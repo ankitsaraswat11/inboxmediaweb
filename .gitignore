@@ -1,0 +1,18 @@
+# dependencies
+node_modules/
+
+# build output and caches
+dist/
+.angular/
+out-tsc/
+
+# logs
+npm-debug.log*
+yarn-error.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
