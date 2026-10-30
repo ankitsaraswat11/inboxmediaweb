@@ -30,7 +30,7 @@ footer{background:var(--navy);color:#d9cff0;padding:3.5rem 0 1.5rem;font-size:.9
 /* responsive */
 @media(max-width:1180px){.fg{grid-template-columns:1fr 1fr 1fr}}
 @media(max-width:800px){.fg{grid-template-columns:1fr 1fr}}
-@media(max-width:1080px){.menu,.row>.cta{display:none}.burger{display:block}.nav.open .mnav{display:block}:root{--nh:68px}}
+@media(max-width:1180px){.menu,.row>.cta{display:none}.burger{display:block}.nav.open .mnav{display:block}:root{--nh:68px}}
 @media(max-width:560px){.fg{grid-template-columns:1fr}.btn{width:100%}h2{max-width:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
@@ -170,10 +170,33 @@ main table td {
 
 
 /* Left-aligned layout: every .wrap (header, pages, footer) starts at the same left gutter */
-@media (min-width:1081px){
+@media (min-width:1181px){
   .menu{margin-left:1.5rem}
 }
 
 /* Space between buttons placed side by side (Angular strips the whitespace between them) */
 main .wrap>.btn{margin:.25rem .8rem .25rem 0}
 @media(max-width:560px){main .wrap>.btn{margin:.25rem 0 .8rem;width:100%}}
+
+/* ===== Navbar enhancement ===== */
+.nav{background:linear-gradient(180deg,rgba(27,16,51,.98),rgba(36,21,68,.96));border-bottom:1px solid rgba(255,255,255,.08);transition:box-shadow .3s}
+.nav .row{transition:height .25s ease}
+.nav.sc .row{height:64px}
+.brand img{transition:height .25s ease}
+.nav.sc .brand img{height:34px}
+.menu{gap:.1rem}
+.dd>a{position:relative;color:rgba(255,255,255,.82);font-weight:500;font-size:.95rem;padding:0 .85rem;border-bottom:0;transition:color .2s}
+.dd>a::after{content:"";position:absolute;left:.85rem;right:.85rem;bottom:0;height:3px;border-radius:3px 3px 0 0;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+.dd>a:hover,.dd:hover>a,.dd:focus-within>a,.dd>a.on{color:#fff}
+.dd>a.on::after,.dd:hover>a::after,.dd:focus-within>a::after{transform:scaleX(1)}
+.dd:has(.panel)>a::before{content:"";order:2;width:6px;height:6px;margin-left:.45rem;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-2px) rotate(45deg);transition:transform .2s}
+.dd:has(.panel):hover>a::before{transform:translateY(1px) rotate(-135deg)}
+.panel{width:340px;padding:.6rem;border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:0 0 16px 16px;box-shadow:0 24px 50px rgba(18,10,36,.35)}
+.panel a{padding:.6rem .8rem;border-radius:10px;font-size:.92rem;transition:background .15s,color .15s,padding-left .15s}
+.panel a:hover{background:var(--soft);color:var(--blue);padding-left:1.1rem}
+/* Book Demo pinned to the right */
+.row>.cta{margin-left:auto}
+.btn.cta{border-radius:999px;padding:.6rem 1.3rem;font-weight:700;gap:.45rem;box-shadow:0 6px 18px rgba(255,112,67,.35);transition:transform .2s,box-shadow .2s}
+.btn.cta::after{content:"\2192";transition:transform .2s}
+.btn.cta:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(255,112,67,.45)}
+.btn.cta:hover::after{transform:translateX(3px)}
