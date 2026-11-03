@@ -1,14 +1,23 @@
-import { Routes } from '@angular/router';
+import { ResolveFn, Routes } from '@angular/router';
+import { platformBySlug } from './data';
 
 const title = (page: string) => `${page} | Inbox Media`;
+const platformTitle: ResolveFn<string> = r => { const p = platformBySlug(r.paramMap.get('slug')); return p ? title(`${p.name}: ${p.descriptor}`) : title('Platforms'); };
 
 export const routes: Routes = [
   {
     path: '',
-    title: 'Inbox Media | Enterprise Communication, AI Automation & Digital Engineering',
+    title: 'Inbox Media | SUTRA, MEDHA & KAVACH: The Connected Enterprise Technology Platform',
     loadComponent: () => import('./pages/home.component').then(m => m.HomeComponent),
-    data: { description: 'Enterprise messaging, voice, AI automation and digital engineering from Inbox Media. Find the right solution for your business problem.' }
+    data: { description: 'Three platforms, one connected enterprise: SUTRA for omnichannel communication, MEDHA for intelligence and automation, and KAVACH for digital trust, security and compliance.' }
   },
+  {
+    path: 'platforms/:slug',
+    title: platformTitle,
+    loadComponent: () => import('./pages/platform.component').then(m => m.PlatformComponent),
+    data: { description: 'Inbox Media platforms: SUTRA (communication fabric), MEDHA (intelligence engine) and KAVACH (trust fabric).' }
+  },
+  { path: 'platforms', redirectTo: 'platforms/sutra', pathMatch: 'full' },
   {
     path: 'capabilities',
     title: title('Capabilities'),

@@ -119,14 +119,14 @@ export const FLOW_CONTACT: Step[]=[{t:'Fill the form',d:'Name, email, interest.'
 
 export const FOUNDED = 2009;
 export const SOLVE = [
- {t:'Software engineering',d:'Build, connect or modernise apps, APIs and cloud systems.',c:'See digital engineering',u:'/capabilities'},
- {t:'AI implementation',d:'Add voice agents, domain models or on-site AI to your operations.',c:'Explore AI solutions',u:'/ai-solutions'},
  {t:'Customer communication',d:'Reach customers reliably with SMS, OTP, WhatsApp, RCS and email.',c:'See communication infrastructure',u:'/capabilities'},
- {t:'Voice automation',d:'Route and automate calls with IVR, cloud telephony and outbound calling.',c:'See voice and telephony',u:'/capabilities'}];
+ {t:'Voice automation',d:'Route and automate calls with IVR, cloud telephony and outbound calling.',c:'See voice and telephony',u:'/capabilities'},
+ {t:'AI implementation',d:'Add voice agents, domain models or on-site AI to your operations.',c:'Explore AI solutions',u:'/ai-solutions'},
+ {t:'Software engineering',d:'Build, connect or modernise apps, APIs and cloud systems.',c:'See digital engineering',u:'/capabilities'}];
 export const THEMES = [
- {t:'Digital engineering',d:'Custom software, apps and cloud systems that connect everything together.'},
+ {t:'Reliable communication',d:'Messages, OTPs and calls that reach customers on the channel they actually use.'},
  {t:'Intelligent automation',d:'AI agents and bots that handle routine conversations, bookings and follow-ups.'},
- {t:'Reliable communication',d:'Messages, OTPs and calls that reach customers on the channel they actually use.'}];
+ {t:'Digital engineering',d:'Custom software, apps and cloud systems that connect everything together.'}];
 export interface Product { name:string; text:string; flow:Step[]; deploy:string; integ:string; note?:string; what?:string; why?:string; how?:string; who?:string[]; benefit?:string; }
 const TBC='To be confirmed with the product team before publishing.';
 const W=(a:string,b:string,c:string,e:string):Step[]=>[{t:a,d:''},{t:b,d:''},{t:c,d:''},{t:e,d:''}];
@@ -188,3 +188,51 @@ const PRODUCT_INFO:Record<string,Partial<Product>>={
   who:['BFSI','Healthcare','Government','Telecom'],
   benefit:'A clear view of your AI risks and a practical path towards certification.'}};
 PRODUCTS.forEach(p=>Object.assign(p,PRODUCT_INFO[p.name]));
+
+/* ===== Platform architecture: SUTRA · MEDHA · KAVACH ===== */
+export type PlatformSlug = 'sutra' | 'medha' | 'kavach';
+/** An offering that makes up a platform. `from` marks a cross-layer item delivered through another platform. */
+export interface PlatformPart { name: string; text: string; link: string; from?: string; }
+export interface Platform {
+  slug: PlatformSlug; name: string; hi: string; area: string; layer: string; descriptor: string; short: string;
+  blurb: string; tagline: string; meaning: string; statement: string; tech: string[];
+  color: string; light: string; tint: string; includes: PlatformPart[];
+}
+const capPart = (n: string): PlatformPart => { const c = CAPABILITIES.find(x => x.name === n)!; return { name: c.name, text: c.text, link: '/capabilities' }; };
+const aiPart = (n: string): PlatformPart => { const a = AI_SOLUTIONS.find(x => x.name === n)!; return { name: a.name, text: a.text, link: '/ai-solutions' }; };
+export const PLATFORMS: Platform[] = [
+  {
+    slug: 'sutra', name: 'SUTRA', hi: 'सूत्र', area: 'Communication', layer: 'The Communication Layer',
+    descriptor: 'Omnichannel Communication Fabric', short: 'Communication Fabric', blurb: 'Unified customer connectivity.', tagline: 'Connect everything.',
+    meaning: 'Sutra means a thread or connecting principle. It represents the digital threads that connect businesses, customers, systems and communication channels.',
+    statement: 'One unified fabric connecting every customer interaction across messaging, voice and digital channels.',
+    tech: ['SMS', 'RCS', 'WhatsApp', 'Email', 'Voice', 'Telephony', 'IVR', 'APIs'],
+    color: '#e64a19', light: '#ff8a65', tint: '#fff1eb',
+    includes: [capPart('Communication Infrastructure'), capPart('Voice & Telephony'), capPart('Omnichannel Engagement Platform')]
+  },
+  {
+    slug: 'medha', name: 'MEDHA', hi: 'मेधा', area: 'Artificial Intelligence', layer: 'The Intelligence Layer',
+    descriptor: 'Enterprise Intelligence & Automation Engine', short: 'Intelligence Engine', blurb: 'Intelligent business automation.', tagline: 'Make everything intelligent.',
+    meaning: 'Medha means intelligence, intellect and wisdom. It represents the ability to understand information, make decisions and execute intelligent workflows.',
+    statement: 'Turning conversations, business data and processes into intelligent decisions and automated actions.',
+    tech: ['Conversational AI', 'LLMs', 'SLMs', 'AI Agents', 'NLP', 'Edge AI', 'Intelligent Workflows'],
+    color: '#673ab7', light: '#b39ddb', tint: '#f3edfc',
+    includes: [capPart('Conversational AI & Automation'), aiPart('Aura AI'), aiPart('Tellco'), aiPart('Custom SLM'), aiPart('TrainExl'), aiPart('Edge AI')]
+  },
+  {
+    slug: 'kavach', name: 'KAVACH', hi: 'कवच', area: 'Compliance & Security', layer: 'The Trust Layer',
+    descriptor: 'Digital Trust, Security & Compliance Fabric', short: 'Trust Fabric', blurb: 'Secure and responsible technology.', tagline: 'Protect everything.',
+    meaning: 'Kavach means shield or protective armour. It represents the protection of enterprise data, digital infrastructure, AI systems and customer privacy.',
+    statement: 'Embedding trust, privacy, security and responsible governance into every digital interaction and business process.',
+    tech: ['DPDP', 'AI Security', 'Cybersecurity', 'Data Privacy', 'Encryption', 'Access Governance', 'ISO 42001'],
+    color: '#00897b', light: '#4db6ac', tint: '#e6f5f3',
+    includes: [
+      aiPart('ISO 42001 AI Readiness'),
+      { name: 'DLT-compliant messaging', text: 'Bulk SMS and notifications sent in line with telecom DLT rules, so high-volume communication stays compliant.', link: '/capabilities', from: 'Communication Infrastructure' },
+      { name: 'On-premise Edge AI', text: 'AI that runs on your own site or device, so sensitive data stays under your control.', link: '/ai-solutions', from: 'Edge AI' }
+    ]
+  }
+];
+export const platformBySlug = (s: string | null | undefined) => PLATFORMS.find(p => p.slug === s);
+/** Platforms that apply to an industry, based on the capabilities and solutions it uses. */
+export const platformsForIndustry = (i: Item) => PLATFORMS.filter(p => (i.uses || []).some(u => p.includes.some(x => x.name === u || x.from === u)));

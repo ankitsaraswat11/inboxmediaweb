@@ -201,5 +201,27 @@ main .wrap>.btn{margin:.25rem .8rem .25rem 0}
 .btn.cta:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(255,112,67,.45)}
 .btn.cta:hover::after{transform:translateX(3px)}
 
-/* close desktop dropdown after a panel link is clicked */
-.menu.shut .dd:hover .panel,.menu.shut .dd:focus-within .panel{visibility:hidden!important;opacity:0!important;transform:translateY(10px)!important;pointer-events:none}
+/* ===== Platform identity: SUTRA · MEDHA · KAVACH ===== */
+:root{--sutra:#e64a19;--medha:#673ab7;--kavach:#00897b;--mark:Eczar,Georgia,'Noto Serif Devanagari',serif}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* Platforms mega menu */
+.panel.mega{width:min(860px,calc(100vw - 2*var(--gut)));display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;padding:.6rem}
+.panel.mega a.mcol{display:flex;flex-direction:column;gap:.2rem;padding:1rem 1.1rem 1.1rem;border-radius:12px;color:var(--ink)}
+.panel.mega a.mcol:hover{background:var(--t);padding-left:1.1rem;color:var(--ink)}
+.mcol b{font:800 1.45rem/1 var(--mark);letter-spacing:.04em;color:var(--c)}
+.mlay{font-size:.8rem;font-weight:600;color:var(--c)}
+.mdesc{font-weight:600;font-size:.92rem;line-height:1.35;color:var(--navy);margin-top:.15rem}
+.minc{display:flex;flex-wrap:wrap;gap:.25rem;margin-top:.55rem}
+.minc i{font-style:normal;font-size:.74rem;color:var(--mute);background:var(--soft);border-radius:6px;padding:.12rem .45rem}
+.mplat{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;padding:.8rem 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.mnav .mplat a{border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:.7rem .75rem;display:grid;gap:.1rem}
+.mplat b{font:800 1.05rem var(--mark);letter-spacing:.04em;color:var(--c)}.mplat span{font-size:.78rem;color:#c9bde3;font-weight:400}
+.fmark{font:700 .95rem var(--mark);letter-spacing:.04em;color:#fff}
+.fg{grid-template-columns:1.3fr 1fr 1fr 1fr 1fr 1.3fr}
+@media(max-width:1180px){.fg{grid-template-columns:1fr 1fr 1fr}}
+@media(max-width:800px){.fg{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.fg{grid-template-columns:1fr}}
+
+/* Keep the desktop menu on one line between the burger breakpoint and wide screens */
+.dd>a,.brand,.btn.cta{white-space:nowrap}
+@media(min-width:1181px) and (max-width:1360px){.dd>a{padding:0 .55rem;font-size:.9rem}.dd>a::after{left:.55rem;right:.55rem}.row{gap:1rem}.menu{margin-left:1rem}.btn.cta{padding:.55rem 1rem}}

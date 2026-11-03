@@ -45,11 +45,11 @@ export class SolutionFinderComponent {
   recommendation = computed(() => {
     const sector = INDUSTRIES.find(x => x.name === this.industry()) ?? INDUSTRIES[0];
     const choices: Record<string, {title:string; detail:string; services:string}> = {
-      communication: {title:'Communication Infrastructure + Omnichannel Engagement', detail:`For ${sector.name}, start by mapping the notifications and customer touchpoints that need to reach people reliably.`, services:'SMS, OTP, RCS, WhatsApp, voice and messaging APIs'},
-      calls: {title:'Voice & Telephony + Tellco', detail:`For ${sector.name}, review inbound call routing, outbound reminders and lead follow-up opportunities.`, services:'IVR, cloud telephony, toll-free numbers and AI-assisted calling'},
-      automation: {title:'Conversational AI & Automation', detail:`For ${sector.name}, identify repetitive questions, booking steps and support conversations that could be automated with a clear human handover.`, services:'AI voice agents, chatbots and WhatsApp automation'},
+      communication: {title:'SUTRA: Communication Infrastructure + Omnichannel Engagement', detail:`For ${sector.name}, start by mapping the notifications and customer touchpoints that need to reach people reliably.`, services:'SMS, OTP, RCS, WhatsApp, voice and messaging APIs'},
+      calls: {title:'SUTRA + MEDHA: Voice & Telephony with Tellco', detail:`For ${sector.name}, review inbound call routing, outbound reminders and lead follow-up opportunities.`, services:'IVR, cloud telephony, toll-free numbers and AI-assisted calling'},
+      automation: {title:'MEDHA: Conversational AI & Automation', detail:`For ${sector.name}, identify repetitive questions, booking steps and support conversations that could be automated with a clear human handover.`, services:'AI voice agents, chatbots and WhatsApp automation'},
       systems: {title:'Digital Engineering & IT Services', detail:`For ${sector.name}, map the systems and data that need to connect before choosing an integration approach.`, services:'Custom applications, APIs, cloud, DevOps and modernisation'},
-      governance: {title:'ISO 42001 AI Readiness + Edge AI assessment', detail:`For ${sector.name}, review AI use, data boundaries, governance needs and whether on-premise processing is relevant.`, services:'AI governance, risk controls and deployment assessment'}
+      governance: {title:'KAVACH: ISO 42001 AI Readiness + Edge AI assessment', detail:`For ${sector.name}, review AI use, data boundaries, governance needs and whether on-premise processing is relevant.`, services:'AI governance, risk controls and deployment assessment'}
     };
     return choices[this.goal()] ?? choices['communication'];
   });
