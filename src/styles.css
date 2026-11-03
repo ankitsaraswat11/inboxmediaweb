@@ -200,3 +200,6 @@ main .wrap>.btn{margin:.25rem .8rem .25rem 0}
 .btn.cta::after{content:"\2192";transition:transform .2s}
 .btn.cta:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(255,112,67,.45)}
 .btn.cta:hover::after{transform:translateX(3px)}
+
+/* close desktop dropdown after a panel link is clicked */
+.menu.shut .dd:hover .panel,.menu.shut .dd:focus-within .panel{visibility:hidden!important;opacity:0!important;transform:translateY(10px)!important;pointer-events:none}

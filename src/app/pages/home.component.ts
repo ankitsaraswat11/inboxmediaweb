@@ -45,9 +45,6 @@ const SECTORS=[{n:'Banking & finance',i:'finance_skyline',t:'OTPs, alerts and se
 <div><h3>Analytics</h3><p>Real-time reporting on every journey</p></div></div>
 <p style="margin-top:1.5rem"><a routerLink="/integrations">Integrations and technology</a></p></div></section>
 
-<section class="s tint"><div class="wrap"><p class="eyebrow">Industries</p><h2>Sector-specific configurations</h2>
-<div class="chips">@for(i of inds;track i.name){<a routerLink="/industries">{{i.name}}</a>}</div></div></section>
-
 <app-scenario-simulator></app-scenario-simulator>
 
 <section class="s"><div class="wrap"><p class="eyebrow">Evidence and trust</p><h2>Proof, published only when verified</h2>

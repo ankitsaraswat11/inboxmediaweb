@@ -119,14 +119,14 @@ export const FLOW_CONTACT: Step[]=[{t:'Fill the form',d:'Name, email, interest.'
 
 export const FOUNDED = 2009;
 export const SOLVE = [
- {t:'Customer communication',d:'Reach customers reliably with SMS, OTP, WhatsApp, RCS and email.',c:'See communication infrastructure',u:'/capabilities'},
- {t:'Voice automation',d:'Route and automate calls with IVR, cloud telephony and outbound calling.',c:'See voice and telephony',u:'/capabilities'},
+ {t:'Software engineering',d:'Build, connect or modernise apps, APIs and cloud systems.',c:'See digital engineering',u:'/capabilities'},
  {t:'AI implementation',d:'Add voice agents, domain models or on-site AI to your operations.',c:'Explore AI solutions',u:'/ai-solutions'},
- {t:'Software engineering',d:'Build, connect or modernise apps, APIs and cloud systems.',c:'See digital engineering',u:'/capabilities'}];
+ {t:'Customer communication',d:'Reach customers reliably with SMS, OTP, WhatsApp, RCS and email.',c:'See communication infrastructure',u:'/capabilities'},
+ {t:'Voice automation',d:'Route and automate calls with IVR, cloud telephony and outbound calling.',c:'See voice and telephony',u:'/capabilities'}];
 export const THEMES = [
- {t:'Reliable communication',d:'Messages, OTPs and calls that reach customers on the channel they actually use.'},
+ {t:'Digital engineering',d:'Custom software, apps and cloud systems that connect everything together.'},
  {t:'Intelligent automation',d:'AI agents and bots that handle routine conversations, bookings and follow-ups.'},
- {t:'Digital engineering',d:'Custom software, apps and cloud systems that connect everything together.'}];
+ {t:'Reliable communication',d:'Messages, OTPs and calls that reach customers on the channel they actually use.'}];
 export interface Product { name:string; text:string; flow:Step[]; deploy:string; integ:string; note?:string; what?:string; why?:string; how?:string; who?:string[]; benefit?:string; }
 const TBC='To be confirmed with the product team before publishing.';
 const W=(a:string,b:string,c:string,e:string):Step[]=>[{t:a,d:''},{t:b,d:''},{t:c,d:''},{t:e,d:''}];
