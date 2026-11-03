@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { FlowComponent } from '../flow.component';
+import { SolutionFinderComponent } from '../components/solution-finder.component';
+import { ScenarioSimulatorComponent } from '../components/scenario-simulator.component';
 import { CAPABILITIES, AI_SOLUTIONS, INDUSTRIES, SOLVE, THEMES, FOUNDED } from '../data';
 const I='/images/';
 const START=[{l:'SMS / OTP',x:70,y:70},{l:'WhatsApp',x:370,y:70},{l:'Voice',x:50,y:250},{l:'Email',x:390,y:250},{l:'AI agents',x:220,y:355}];
@@ -8,7 +9,7 @@ const TICK=['Since 2009','5 Capability Domains','6 AI Solutions','Voice & Teleph
 const CAPIMG=['server_room_1','office_glass','dashboard_1','fintech_payment','hero_core'];
 const AIIMG=['hero_core','office_glass','dashboard_1','education_2','server_room_1','finance_skyline'];
 const SECTORS=[{n:'Banking & finance',i:'finance_skyline',t:'OTPs, alerts and secure customer calls.'},{n:'Healthcare',i:'healthcare_1',t:'Appointment booking and reminders.'},{n:'Telecom',i:'server_room_1',t:'Voice, IVR and messaging APIs.'},{n:'E-commerce',i:'fintech_payment',t:'Order updates and support automation.'}];
-@Component({standalone:true,imports:[RouterLink,FlowComponent],template:`
+@Component({standalone:true,imports:[RouterLink,SolutionFinderComponent,ScenarioSimulatorComponent],template:`
 <section id="who" class="hero" (pointermove)="glow($event)" [style.--mx.%]="mx()" [style.--my.%]="my()"><div class="wrap hero-in"><div>
 <p class="pill"><span class="dots"><i></i><i></i><i></i></span>Powering Innovation Through AI &amp; Automation</p>
 <h1>Intelligent Infrastructure <span class="grad">for Modern Enterprises</span></h1>
@@ -27,6 +28,8 @@ const SECTORS=[{n:'Banking & finance',i:'finance_skyline',t:'OTPs, alerts and se
 <section class="s"><div class="wrap"><p class="eyebrow">Start here</p><h2>What are you trying to solve?</h2>
 <div class="paths">@for(p of solve;track p.t){<a class="path" [routerLink]="p.u"><h3>{{p.t}}</h3><p>{{p.d}}</p><span>{{p.c}}</span></a>}</div></div></section>
 
+<app-solution-finder></app-solution-finder>
+
 <section class="s tint"><div class="wrap"><p class="eyebrow">What Inbox Media enables</p><h2>Three things, done reliably</h2>
 <div class="three">@for(t of themes;track t.t;let i=$index){<div><b>{{i+1}}</b><h3>{{t.t}}</h3><p>{{t.d}}</p></div>}</div></div></section>
 
@@ -44,6 +47,8 @@ const SECTORS=[{n:'Banking & finance',i:'finance_skyline',t:'OTPs, alerts and se
 
 <section class="s tint"><div class="wrap"><p class="eyebrow">Industries</p><h2>Sector-specific configurations</h2>
 <div class="chips">@for(i of inds;track i.name){<a routerLink="/industries">{{i.name}}</a>}</div></div></section>
+
+<app-scenario-simulator></app-scenario-simulator>
 
 <section class="s"><div class="wrap"><p class="eyebrow">Evidence and trust</p><h2>Proof, published only when verified</h2>
 <div class="trust"><div><h3>Certifications</h3><p>Certificate numbers, certification body, scope and validity are published after verification.</p><a routerLink="/about/certifications">View certification details</a></div>

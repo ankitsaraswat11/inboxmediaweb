@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { FlowComponent } from '../flow.component';
+import { FlowComponent } from '../components/flow.component';
 import { PRODUCTS } from '../data';
 @Component({standalone:true,imports:[RouterLink,FlowComponent],template:`
 <section class="s dark page-hero"><div class="wrap"><h1>AI Solutions</h1><p class="lead">Six solutions, each for a distinct job. Pick one to see how it works, where it runs and what the implementation includes.</p></div></section>

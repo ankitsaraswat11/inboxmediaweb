@@ -109,7 +109,7 @@ export const TIMELINE: Item[] = [
 export const CERTS: Item[] = [
  {name:'ISO 9001:2015: Quality Management',text:'Documented and audited delivery processes, continuous improvement controls and customer satisfaction as a measurable standard.'},
  {name:'ISO 27001:2013: Information Security',text:'Enterprise data security and access controls, an information risk management framework, and readiness for BFSI, healthcare and government requirements.'}];
-import { Step } from './flow.component';
+import { Step } from './components/flow.component';
 export const FLOW_JOURNEY: Step[]=[{t:'Discover',d:'Visitor lands and sees what Inbox Media does.'},{t:'Understand',d:'Capabilities and AI solutions explained by outcome.'},{t:'Trust',d:'Proof: case studies, results, verified claims.'},{t:'Enquire',d:'One clear form to book a demo.'}];
 export const FLOW_CAP: Step[]=[{t:'Customer need',d:'Alert, call, support or booking.'},{t:'Channel',d:'SMS, voice, WhatsApp, email or push.'},{t:'Automation',d:'Bots and agents handle the routine work.'},{t:'Integration',d:'APIs connect CRM and internal systems.'},{t:'Outcome',d:'Faster response, one coordinated journey.'}];
 export const FLOW_AI: Step[]=[{t:'Pick a use case',d:'Reception, outbound calls, training or governance.'},{t:'Match a solution',d:'Aura AI, Tellco, SLM, TrainExl, Edge AI or ISO 42001.'},{t:'Verify claims',d:'Confirm scope and data needs internally.'},{t:'Deploy',d:'Cloud or on-site, based on latency and data rules.'}];

@@ -2,7 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { FlowComponent } from '../flow.component';
+import { FlowComponent } from '../components/flow.component';
 import { CAPABILITIES, AI_SOLUTIONS, FLOW_CONTACT } from '../data';
 // TODO: point to the real enquiry endpoint (CRM or existing backend) once confirmed.
 export const ENQUIRY_ENDPOINT = '/api/enquiry';
