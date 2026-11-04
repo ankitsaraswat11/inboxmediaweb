@@ -1,0 +1,119 @@
+/* =====================================================================
+   THEME TOKENS
+   Every colour in the site comes from these tokens. Light is the default;
+   [data-theme="dark"] on <html> (set by ThemeService) swaps the palette.
+   ===================================================================== */
+:root {
+  /* type */
+  --font-display: Sora, Inter, system-ui, sans-serif;
+  --font-body: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mark: Eczar, Georgia, 'Noto Serif Devanagari', serif; /* platform wordmarks, Latin + Devanagari */
+
+  /* layout */
+  --gut: clamp(16px, 3vw, 40px);
+  --nh: 72px;
+  --r-sm: 8px; --r: 12px; --r-lg: 18px; --r-xl: 24px;
+
+  /* ---------- LIGHT: purple & lavender ---------- */
+  --bg: #FFFFFF;
+  --bg-alt: #F4F0FA;          /* secondary background for selected sections */
+  --bg-soft: #F7F4FC;
+  --lavender: #EDE7F6;
+  --surface: #FFFFFF;          /* cards and panels */
+  --surface-2: #FAF8FD;        /* inset areas inside panels */
+  --fg: #211A2E;               /* primary text */
+  --fg-2: #716A7E;             /* secondary text */
+  --border: #E6DFF1;
+  --border-strong: #D3C6EA;
+  --primary: #673AB7;
+  --primary-deep: #452080;
+  --accent: #8B5CF6;
+  --btn: #673AB7; --btn-hover: #5B2FA6; --btn-fg: #FFFFFF;
+  --link: #5B2FA6;
+  --focus: #8B5CF6;
+  --glow: rgba(103, 58, 183, .16);
+  --shadow: 0 1px 2px rgba(33, 26, 46, .04), 0 10px 28px rgba(69, 32, 128, .07);
+  --shadow-lg: 0 2px 4px rgba(33, 26, 46, .05), 0 24px 48px rgba(69, 32, 128, .12);
+  --header-bg: rgba(255, 255, 255, .88);
+  --header-border: #EAE3F4;
+  --hero-glow: radial-gradient(60% 70% at 85% 10%, #EDE7F6 0%, rgba(237, 231, 246, 0) 70%), radial-gradient(40% 50% at 0% 100%, #F4F0FA 0%, rgba(244, 240, 250, 0) 70%);
+  --logo-filter: brightness(0) saturate(100%) invert(9%) sepia(19%) saturate(1530%) hue-rotate(226deg) brightness(95%) contrast(95%);
+
+  /* contrast band (used sparingly: architecture, closing CTA) */
+  --band-bg: radial-gradient(70% 80% at 100% 0%, rgba(139, 92, 246, .45), transparent 60%), linear-gradient(160deg, #2B1554 0%, #3A1C6E 60%, #452080 100%);
+  --band-fg: #FFFFFF;
+  --band-fg-2: #DCD2F2;
+  --band-border: rgba(255, 255, 255, .16);
+  --band-surface: rgba(255, 255, 255, .07);
+  --band-btn: #FFFFFF; --band-btn-fg: #452080; --band-btn-hover: #EDE7F6;
+
+  /* platform identities */
+  --sutra: #C2410C;  --sutra-tint: #FFF2EC;
+  --medha: #673AB7;  --medha-tint: #F3EDFC;
+  --kavach: #00796B; --kavach-tint: #E7F5F2;
+  --eng: #3949AB;    --eng-tint: #ECEEFA;
+  /* light variants for use on dark surfaces in either theme */
+  --sutra-l: #FF9A76; --medha-l: #B69CFF; --kavach-l: #4FD1C5; --eng-l: #9FA8DA;
+
+  /* status */
+  --ok: #2E7D32; --ok-tint: #E8F5E9;
+  --pending: #8D6E00; --pending-tint: #FFF6D6;
+  --err: #B3261E;
+
+  /* legacy aliases used by existing page styles */
+  --navy: var(--fg); --ink: var(--fg); --mute: var(--fg-2); --line: var(--border);
+  --soft: var(--bg-alt); --sky: var(--lavender); --blue: var(--primary);
+  --shadow-card: var(--shadow); --radius-lg: var(--r-lg);
+
+  color-scheme: light;
+}
+
+/* ---------- DARK ---------- */
+:root[data-theme="dark"] {
+  --bg: #100D1A;
+  --bg-alt: #191326;
+  --bg-soft: #150F22;
+  --lavender: #2A2040;
+  --surface: #211A30;
+  --surface-2: #1A1428;
+  --fg: #FFFFFF;
+  --fg-2: #B7AEC8;
+  --border: #332843;
+  --border-strong: #4A3B63;
+  --primary: #8B5CF6;
+  --primary-deep: #B69CFF;
+  --accent: #B69CFF;
+  --btn: #7C3AED; --btn-hover: #8B5CF6; --btn-fg: #FFFFFF;
+  --link: #B69CFF;
+  --focus: #B69CFF;
+  --glow: rgba(139, 92, 246, .30);
+  --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 12px 32px rgba(0, 0, 0, .35);
+  --shadow-lg: 0 2px 4px rgba(0, 0, 0, .4), 0 28px 60px rgba(0, 0, 0, .5);
+  --header-bg: rgba(16, 13, 26, .84);
+  --header-border: #2A2138;
+  --hero-glow: radial-gradient(55% 70% at 85% 5%, rgba(139, 92, 246, .28) 0%, transparent 70%), radial-gradient(40% 50% at 0% 100%, rgba(79, 209, 197, .08) 0%, transparent 70%);
+  --logo-filter: none;
+
+  --band-bg: radial-gradient(70% 80% at 100% 0%, rgba(139, 92, 246, .30), transparent 60%), radial-gradient(50% 60% at 0% 100%, rgba(79, 209, 197, .08), transparent 60%), #191326;
+  --band-fg: #FFFFFF;
+  --band-fg-2: #C9BFDB;
+  --band-border: #3A2E4E;
+  --band-surface: rgba(255, 255, 255, .04);
+  --band-btn: #7C3AED; --band-btn-fg: #FFFFFF; --band-btn-hover: #8B5CF6;
+
+  --sutra: #FF9A76;  --sutra-tint: rgba(255, 154, 118, .09);
+  --medha: #B69CFF;  --medha-tint: rgba(182, 156, 255, .10);
+  --kavach: #4FD1C5; --kavach-tint: rgba(79, 209, 197, .08);
+  --eng: #9FA8DA;    --eng-tint: rgba(159, 168, 218, .09);
+
+  --ok: #81C784; --ok-tint: rgba(129, 199, 132, .12);
+  --pending: #FFD54F; --pending-tint: rgba(255, 213, 79, .10);
+  --err: #F2B8B5;
+
+  color-scheme: dark;
+}
+
+/* Smooth cross-fade only while the theme is being switched (avoids transition cost during normal use). */
+:root.theme-anim, :root.theme-anim *, :root.theme-anim *::before, :root.theme-anim *::after {
+  transition: background-color .35s ease, color .35s ease, border-color .35s ease, fill .35s ease, stroke .35s ease, box-shadow .35s ease !important;
+}

@@ -1,0 +1,95 @@
+/* =====================================================================
+   SITE CHROME: header, dropdowns, mobile navigation, theme toggle, footer
+   ===================================================================== */
+.hdr { position: sticky; top: 0; z-index: 60 }
+.nav { background: var(--header-bg); backdrop-filter: saturate(160%) blur(14px); -webkit-backdrop-filter: saturate(160%) blur(14px); border-bottom: 1px solid var(--header-border); transition: box-shadow .3s }
+.nav.sc { box-shadow: 0 8px 28px rgba(33, 26, 46, .08) }
+:root[data-theme="dark"] .nav.sc { box-shadow: 0 8px 28px rgba(0, 0, 0, .45) }
+.row { display: flex; align-items: center; gap: 1rem; height: var(--nh) }
+.brand { display: flex; align-items: center; color: var(--fg); text-decoration: none; font: 700 1.25rem var(--font-display); flex-shrink: 0 }
+.brand img { height: 38px; width: auto; filter: var(--logo-filter) }
+
+.menu { display: flex; align-items: stretch; height: 100%; margin-left: 1.25rem; gap: .1rem }
+.dd { position: relative; display: flex; align-items: center }
+.dd > a { position: relative; display: flex; align-items: center; gap: .35rem; height: 100%; padding: 0 .7rem; color: var(--fg-2); text-decoration: none; font-weight: 550; font-size: .93rem; white-space: nowrap; transition: color .2s }
+.dd > a::after { content: ""; position: absolute; left: .7rem; right: .7rem; bottom: -1px; height: 2px; border-radius: 2px; background: var(--primary); transform: scaleX(0); transform-origin: left; transition: transform .25s }
+.dd > a:hover, .dd:focus-within > a, .dd:hover > a { color: var(--fg) }
+.dd > a.on { color: var(--primary) }
+.dd > a.on::after, .dd:hover > a::after { transform: scaleX(1) }
+.dd > a .chev { width: 10px; height: 10px; fill: none; stroke: currentColor; stroke-width: 2; transition: transform .2s }
+.dd:hover > a .chev, .dd:focus-within > a .chev { transform: rotate(180deg) }
+
+.panel { position: absolute; top: calc(100% - 6px); left: 0; min-width: 260px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); padding: .5rem; visibility: hidden; opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s, visibility .2s; z-index: 5 }
+.dd:hover .panel, .dd:focus-within .panel { visibility: visible; opacity: 1; transform: none }
+.panel a { display: block; padding: .6rem .75rem; border-radius: var(--r-sm); color: var(--fg); text-decoration: none; font-size: .92rem; font-weight: 500 }
+.panel a:hover, .panel a.on { background: var(--bg-alt); color: var(--primary) }
+
+/* Platforms mega menu */
+.panel.mega { width: min(900px, calc(100vw - 2 * var(--gut))); padding: .6rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem }
+.mega a.mcol { display: flex; flex-direction: column; gap: .25rem; padding: 1rem 1.05rem; border-radius: var(--r); border: 1px solid transparent }
+.mega a.mcol:hover { background: var(--t); border-color: color-mix(in srgb, var(--c) 25%, transparent); color: var(--fg) }
+.mcol b { font: 800 1.35rem/1 var(--mark); letter-spacing: .04em; color: var(--c) }
+.mcol .mlay { font-size: .78rem; font-weight: 700; color: var(--c) }
+.mcol .mdesc { font-weight: 600; font-size: .9rem; line-height: 1.35; color: var(--fg) }
+.mcol .msub { font-size: .82rem; color: var(--fg-2); line-height: 1.5 }
+.mega .mfoot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: .3rem 1rem; padding: .7rem .9rem; border-top: 1px solid var(--border); margin-top: .2rem }
+.mega .mfoot a { display: inline-flex; padding: .35rem .5rem; font-size: .86rem; font-weight: 600; color: var(--fg-2) }
+.mega .mfoot a:hover { color: var(--primary); background: none }
+.mega .mfoot span { font-size: .8rem; color: var(--fg-2) }
+
+.tools { margin-left: auto; display: flex; align-items: center; gap: .6rem }
+.tools .btn { min-height: 42px; padding: .55rem 1.05rem; font-size: .92rem; white-space: nowrap }
+
+/* theme toggle */
+.tt { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--fg); display: grid; place-items: center; cursor: pointer; position: relative; overflow: hidden; flex-shrink: 0; transition: border-color .2s, background .2s }
+.tt:hover { border-color: var(--primary); color: var(--primary) }
+.tt svg { position: absolute; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform .45s cubic-bezier(.2, .8, .2, 1), opacity .3s }
+.tt .moon { transform: translateY(120%) rotate(-40deg); opacity: 0 }
+:root[data-theme="dark"] .tt .sun { transform: translateY(-120%) rotate(40deg); opacity: 0 }
+:root[data-theme="dark"] .tt .moon { transform: none; opacity: 1 }
+
+.burger { display: none; width: 44px; height: 44px; border: 1px solid var(--border); border-radius: var(--r); background: var(--surface); cursor: pointer; padding: 0 }
+.burger span { display: block; width: 20px; height: 2px; background: var(--fg); margin: 4px auto; border-radius: 2px; transition: transform .3s, opacity .3s }
+.burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg) }
+.burger.open span:nth-child(2) { opacity: 0 }
+.burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg) }
+
+.mnav { display: none; border-top: 1px solid var(--border); background: var(--bg); max-height: calc(100dvh - var(--nh)); overflow-y: auto; padding: .6rem var(--gut) 1.4rem }
+.mnav > a, .mnav details > summary { display: flex; align-items: center; justify-content: space-between; min-height: 52px; color: var(--fg); text-decoration: none; font-weight: 600; border-bottom: 1px solid var(--border); cursor: pointer; list-style: none }
+.mnav details > summary::-webkit-details-marker { display: none }
+.mnav details > summary::after { content: ""; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform .2s; margin-right: 4px }
+.mnav details[open] > summary::after { transform: rotate(-135deg) }
+.mnav a.on { color: var(--primary) }
+.mplat { display: grid; gap: .5rem; padding: .7rem 0 .9rem }
+.mplat a { display: grid; gap: .1rem; padding: .75rem .9rem; border-radius: var(--r); background: var(--t); text-decoration: none; border: 1px solid color-mix(in srgb, var(--c) 18%, transparent) }
+.mplat b { font: 800 1.1rem var(--mark); letter-spacing: .04em; color: var(--c) }
+.mplat span { font-size: .84rem; color: var(--fg-2) }
+.msubl { display: grid; padding: .3rem 0 .7rem }
+.msubl a { padding: .6rem .9rem; color: var(--fg-2); text-decoration: none; font-weight: 500 }
+.mnav .btn { width: 100%; margin-top: 1.1rem }
+
+/* ---------- footer ---------- */
+footer.site { background: var(--bg-alt); border-top: 1px solid var(--border); color: var(--fg-2); padding: 3.5rem 0 1.5rem; font-size: .92rem }
+:root[data-theme="dark"] footer.site { background: #0B0913 }
+.fg { display: grid; gap: 2rem; grid-template-columns: 1.5fr 1fr 1fr 1fr 1.3fr }
+footer.site h4 { font-size: .95rem; color: var(--fg); margin: 0 0 .8rem; letter-spacing: 0 }
+footer.site a { display: block; color: var(--fg-2); text-decoration: none; padding: .22rem 0 }
+footer.site a:hover { color: var(--primary) }
+footer.site p { color: var(--fg-2); font-size: .9rem }
+footer.site .brand img { height: 36px }
+.fmark { font: 700 .95rem var(--mark); letter-spacing: .04em; color: var(--c) }
+.ftag { font-family: var(--font-display); font-weight: 600; color: var(--fg); font-size: .95rem; margin-top: 1rem }
+.legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--border); margin-top: 2.4rem; padding-top: 1.2rem }
+.soc { display: flex; flex-wrap: wrap; gap: 1.1rem }
+.soc a { padding: 0 }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1240px) {
+  .menu, .tools .btn { display: none }
+  .burger { display: block }
+  .nav.open .mnav { display: block }
+  :root { --nh: 66px }
+}
+@media (max-width: 1100px) { .fg { grid-template-columns: 1fr 1fr 1fr } .fg > :first-child { grid-column: 1 / -1 } }
+@media (max-width: 640px) { .fg { grid-template-columns: 1fr 1fr } }
+@media (max-width: 420px) { .fg { grid-template-columns: 1fr } }

@@ -1,15 +1,24 @@
 import { ResolveFn, Routes } from '@angular/router';
-import { platformBySlug } from './data';
+import { platformBySlug } from './content/platforms';
 
 const title = (page: string) => `${page} | Inbox Media`;
-const platformTitle: ResolveFn<string> = r => { const p = platformBySlug(r.paramMap.get('slug')); return p ? title(`${p.name}: ${p.descriptor}`) : title('Platforms'); };
+const platformTitle: ResolveFn<string> = r => {
+  const p = platformBySlug(r.paramMap.get('slug'));
+  return p ? title(`${p.name}: ${p.descriptor}`) : title('Platforms');
+};
 
 export const routes: Routes = [
   {
     path: '',
-    title: 'Inbox Media | SUTRA, MEDHA & KAVACH: The Connected Enterprise Technology Platform',
+    title: 'Inbox Media | Intelligent Infrastructure for Modern Enterprises',
     loadComponent: () => import('./pages/home.component').then(m => m.HomeComponent),
-    data: { description: 'Three platforms, one connected enterprise: SUTRA for omnichannel communication, MEDHA for intelligence and automation, and KAVACH for digital trust, security and compliance.' }
+    data: { description: 'An integrated enterprise technology platform: SUTRA for omnichannel communication, MEDHA for intelligence and automation, KAVACH for digital trust, on a shared digital engineering foundation.' }
+  },
+  {
+    path: 'platforms',
+    title: title('Platforms'),
+    loadComponent: () => import('./pages/platforms.component').then(m => m.PlatformsComponent),
+    data: { description: 'Compare SUTRA, MEDHA and KAVACH: the communication, intelligence and trust layers of Inbox Media.' }
   },
   {
     path: 'platforms/:slug',
@@ -17,30 +26,35 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/platform.component').then(m => m.PlatformComponent),
     data: { description: 'Inbox Media platforms: SUTRA (communication fabric), MEDHA (intelligence engine) and KAVACH (trust fabric).' }
   },
-  { path: 'platforms', redirectTo: 'platforms/sutra', pathMatch: 'full' },
+  {
+    path: 'digital-engineering',
+    title: title('Digital Engineering'),
+    loadComponent: () => import('./pages/engineering.component').then(m => m.EngineeringComponent),
+    data: { description: 'Custom software, APIs, cloud, DevOps and IT modernisation: the shared engineering foundation under SUTRA, MEDHA and KAVACH.' }
+  },
   {
     path: 'capabilities',
     title: title('Capabilities'),
     loadComponent: () => import('./pages/capabilities.component').then(m => m.CapabilitiesComponent),
-    data: { description: 'Five capability domains: communication infrastructure, voice and telephony, conversational AI, omnichannel engagement and digital engineering.' }
+    data: { description: 'Five capability domains and where each sits: communication, voice and omnichannel in SUTRA, conversational AI in MEDHA, digital engineering as the shared foundation.' }
   },
   {
     path: 'ai-solutions',
-    title: title('AI Solutions'),
+    title: title('AI Products'),
     loadComponent: () => import('./pages/ai.component').then(m => m.AiComponent),
-    data: { description: 'Aura AI, Tellco, Custom SLM, TrainExl, Edge AI and ISO 42001 readiness: use cases, workflows and deployment details.' }
+    data: { description: 'MEDHA AI products: Aura AI, Tellco, Custom SLM, TrainExl and Edge AI. Use cases, workflows and deployment details.' }
   },
   {
     path: 'industries',
     title: title('Industries'),
     loadComponent: () => import('./pages/industries.component').then(m => m.IndustriesComponent),
-    data: { description: 'Explore illustrative communication and AI workflows for BFSI, healthcare, education, ecommerce, real estate, logistics, government and telecom.' }
+    data: { description: 'Challenges, platforms, products and example workflows for BFSI, healthcare, education, ecommerce, real estate, logistics, government and telecom.' }
   },
   {
     path: 'integrations',
     title: title('Integrations & Technology'),
     loadComponent: () => import('./pages/integrations.component').then(m => m.IntegrationsComponent),
-    data: { description: 'How business systems, communication channels, AI agents and analytics can connect.' }
+    data: { description: 'How communication channels, enterprise systems, APIs, AI agents, cloud and internal applications connect to the Inbox Media platforms.' }
   },
   {
     path: 'resources',
@@ -52,7 +66,7 @@ export const routes: Routes = [
     path: 'about',
     title: title('About'),
     loadComponent: () => import('./pages/about.component').then(m => m.AboutComponent),
-    data: { description: 'Inbox Media: enterprise communication infrastructure, AI automation and digital engineering.' }
+    data: { description: 'Inbox Media: an integrated enterprise technology platform for communication, intelligence and digital trust.' }
   },
   {
     path: 'about/certifications',

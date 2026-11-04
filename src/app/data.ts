@@ -42,8 +42,8 @@ export const AI_SOLUTIONS: Item[] = [
  {name:'Tellco',text:'AI-powered outreach and campaign automation: predictive dialing, appointment booking, lead qualification and follow-ups at scale.'},
  {name:'Custom SLM',text:'Domain-specific small language models built for enterprise workflows: banking, healthcare, legal, telecom and more.'},
  {name:'TrainExl',text:'AI-native enterprise learning orchestration that turns SOPs, manuals and compliance documents into intelligent microlearning systems.'},
- {name:'Edge AI',text:'Offline, on-premise AI deployment for regulated industries, healthcare facilities and remote enterprise environments.'},
- {name:'ISO 42001 AI Readiness',text:'AI governance assessment, risk management framework and ISO 42001 certification preparation for enterprise AI compliance.'}];
+ {name:'Edge AI',text:'Offline, on-premise AI deployment for regulated industries, healthcare facilities and remote enterprise environments.'}];
+/* ISO 42001 AI Readiness moved to KAVACH (content/platforms.ts): it is a governance service, not an AI product. */
 export const INDUSTRIES: Item[] = [
  {name:'BFSI',
   text:'Secure, high-volume customer communication for banks, insurers, NBFCs and fintechs.',
@@ -112,8 +112,8 @@ export const CERTS: Item[] = [
 import { Step } from './components/flow.component';
 export const FLOW_JOURNEY: Step[]=[{t:'Discover',d:'Visitor lands and sees what Inbox Media does.'},{t:'Understand',d:'Capabilities and AI solutions explained by outcome.'},{t:'Trust',d:'Proof: case studies, results, verified claims.'},{t:'Enquire',d:'One clear form to book a demo.'}];
 export const FLOW_CAP: Step[]=[{t:'Customer need',d:'Alert, call, support or booking.'},{t:'Channel',d:'SMS, voice, WhatsApp, email or push.'},{t:'Automation',d:'Bots and agents handle the routine work.'},{t:'Integration',d:'APIs connect CRM and internal systems.'},{t:'Outcome',d:'Faster response, one coordinated journey.'}];
-export const FLOW_AI: Step[]=[{t:'Pick a use case',d:'Reception, outbound calls, training or governance.'},{t:'Match a solution',d:'Aura AI, Tellco, SLM, TrainExl, Edge AI or ISO 42001.'},{t:'Verify claims',d:'Confirm scope and data needs internally.'},{t:'Deploy',d:'Cloud or on-site, based on latency and data rules.'}];
-export const FLOW_ABOUT: Step[]=[{t:'Company',d:'Communication, AI and engineering partner.'},{t:'Capabilities',d:'Five broad service areas.'},{t:'AI solutions',d:'Six named solutions.'},{t:'Enquiry',d:'Talk to the team.'}];
+export const FLOW_AI: Step[]=[{t:'Pick a use case',d:'Reception, outbound calls, knowledge, training or on-site AI.'},{t:'Match a solution',d:'Aura AI, Tellco, Custom SLM, TrainExl or Edge AI.'},{t:'Verify claims',d:'Confirm scope and data needs internally.'},{t:'Deploy',d:'Cloud or on-site, based on latency and data rules.'}];
+export const FLOW_ABOUT: Step[]=[{t:'Company',d:'Integrated enterprise technology platform.'},{t:'Capabilities',d:'Five capability domains inside the platforms.'},{t:'Platforms',d:'SUTRA, MEDHA and KAVACH on a shared engineering foundation.'},{t:'Enquiry',d:'Talk to the team.'}];
 export const ROADMAP: Step[]=[{t:'Strategy & Content',d:'Positioning, sitemap, approved copy, logos.'},{t:'UI & Development',d:'Components, routing, responsive layouts.'},{t:'Integration',d:'Forms, backend/API, CRM/email, analytics.'},{t:'QA & Launch',d:'Route, form, mobile, accessibility, SEO, performance tests.'},{t:'Optimization',d:'Analytics review, content and conversion improvements.'}];
 export const FLOW_CONTACT: Step[]=[{t:'Fill the form',d:'Name, email, interest.'},{t:'Validate',d:'Checked in browser, then on the server.'},{t:'Backend / CRM',d:'Enquiry is stored and routed.'},{t:'Confirmation',d:'Visitor sees success or a clear error.'}];
 
@@ -127,7 +127,8 @@ export const THEMES = [
  {t:'Reliable communication',d:'Messages, OTPs and calls that reach customers on the channel they actually use.'},
  {t:'Intelligent automation',d:'AI agents and bots that handle routine conversations, bookings and follow-ups.'},
  {t:'Digital engineering',d:'Custom software, apps and cloud systems that connect everything together.'}];
-export interface Product { name:string; text:string; flow:Step[]; deploy:string; integ:string; note?:string; what?:string; why?:string; how?:string; who?:string[]; benefit?:string; }
+export type ProductVisual='aura'|'tellco'|'slm'|'trainexl'|'edge';
+export interface Product { name:string; text:string; flow:Step[]; deploy:string; integ:string; note?:string; what?:string; why?:string; how?:string; who?:string[]; benefit?:string; tagline?:string; caps?:string[]; visual?:ProductVisual; }
 const TBC='To be confirmed with the product team before publishing.';
 const W=(a:string,b:string,c:string,e:string):Step[]=>[{t:a,d:''},{t:b,d:''},{t:c,d:''},{t:e,d:''}];
 export const PRODUCTS: Product[] = [
@@ -135,8 +136,7 @@ export const PRODUCTS: Product[] = [
  {name:'Tellco',text:AI_SOLUTIONS[1].text,flow:W('Campaign list','Predictive dialing','Qualify lead or book appointment','Follow-up'),deploy:TBC,integ:TBC},
  {name:'Custom SLM',text:AI_SOLUTIONS[2].text+' Example: an internal assistant that explains approved company procedures to employees.',flow:W('Domain documents','Model built for your workflow','Employees ask questions','Answers from approved procedures'),deploy:TBC,integ:TBC},
  {name:'TrainExl',text:AI_SOLUTIONS[3].text,flow:W('SOPs and manuals','Converted to microlearning','Learners complete modules','Review and update'),deploy:TBC,integ:TBC},
- {name:'Edge AI',text:AI_SOLUTIONS[4].text,flow:W('Site or device','AI runs locally','Instant result','Data stays on-premise'),deploy:'On-premise or on-device, including offline environments.',integ:TBC},
- {name:'ISO 42001 AI Readiness',text:AI_SOLUTIONS[5].text,flow:W('Assess AI governance','Identify risks','Define controls','Prepare for certification'),deploy:'Advisory and assessment service.',integ:'Not applicable.',note:'Readiness does not mean the company is certified. Certification is established separately.'}];
+ {name:'Edge AI',text:AI_SOLUTIONS[4].text,flow:W('Site or device','AI runs locally','Instant result','Data stays on-premise'),deploy:'On-premise or on-device, including offline environments.',integ:TBC}];
 export const INTEGRATIONS: Item[] = [
  {name:'Communication channels',text:'SMS, WhatsApp, voice, email, RCS and push notifications, orchestrated from one place.'},
  {name:'Business systems and data',text:'Customer data, CRM and internal systems connected through APIs. Specific connectors are confirmed per project.'},
@@ -180,59 +180,75 @@ const PRODUCT_INFO:Record<string,Partial<Product>>={
   why:'Some data cannot leave the premises, and some sites have weak or no connectivity.',
   how:'The AI runs on your site or on the device itself and gives results instantly, and the data stays on-premise.',
   who:['Healthcare','Government','BFSI','Remote sites'],
-  benefit:'AI that works where cloud AI cannot, with data kept under your control.'},
- 'ISO 42001 AI Readiness':{
-  what:'An advisory service that reviews how your organisation governs AI and prepares you for ISO 42001 certification.',
-  why:'As AI use grows, regulators and customers ask how it is governed, and unmanaged AI creates risk.',
-  how:'We assess your AI governance, identify risks, define controls and prepare you for certification.',
-  who:['BFSI','Healthcare','Government','Telecom'],
-  benefit:'A clear view of your AI risks and a practical path towards certification.'}};
+  benefit:'AI that works where cloud AI cannot, with data kept under your control.'}};
 PRODUCTS.forEach(p=>Object.assign(p,PRODUCT_INFO[p.name]));
 
-/* ===== Platform architecture: SUTRA · MEDHA · KAVACH ===== */
-export type PlatformSlug = 'sutra' | 'medha' | 'kavach';
-/** An offering that makes up a platform. `from` marks a cross-layer item delivered through another platform. */
-export interface PlatformPart { name: string; text: string; link: string; from?: string; }
-export interface Platform {
-  slug: PlatformSlug; name: string; hi: string; area: string; layer: string; descriptor: string; short: string;
-  blurb: string; tagline: string; meaning: string; statement: string; tech: string[];
-  color: string; light: string; tint: string; includes: PlatformPart[];
-}
-const capPart = (n: string): PlatformPart => { const c = CAPABILITIES.find(x => x.name === n)!; return { name: c.name, text: c.text, link: '/capabilities' }; };
-const aiPart = (n: string): PlatformPart => { const a = AI_SOLUTIONS.find(x => x.name === n)!; return { name: a.name, text: a.text, link: '/ai-solutions' }; };
-export const PLATFORMS: Platform[] = [
-  {
-    slug: 'sutra', name: 'SUTRA', hi: 'सूत्र', area: 'Communication', layer: 'The Communication Layer',
-    descriptor: 'Omnichannel Communication Fabric', short: 'Communication Fabric', blurb: 'Unified customer connectivity.', tagline: 'Connect everything.',
-    meaning: 'Sutra means a thread or connecting principle. It represents the digital threads that connect businesses, customers, systems and communication channels.',
-    statement: 'One unified fabric connecting every customer interaction across messaging, voice and digital channels.',
-    tech: ['SMS', 'RCS', 'WhatsApp', 'Email', 'Voice', 'Telephony', 'IVR', 'APIs'],
-    color: '#e64a19', light: '#ff8a65', tint: '#fff1eb',
-    includes: [capPart('Communication Infrastructure'), capPart('Voice & Telephony'), capPart('Omnichannel Engagement Platform')]
-  },
-  {
-    slug: 'medha', name: 'MEDHA', hi: 'मेधा', area: 'Artificial Intelligence', layer: 'The Intelligence Layer',
-    descriptor: 'Enterprise Intelligence & Automation Engine', short: 'Intelligence Engine', blurb: 'Intelligent business automation.', tagline: 'Make everything intelligent.',
-    meaning: 'Medha means intelligence, intellect and wisdom. It represents the ability to understand information, make decisions and execute intelligent workflows.',
-    statement: 'Turning conversations, business data and processes into intelligent decisions and automated actions.',
-    tech: ['Conversational AI', 'LLMs', 'SLMs', 'AI Agents', 'NLP', 'Edge AI', 'Intelligent Workflows'],
-    color: '#673ab7', light: '#b39ddb', tint: '#f3edfc',
-    includes: [capPart('Conversational AI & Automation'), aiPart('Aura AI'), aiPart('Tellco'), aiPart('Custom SLM'), aiPart('TrainExl'), aiPart('Edge AI')]
-  },
-  {
-    slug: 'kavach', name: 'KAVACH', hi: 'कवच', area: 'Compliance & Security', layer: 'The Trust Layer',
-    descriptor: 'Digital Trust, Security & Compliance Fabric', short: 'Trust Fabric', blurb: 'Secure and responsible technology.', tagline: 'Protect everything.',
-    meaning: 'Kavach means shield or protective armour. It represents the protection of enterprise data, digital infrastructure, AI systems and customer privacy.',
-    statement: 'Embedding trust, privacy, security and responsible governance into every digital interaction and business process.',
-    tech: ['DPDP', 'AI Security', 'Cybersecurity', 'Data Privacy', 'Encryption', 'Access Governance', 'ISO 42001'],
-    color: '#00897b', light: '#4db6ac', tint: '#e6f5f3',
-    includes: [
-      aiPart('ISO 42001 AI Readiness'),
-      { name: 'DLT-compliant messaging', text: 'Bulk SMS and notifications sent in line with telecom DLT rules, so high-volume communication stays compliant.', link: '/capabilities', from: 'Communication Infrastructure' },
-      { name: 'On-premise Edge AI', text: 'AI that runs on your own site or device, so sensitive data stays under your control.', link: '/ai-solutions', from: 'Edge AI' }
-    ]
-  }
+/* ===== Product showcase details (MEDHA) ===== */
+const PRODUCT_SHOWCASE: Record<string, Pick<Product, 'tagline' | 'caps' | 'visual'>> = {
+  'Aura AI': { visual: 'aura', tagline: 'A face and a voice for your front desk',
+    caps: ['AI Voice Assistants', 'Conversational Avatars', 'Visual AI Interaction', 'Virtual Front Desks', 'Voice-Based Customer Support', 'Interactive AI Experiences'] },
+  'Tellco': { visual: 'tellco', tagline: 'Outreach that never forgets a follow-up',
+    caps: ['AI-Powered Outbound Calling', 'Predictive Dialing', 'Lead Qualification', 'Appointment Booking', 'Automated Follow-Ups', 'Customer Outreach Automation'] },
+  'Custom SLM': { visual: 'slm', tagline: 'A language model that knows your business',
+    caps: ['Small Language Models', 'Domain-Specific AI Models', 'Enterprise Knowledge Models', 'Specialised AI Responses', 'Private Domain Knowledge Processing'] },
+  'TrainExl': { visual: 'trainexl', tagline: 'Turn manuals into learning people finish',
+    caps: ['AI-Based Employee Training', 'SOP-Based Learning', 'Document-to-Learning Conversion', 'Interactive Microlearning', 'Knowledge Assessment', 'Training Automation'] },
+  'Edge AI': { visual: 'edge', tagline: 'AI that runs where your data lives',
+    caps: ['On-Device AI', 'On-Premise AI', 'Local AI Processing', 'Offline AI Capabilities', 'Low-Latency AI Applications', 'Data Locality'] }
+};
+PRODUCTS.forEach(p => Object.assign(p, PRODUCT_SHOWCASE[p.name]));
+
+/* ===== Industry detail: challenges, platforms and an example workflow ===== */
+export type PlatformKey = 'sutra' | 'medha' | 'kavach';
+export interface IndustryDetail { challenges: string[]; platforms: PlatformKey[]; engineering?: boolean; workflow: string[]; }
+const INDUSTRY_DETAIL: Record<string, IndustryDetail> = {
+  'BFSI': { platforms: ['sutra', 'medha', 'kavach'],
+    challenges: ['OTPs and alerts must arrive in seconds', 'Missed reminders cost trust and revenue', 'Strict security and DLT messaging rules'],
+    workflow: ['A transaction triggers a DLT-compliant SMS, OTP or RCS alert', 'WhatsApp automation answers routine service queries', 'IVR and outbound calls handle verification and reminders', 'Tellco automates follow-ups; staff ask a Custom SLM about approved procedures'] },
+  'Healthcare': { platforms: ['sutra', 'medha', 'kavach'],
+    challenges: ['Busy front desks and long call queues', 'No-shows waste clinical time', 'Patient data that must stay on site'],
+    workflow: ['A patient books through Aura AI’s virtual front desk', 'Tellco confirms the appointment and schedules follow-ups', 'WhatsApp and SMS reminders reduce missed visits', 'Edge AI keeps sensitive processing on-premise'] },
+  'Education': { platforms: ['sutra', 'medha'],
+    challenges: ['Admission enquiries arrive in bursts', 'Notices must reach every parent', 'Policies and SOPs are rarely read in full'],
+    workflow: ['Tellco captures and qualifies the admission enquiry', 'Notices and fee reminders go out by SMS and WhatsApp', 'Aura AI answers counselling questions', 'TrainExl turns staff SOPs into microlearning'] },
+  'Ecommerce & Retail': { platforms: ['sutra', 'medha'], engineering: true,
+    challenges: ['“Where is my order” tickets grow with every sale', 'Customers expect updates on their preferred channel', 'Repeat customers matter more than new ones'],
+    workflow: ['An order event triggers the right message on the right channel', 'WhatsApp and voice bots answer common questions', 'Sentiment analysis flags unhappy customers for a person', 'APIs keep order and CRM systems in sync'] },
+  'Real Estate': { platforms: ['sutra', 'medha'],
+    challenges: ['Leads go cold within hours', 'Sales time lost on buyers who are not ready', 'Campaign response is hard to track'],
+    workflow: ['A new lead calls a campaign-specific number', 'Tellco calls back, qualifies and books a site visit', 'WhatsApp shares project details and reminders', 'The sales team follows up with qualified buyers'] },
+  'Logistics & Delivery': { platforms: ['sutra'], engineering: true,
+    challenges: ['Failed deliveries are expensive', '“Where is my parcel” calls flood support', 'Tracking systems rarely talk to messaging'],
+    workflow: ['Each shipment stage triggers SMS and WhatsApp alerts', 'Outbound calls and IVR confirm address and delivery slot', 'APIs connect tracking and dispatch systems', 'Exceptions route to the operations team'] },
+  'Government': { platforms: ['sutra', 'medha', 'kavach'],
+    challenges: ['Large, multilingual populations to reach', 'Helplines that must scale on demand', 'Strict data handling and AI governance rules'],
+    workflow: ['Citizen notices go out through bulk messaging and IVR', 'Multilingual voice and WhatsApp bots answer routine queries', 'Edge AI keeps processing on-premise', 'ISO 42001 readiness and TrainExl support governance and staff training'] },
+  'Telecom': { platforms: ['sutra', 'medha'], engineering: true,
+    challenges: ['Huge call and message volumes', 'Customers expect quick resolution on any channel', 'Legacy platforms slow down change'],
+    workflow: ['Cloud telephony and IVR route and automate calls', 'Messaging APIs deliver notifications at scale', 'A Custom SLM powers a telecom-specific assistant', 'Digital engineering modernises the platforms underneath'] }
+};
+export const INDUSTRY_VIEW = INDUSTRIES.map(i => ({
+  ...i, ...INDUSTRY_DETAIL[i.name],
+  products: (i.uses || []).filter(u => PRODUCTS.some(p => p.name === u))
+}));
+export type IndustryView = typeof INDUSTRY_VIEW[number];
+
+/* ===== Integration architecture (generic categories only: specific connectors are confirmed per project) ===== */
+export const INTEGRATION_GROUPS = [
+  { key: 'channels', name: 'Communication channels', text: 'Every customer touchpoint, sent and received through SUTRA.', items: ['SMS', 'WhatsApp', 'RCS', 'Email', 'Voice', 'Push'] },
+  { key: 'crm', name: 'CRM & enterprise systems', text: 'Customer records and business events that trigger journeys.', items: ['CRM', 'ERP', 'Helpdesk', 'Order management'] },
+  { key: 'apis', name: 'APIs', text: 'Standard interfaces to send, receive and automate.', items: ['REST APIs', 'Webhooks', 'Messaging APIs'] },
+  { key: 'agents', name: 'AI agents', text: 'MEDHA products that act on conversations and data.', items: ['Aura AI', 'Tellco', 'Custom SLM', 'TrainExl', 'Edge AI'] },
+  { key: 'cloud', name: 'Cloud infrastructure', text: 'Where the platforms run, chosen around data rules.', items: ['Public cloud', 'Private cloud', 'On-premise'] },
+  { key: 'apps', name: 'Internal business apps', text: 'Your own portals, tools and dashboards.', items: ['Custom apps', 'Portals', 'Dashboards'] }
 ];
-export const platformBySlug = (s: string | null | undefined) => PLATFORMS.find(p => p.slug === s);
-/** Platforms that apply to an industry, based on the capabilities and solutions it uses. */
-export const platformsForIndustry = (i: Item) => PLATFORMS.filter(p => (i.uses || []).some(u => p.includes.some(x => x.name === u || x.from === u)));
+
+/* ===== Why Inbox Media ===== */
+export const WHY = [
+  { t: 'Enterprise technology expertise', d: 'Serving enterprises since 2009, from telecom infrastructure to AI.' },
+  { t: 'Integrated communication infrastructure', d: 'SMS, voice, WhatsApp, RCS and email on one fabric: SUTRA.' },
+  { t: 'Intelligent automation', d: 'Five AI products and custom automation in MEDHA.' },
+  { t: 'Digital trust & security', d: 'Privacy, security and AI governance through KAVACH.' },
+  { t: 'Scalable engineering', d: 'Software, APIs, cloud and DevOps under every platform.' },
+  { t: 'Industry-focused solutions', d: 'Configured for BFSI, healthcare, government and five more sectors.' }
+];
