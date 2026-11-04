@@ -29,7 +29,7 @@ const LOGO = 'https://inboxmedia.in/wp-content/themes/wpinboxmedia/images/logo-w
   <a routerLink="/" class="brand" aria-label="Inbox Media home">@if (logoOk()) { <img [src]="logo" alt="Inbox Media" height="38" (error)="logoOk.set(false)"> } @else { Inbox Media }</a>
   <nav class="menu" aria-label="Main">
     <div class="dd"><a routerLink="/" routerLinkActive="on" [routerLinkActiveOptions]="{exact:true}">Home</a></div>
-    <div class="dd"><a routerLink="/platforms" [class.on]="section() === 'platforms'" aria-haspopup="true">Platforms<svg class="chev" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg></a>
+    <div class="dd static"><a routerLink="/platforms" [class.on]="section() === 'platforms'" aria-haspopup="true">Platforms<svg class="chev" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg></a>
       <div class="panel mega">
         @for (p of plats; track p.slug) {
           <a class="mcol" [routerLink]="['/platforms', p.slug]" routerLinkActive="on" [style.--c]="'var(--' + p.slug + ')'" [style.--t]="'var(--' + p.slug + '-tint)'">

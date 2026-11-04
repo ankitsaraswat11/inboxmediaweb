@@ -5,7 +5,8 @@
    ===================================================================== */
 
 /* ---------- announcement bar (scrolls away; the header below stays) ---------- */
-.ann { background: var(--night-3); color: var(--fg); font-size: .9rem; border-bottom: 1px solid var(--border) }
+.ann { background: linear-gradient(90deg, #EEF0FF, #FCEFF6 50%, #ECF7FF); color: var(--fg); font-size: .9rem; border-bottom: 1px solid var(--border) }
+:root[data-theme="dark"] .ann { background: linear-gradient(90deg, #0E1238, #1A1031 50%, #0B1A33) }
 .ann .wrap { display: flex; align-items: center; justify-content: center; gap: .4rem 1rem; flex-wrap: wrap; min-height: 42px; padding: .45rem 2.4rem; position: relative; text-align: center }
 .ann p { margin: 0; color: var(--fg-2); max-width: none }
 .ann b { color: var(--fg); font-weight: 600 }
@@ -16,32 +17,41 @@
 .ann .x:hover { background: color-mix(in srgb, var(--fg) 8%, transparent); color: var(--fg) }
 .ann .x svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round }
 
-/* ---------- header ---------- */
-.hdr { position: sticky; top: 0; z-index: 60 }
-.nav { background: color-mix(in srgb, var(--night) 90%, transparent); backdrop-filter: saturate(160%) blur(16px); -webkit-backdrop-filter: saturate(160%) blur(16px); border-bottom: 1px solid var(--border); transition: box-shadow .3s, background .3s }
-.nav.sc { background: color-mix(in srgb, var(--night) 96%, transparent); box-shadow: var(--hdr-shadow) }
+/* ---------- header: floating glass bar that overlays the first section ---------- */
+:root { --hdr-top: 14px; --hdr-space: calc(var(--nh) + var(--hdr-top) * 2) }
+.hdr { position: sticky; top: 0; z-index: 60; padding: var(--hdr-top) var(--gut) 0; height: var(--hdr-space); margin-bottom: calc(var(--hdr-space) * -1); pointer-events: none }
+.nav { pointer-events: auto; width: min(1320px, 100%); margin-inline: auto; border-radius: 16px; background: var(--hdr-bg); backdrop-filter: saturate(180%) blur(22px); -webkit-backdrop-filter: saturate(180%) blur(22px); border: 1px solid color-mix(in srgb, var(--border) 80%, transparent); transition: box-shadow .4s, background .4s, transform .5s var(--ease-out) }
+.nav.sc { box-shadow: var(--hdr-shadow); background: color-mix(in srgb, var(--hdr-bg) 100%, var(--bg) 20%) }
+.nav > .wrap.row { width: 100%; padding: 0 clamp(14px, 2vw, 28px) }
+/* the first section of every page extends under the floating header */
+main > * > section:first-child { border-top: var(--hdr-space) solid transparent; background-origin: border-box !important }
 .row { display: flex; align-items: center; gap: 1rem; height: var(--nh) }
-.brand { display: flex; align-items: center; color: var(--fg); text-decoration: none; font: 650 1.25rem var(--font-display); letter-spacing: -.02em; flex-shrink: 0 }
-.brand img { height: 38px; width: auto; filter: var(--logo-filter) }
+.brand { display: flex; align-items: center; color: var(--fg); text-decoration: none; font: 650 1.25rem var(--font-body); letter-spacing: -.02em; flex-shrink: 0 }
+.brand img { height: 36px; width: auto; filter: var(--logo-filter) }
 
-.menu { display: flex; align-items: stretch; height: 100%; margin-left: 1.6rem; gap: .15rem }
+.menu { display: flex; align-items: stretch; height: 100%; margin-left: auto; gap: .1rem }
 .dd { position: relative; display: flex; align-items: center }
-.dd > a { position: relative; display: flex; align-items: center; gap: .35rem; height: 100%; padding: 0 .75rem; color: var(--fg-2); text-decoration: none; font-weight: 500; font-size: .95rem; white-space: nowrap; transition: color .2s }
-.dd > a::after { content: ""; position: absolute; left: 50%; bottom: 14px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--accent); transform: scale(0); transition: transform .25s var(--ease) }
+.dd > a { position: relative; display: flex; align-items: center; gap: .35rem; height: 100%; padding: 0 .8rem; color: var(--fg); text-decoration: none; font-weight: 500; font-size: 1rem; white-space: nowrap; transition: color .2s }
+.dd > a::after { content: ""; position: absolute; left: .8rem; right: .8rem; bottom: 18px; height: 1.5px; border-radius: 2px; background: var(--primary); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease) }
+.dd > a:hover::after { transform: scaleX(1) }
 .dd > a:hover, .dd:focus-within > a, .dd:hover > a { color: var(--fg) }
 .dd > a.on { color: var(--fg) }
-.dd > a.on::after { transform: scale(1) }
+.dd > a.on::after { transform: scaleX(1) }
 .dd > a .chev { width: 10px; height: 10px; fill: none; stroke: currentColor; stroke-width: 2; transition: transform .2s; opacity: .7 }
 .dd:hover > a .chev, .dd:focus-within > a .chev { transform: rotate(180deg) }
 
-.panel { position: absolute; top: calc(100% - 4px); left: 0; min-width: 260px; background: var(--night-2); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); padding: .5rem; visibility: hidden; opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s var(--ease), visibility .2s; z-index: 5 }
+.panel { position: absolute; top: calc(100% - 6px); backdrop-filter: blur(20px); left: 0; min-width: 260px; background: var(--night-2); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); padding: .5rem; visibility: hidden; opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s var(--ease), visibility .2s; z-index: 5 }
 .dd:hover .panel, .dd:focus-within .panel { visibility: visible; opacity: 1; transform: none }
 .panel a { display: block; padding: .62rem .8rem; border-radius: var(--r-sm); color: var(--fg); text-decoration: none; font-size: .94rem; font-weight: 500 }
 .panel a:hover, .panel a.on { background: color-mix(in srgb, var(--fg) 6%, transparent) }
 .panel a small { display: block; color: var(--fg-2); font-size: .82rem; font-weight: 400; margin-top: .1rem }
 
 /* Platforms mega menu */
-.panel.mega { width: min(940px, calc(100vw - 2 * var(--gut))); padding: .6rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem; left: -1rem }
+.nav { position: relative }
+.dd.static { position: static }
+.panel.mega { top: calc(100% + 8px); left: 50%; transform: translate(-50%, 8px); width: min(960px, calc(100vw - 2 * var(--gut))); padding: .6rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem }
+.dd:hover .panel.mega, .dd:focus-within .panel.mega { transform: translate(-50%, 0) }
+.panel.mega::before { content: ""; position: absolute; left: 0; right: 0; top: -16px; height: 16px }
 .mega a.mcol { position: relative; display: flex; flex-direction: column; gap: .3rem; padding: 1.1rem 1.15rem 1.15rem; border-radius: var(--r); border: 1px solid transparent; overflow: hidden }
 .mega a.mcol::before { content: ""; position: absolute; left: 1.15rem; right: 1.15rem; top: 0; height: 2px; border-radius: 2px; background: var(--c); opacity: .9 }
 .mega a.mcol:hover { background: var(--t); border-color: color-mix(in srgb, var(--c) 30%, transparent) }
@@ -54,8 +64,8 @@
 .mega .mfoot a:hover { color: var(--fg); background: none }
 .mega .mfoot span { font-size: .84rem; color: var(--fg-2) }
 
-.tools { margin-left: auto; display: flex; align-items: center; gap: .6rem }
-.tools .btn { min-height: 42px; padding: .55rem 1.15rem; font-size: .93rem; white-space: nowrap }
+.tools { margin-left: 1rem; display: flex; align-items: center; gap: .6rem }
+.tools .btn { min-height: 50px; padding: .6rem 1.4rem; font-size: 1rem; white-space: nowrap; border-radius: 8px }
 
 /* theme toggle */
 .tt { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border); background: transparent; color: var(--fg); display: grid; place-items: center; cursor: pointer; position: relative; overflow: hidden; flex-shrink: 0; transition: border-color .2s, background .2s }
@@ -71,7 +81,7 @@
 .burger.open span:nth-child(2) { opacity: 0 }
 .burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg) }
 
-.mnav { display: none; border-top: 1px solid var(--border); background: var(--night); max-height: calc(100dvh - var(--nh)); overflow-y: auto; padding: .6rem var(--gut) 1.6rem }
+.mnav { display: none; border-top: 1px solid var(--border); background: transparent; border-radius: 0 0 16px 16px; max-height: calc(100dvh - var(--hdr-space) - 16px); overflow-y: auto; padding: .6rem var(--gut) 1.6rem }
 .mnav > a, .mnav details > summary { display: flex; align-items: center; justify-content: space-between; min-height: 54px; color: var(--fg); text-decoration: none; font-weight: 500; font-size: 1.05rem; border-bottom: 1px solid var(--border); cursor: pointer; list-style: none }
 .mnav details > summary::-webkit-details-marker { display: none }
 .mnav details > summary::after { content: ""; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform .2s; margin-right: 4px; opacity: .7 }
@@ -85,28 +95,32 @@
 .msubl a { padding: .6rem .95rem; color: var(--fg-2); text-decoration: none; font-weight: 500 }
 .mnav .btn { width: 100%; margin-top: 1.2rem }
 
-/* ---------- footer ---------- */
-footer.site { position: relative; background: radial-gradient(50% 70% at 100% 0%, var(--glow-1), transparent 60%), radial-gradient(40% 70% at 0% 100%, var(--glow-2), transparent 60%), var(--night); color: var(--fg-2); padding: clamp(3.5rem, 7vw, 5.5rem) 0 1.6rem; font-size: .95rem }
-.fg { display: grid; gap: 2.2rem; grid-template-columns: 1.6fr 1fr 1fr 1fr 1.3fr }
-footer.site h4 { font-size: .95rem; font-weight: 600; color: var(--fg); margin: 0 0 1rem; letter-spacing: 0 }
-footer.site a { display: block; color: var(--fg-2); text-decoration: none; padding: .26rem 0; transition: color .2s }
-footer.site a:hover { color: var(--fg) }
-footer.site p { color: var(--fg-2); font-size: .94rem }
-footer.site .brand img { height: 38px }
+/* ---------- footer: clean editorial footer ---------- */
+footer.site { position: relative; background: var(--bg); color: var(--fg-2); padding: clamp(3.5rem, 7vw, 6rem) 0 2rem; font-size: .98rem; border-top: 1px solid var(--border) }
+.fg { display: grid; gap: 2.4rem; grid-template-columns: 1.7fr 1fr 1fr 1fr 1.25fr }
+footer.site h4 { font: 600 .8rem var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--fg-3); margin: 0 0 1.2rem }
+footer.site a { display: block; color: var(--fg); text-decoration: none; padding: .32rem 0; transition: color .2s, transform .3s var(--ease) }
+footer.site a:hover { color: var(--primary); transform: translateX(3px) }
+footer.site p { color: var(--fg-2); font-size: .96rem }
+footer.site .brand img { height: 44px }
+footer.site .brand:hover { transform: none }
 .fmark { font: 700 .98rem var(--mark); letter-spacing: .04em; color: var(--c) }
-footer.site .ftag { font-family: var(--font-display); font-weight: 600; color: var(--fg); font-size: 1.25rem; line-height: 1.3; letter-spacing: -.015em; margin: 1.3rem 0 .8rem; max-width: 22ch }
-.fcta { display: inline-flex !important; margin-top: .6rem; padding: .62rem 1.15rem !important; border-radius: 999px; border: 1px solid var(--border-strong); color: var(--fg) !important; font-weight: 600 }
-.fcta:hover { background: color-mix(in srgb, var(--fg) 6%, transparent) }
-.legal { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; border-top: 1px solid var(--border); margin-top: 3rem; padding-top: 1.4rem; font-size: .88rem }
-.soc { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem }
-.soc a { display: inline-block !important; padding: 0 !important }
+footer.site .ftag { font-family: var(--font-serif); font-weight: 400; color: var(--fg); font-size: 1.5rem; line-height: 1.25; letter-spacing: -.01em; margin: 1.4rem 0 .8rem; max-width: 20ch }
+.fcta { display: inline-flex !important; margin-top: .8rem; padding: .7rem 1.3rem !important; border-radius: 8px; background: var(--btn); color: var(--btn-fg) !important; font-weight: 600 }
+.fcta:hover { background: var(--btn-hover); transform: none !important }
+.legal { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; border-top: 1px solid var(--border); margin-top: 3.5rem; padding-top: 1.6rem; font-size: .9rem; color: var(--fg-3) }
+.soc { display: flex; flex-wrap: wrap; gap: .5rem }
+.soc a { display: inline-grid !important; place-items: center; min-width: 40px; height: 40px; padding: 0 .9rem !important; border-radius: 999px; background: var(--lavender); color: var(--fg) !important; font-size: .86rem; font-weight: 600 }
+.soc a:hover { background: var(--primary); color: #fff !important; transform: translateY(-2px) !important }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1240px) {
   .menu, .tools .btn { display: none }
   .burger { display: block }
+  .tools { margin-left: auto }
   .nav.open .mnav { display: block }
-  :root { --nh: 66px }
+  .nav.open { background: var(--bg); box-shadow: var(--shadow-lg) }
+  :root { --nh: 64px; --hdr-top: 10px }
 }
 @media (max-width: 1100px) { .fg { grid-template-columns: 1fr 1fr 1fr } .fg > :first-child { grid-column: 1 / -1 } }
 @media (max-width: 640px) { .fg { grid-template-columns: 1fr 1fr } .ann { font-size: .84rem } }

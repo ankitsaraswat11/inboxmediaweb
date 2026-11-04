@@ -3,14 +3,16 @@
    ===================================================================== */
 *, *::before, *::after { box-sizing: border-box }
 html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nh) + 16px); -webkit-text-size-adjust: 100% }
-body { margin: 0; font: 400 1.0625rem/1.6 var(--font-body); color: var(--fg); background: var(--bg); overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility }
+body { margin: 0; font: 400 1.0625rem/1.6 var(--font-body); font-feature-settings: 'ss01'; color: var(--fg); background: var(--bg); overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility }
 img, svg { max-width: 100%; display: block }
 
-/* Type scale: tight, slightly narrow headlines; calm body copy. */
-h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height: 1.12; letter-spacing: -.02em; margin: 0 0 .5em; color: var(--fg); text-wrap: balance }
-h1 { font-size: clamp(2.6rem, 6vw, 4.9rem); line-height: 1.02; letter-spacing: -.03em; font-stretch: 90%; font-weight: 620 }
-h2 { font-size: clamp(2rem, 3.9vw, 3.15rem); line-height: 1.06; letter-spacing: -.026em; font-stretch: 92%; font-weight: 620; max-width: 22ch }
-h3 { font-size: 1.2rem; letter-spacing: -.012em; line-height: 1.25 }
+/* Type scale: editorial serif headlines (h1, h2), crisp sans for UI headings (h3, h4). */
+h1, h2, h3, h4 { font-family: var(--font-body); font-weight: 600; line-height: 1.15; letter-spacing: -.015em; margin: 0 0 .5em; color: var(--fg); text-wrap: balance }
+h1, h2 { font-family: var(--font-serif); font-weight: 400; letter-spacing: -.012em }
+h1 { font-size: clamp(2.7rem, 6.4vw, 5.4rem); line-height: 1.02 }
+h2 { font-size: clamp(2.1rem, 4.2vw, 3.5rem); line-height: 1.06; max-width: 22ch }
+h1 b, h2 b, h1 strong, h2 strong { font-weight: 700 }
+h3 { font-size: 1.2rem; line-height: 1.28 }
 h4 { font-size: 1rem; letter-spacing: -.005em }
 p { margin: 0 0 1em; max-width: 68ch; color: var(--fg-2) }
 a { color: var(--link) }
@@ -39,13 +41,13 @@ section.s { padding: clamp(64px, 9vw, 120px) 0 }
 @media (max-width: 900px) { .sh { grid-template-columns: 1fr } }
 
 /* Small context label above a page heading (section name) */
-.eyebrow { display: inline-flex; align-items: center; gap: .55rem; font-size: .9rem; font-weight: 600; color: var(--primary); margin: 0 0 1.1rem }
-.eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent) }
+.eyebrow { display: inline-flex; align-items: center; gap: .6rem; font: 600 .76rem/1.2 var(--font-body); letter-spacing: .16em; text-transform: uppercase; color: var(--primary); margin: 0 0 1.3rem }
+.eyebrow::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent) }
 .eyebrow a { color: inherit }
 
 /* ---------- buttons ---------- */
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 48px; padding: .78rem 1.45rem; border-radius: 999px; background: var(--btn); color: var(--btn-fg); text-decoration: none; font: 600 .98rem/1.2 var(--font-body); border: 1px solid transparent; cursor: pointer; transition: background .2s, border-color .2s, color .2s, box-shadow .2s }
-.btn:hover { background: var(--btn-hover) }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 48px; padding: .78rem 1.45rem; border-radius: 10px; background: var(--btn); color: var(--btn-fg); text-decoration: none; font: 600 .98rem/1.2 var(--font-body); border: 1px solid transparent; cursor: pointer; transition: background .2s, border-color .2s, color .2s, box-shadow .2s }
+.btn:hover { background: var(--btn-hover); box-shadow: 0 10px 30px -10px color-mix(in srgb, var(--btn) 70%, transparent) }
 .btn:active { transform: translateY(1px) }
 .btn.ghost { background: transparent; color: var(--fg); border-color: var(--border-strong) }
 .btn.ghost:hover { border-color: var(--fg); background: color-mix(in srgb, var(--fg) 5%, transparent) }
@@ -119,6 +121,21 @@ table { border-collapse: separate; border-spacing: 0; width: 100% }
 th, td { text-align: left; padding: 1rem 1.1rem; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--fg-2) }
 thead th { background: var(--bg-alt); color: var(--fg); font-size: .84rem; font-weight: 600 }
 tbody th { color: var(--fg) }
+
+/* ---------- v2 shared patterns ---------- */
+/* faint vertical rule lines (editorial grid) */
+.ruled { background-image: linear-gradient(90deg, var(--rule) 1px, transparent 1px); background-size: 34px 100%; background-position: center top }
+/* iridescent text */
+.iri-text { background: var(--iri); -webkit-background-clip: text; background-clip: text; color: transparent }
+/* small uppercase label used on pills and diagrams */
+.tag { display: inline-flex; align-items: center; padding: .35rem .7rem; border-radius: 6px; background: color-mix(in srgb, var(--surface) 86%, transparent); border: 1px solid var(--border); font: 600 .72rem/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; color: var(--fg-2); box-shadow: 0 6px 20px -10px rgba(20, 26, 82, .25) }
+/* scroll reveal (driven by the [reveal] directive; falls back to visible) */
+.rv { opacity: 0; transform: translate3d(0, 28px, 0); filter: blur(6px); transition: opacity .9s var(--ease-out), transform .9s var(--ease-out), filter .9s var(--ease-out); transition-delay: var(--d, 0s) }
+.rv.in { opacity: 1; transform: none; filter: none }
+/* arrow icon inside buttons */
+.btn .arr { width: 16px; height: 16px; transition: transform .3s var(--ease) }
+.btn:hover .arr { transform: translateX(3px) }
+.btn.lg { min-height: 58px; padding: 1rem 2rem; font-size: 1.08rem; border-radius: 10px }
 
 @media (max-width: 560px) {
   .btns .btn { width: 100% }
