@@ -3,7 +3,6 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { PlatformArtComponent } from '../components/platform-art.component';
-import { ArchitectureComponent } from '../components/architecture.component';
 import { ProductShowcaseComponent } from '../components/product-showcase.component';
 import { ISO42001, PLATFORMS, TRUST_KINDS, TrustKind, platformBySlug } from '../content/platforms';
 import { ENGINEERING } from '../content/engineering';
@@ -11,7 +10,7 @@ import { INDUSTRY_VIEW } from '../data';
 
 @Component({
   standalone: true,
-  imports: [RouterLink, PlatformArtComponent, ArchitectureComponent, ProductShowcaseComponent],
+  imports: [RouterLink, PlatformArtComponent, ProductShowcaseComponent],
   template: `
   @if (p(); as p) {
   <section class="phero" [style.--c]="'var(--' + p.slug + ')'" [style.--t]="'var(--' + p.slug + '-tint)'">
@@ -91,14 +90,6 @@ import { INDUSTRY_VIEW } from '../data';
       @if (industries().length) {
         <div class="inds"><span>Industries using {{ p.name }}</span>@for (i of industries(); track i.name) { <a class="chip" routerLink="/industries">{{ i.name }}</a> }</div>
       }
-    </div>
-  </section>
-
-  <!-- Architecture -->
-  <section class="s band">
-    <div class="wrap">
-      <div class="sh"><h2>Where {{ p.name }} sits in the architecture</h2><p class="lead">{{ p.name }} is {{ p.layer.toLowerCase() }}. Select any layer to see how they connect.</p></div>
-      <app-architecture [start]="p.slug"/>
     </div>
   </section>
 

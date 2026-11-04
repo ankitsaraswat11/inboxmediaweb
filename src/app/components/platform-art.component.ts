@@ -35,7 +35,7 @@ const MESH = [[196, 150], [196, 190], [196, 230], [196, 270], [244, 170], [244, 
 
 /* ---------- KAVACH: a shield inside protection rings ---------- */
 const K_TAGS: Node[] = [
-  ['Data protection', 220, 88, 'Encryption, consent and lifecycle controls for personal data.'],
+  ['DPDP compliance', 220, 88, 'DPDP Act compliance: consent, encryption and lifecycle controls for personal data.'],
   ['Access control', 372, 205, 'Identity and access management with least privilege.'],
   ['Security monitoring', 220, 322, 'Monitoring and audit logs that produce evidence.'],
   ['AI governance', 68, 205, 'ISO 42001 readiness, AI risk assessment and model oversight.']
@@ -92,7 +92,7 @@ const K_TAGS: Node[] = [
       </svg>
     }
     @case ('kavach') {
-      <svg viewBox="0 0 440 410" role="img" aria-label="KAVACH shield inside protection rings for data, access, monitoring and AI governance">
+      <svg viewBox="0 0 440 410" role="img" aria-label="KAVACH shield inside protection rings for DPDP compliance, access control, security monitoring and AI governance">
         <circle class="rg" cx="220" cy="205" r="70"/>
         <circle class="rg" cx="220" cy="205" r="117"/>
         <circle class="rg dash spin" cx="220" cy="205" r="160"/>

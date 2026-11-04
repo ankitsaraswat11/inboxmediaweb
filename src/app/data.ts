@@ -252,3 +252,14 @@ export const WHY = [
   { t: 'Scalable engineering', d: 'Software, APIs, cloud and DevOps under every platform.' },
   { t: 'Industry-focused solutions', d: 'Configured for BFSI, healthcare, government and five more sectors.' }
 ];
+
+/* ===== Solution finder goals (contact page) =====
+   Shared by the finder and the enquiry form. `interest` must match an option in the form's "Area of interest" list. */
+export interface FinderGoal { key: string; label: string; interest: string; }
+export const FINDER_GOALS: FinderGoal[] = [
+  { key: 'communication', label: 'Customer communication and alerts', interest: 'SUTRA' },
+  { key: 'calls', label: 'Voice calls and follow-ups', interest: 'Voice & Telephony' },
+  { key: 'automation', label: 'Customer support and conversations', interest: 'MEDHA' },
+  { key: 'systems', label: 'Connect or modernise systems', interest: 'Digital Engineering' },
+  { key: 'governance', label: 'Privacy, security and AI governance', interest: 'KAVACH' }
+];

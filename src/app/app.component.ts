@@ -32,7 +32,6 @@ const LOGO = 'https://inboxmedia.in/wp-content/themes/wpinboxmedia/images/logo-w
     </div>
     <div class="dd"><a routerLink="/digital-engineering" routerLinkActive="on">Digital Engineering</a></div>
     <div class="dd"><a routerLink="/industries" routerLinkActive="on">Industries</a></div>
-    <div class="dd"><a routerLink="/integrations" routerLinkActive="on">Integrations</a></div>
     <div class="dd"><a routerLink="/resources" routerLinkActive="on">Resources</a></div>
     <div class="dd"><a routerLink="/about" routerLinkActive="on" aria-haspopup="true">About<svg class="chev" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg></a>
       <div class="panel"><a routerLink="/about" routerLinkActive="on" [routerLinkActiveOptions]="{exact:true}">About Inbox Media</a><a routerLink="/about/why-inbox-media" routerLinkActive="on">Why Inbox Media</a><a routerLink="/about/certifications" routerLinkActive="on">Certifications</a></div>
@@ -52,7 +51,6 @@ const LOGO = 'https://inboxmedia.in/wp-content/themes/wpinboxmedia/images/logo-w
     </details>
     <a routerLink="/digital-engineering" routerLinkActive="on">Digital Engineering</a>
     <a routerLink="/industries" routerLinkActive="on">Industries</a>
-    <a routerLink="/integrations" routerLinkActive="on">Integrations</a>
     <a routerLink="/resources" routerLinkActive="on">Resources</a>
     <details><summary>About</summary><div class="msubl"><a routerLink="/about">About Inbox Media</a><a routerLink="/about/why-inbox-media">Why Inbox Media</a><a routerLink="/about/certifications">Certifications</a></div></details>
     <a routerLink="/contact" routerLinkActive="on">Contact</a>

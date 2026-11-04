@@ -1,0 +1,6 @@
+/* Inbox Media global styles.
+   Organised as: tokens (light/dark theme) → base (type, layout, buttons, shared patterns) → chrome (header, nav, footer).
+   Component-specific styles live inside each Angular component. */
+@import './styles/tokens.css';
+@import './styles/base.css';
+@import './styles/chrome.css';

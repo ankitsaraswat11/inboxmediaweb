@@ -100,8 +100,8 @@ export const PLATFORMS: Platform[] = [
     descriptor: 'Digital Trust, Security & Compliance Fabric', short: 'Trust Fabric', tagline: 'Protect everything.',
     meaning: 'Kavach represents protection, security and safeguarding.',
     positioning: 'KAVACH embeds digital trust, privacy protection, information security and responsible AI governance into enterprise technology environments.',
-    summary: 'Privacy, security and responsible AI governance built into every layer.',
-    highlights: ['DPDP Act', 'Consent Management', 'Encryption', 'Identity & Access', 'Security Monitoring', 'Audit Logs', 'ISO 42001 Readiness', 'AI Governance'],
+    summary: 'DPDP compliance, privacy, security and responsible AI governance built into every layer.',
+    highlights: ['DPDP Compliance', 'Consent Management', 'Encryption', 'Identity & Access', 'Security Monitoring', 'Audit Logs', 'ISO 42001 Readiness', 'AI Governance'],
     groups: [
       { title: 'Data Privacy', text: 'Handle personal data lawfully and transparently, from consent to deletion.',
         items: [

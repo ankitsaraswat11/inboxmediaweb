@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { EcosystemComponent } from '../components/ecosystem.component';
-import { ArchitectureComponent } from '../components/architecture.component';
 import { PLATFORMS, TAGLINE } from '../content/platforms';
 import { ENGINEERING } from '../content/engineering';
 
 /** /platforms: one place to compare SUTRA, MEDHA and KAVACH before choosing one. */
 @Component({
   standalone: true,
-  imports: [RouterLink, EcosystemComponent, ArchitectureComponent],
+  imports: [RouterLink, EcosystemComponent],
   template: `
   <section class="s page-hero">
     <div class="wrap ph">
@@ -37,12 +36,6 @@ import { ENGINEERING } from '../content/engineering';
           </a>
         }
       </div>
-    </div>
-  </section>
-  <section class="s band">
-    <div class="wrap">
-      <div class="sh"><h2>How the platforms connect</h2><p class="lead">KAVACH protects every layer and Digital Engineering connects them. Select a layer to see its role.</p></div>
-      <app-architecture/>
     </div>
   </section>`,
   styles: [`

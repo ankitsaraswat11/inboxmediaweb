@@ -2,10 +2,9 @@ import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, QueryList, Vie
 import { RouterLink } from '@angular/router';
 import { EcosystemComponent } from '../components/ecosystem.component';
 import { PlatformArtComponent } from '../components/platform-art.component';
-import { ProductShowcaseComponent } from '../components/product-showcase.component';
-import { ArchitectureComponent } from '../components/architecture.component';
 import { IndustryExplorerComponent } from '../components/industry-explorer.component';
 import { IntegrationMapComponent } from '../components/integration-map.component';
+import { ArchitectureComponent } from '../components/architecture.component';
 import { PLATFORMS } from '../content/platforms';
 import { ENGINEERING } from '../content/engineering';
 import { FOUNDED, INDUSTRIES, WHY } from '../data';
@@ -19,7 +18,7 @@ const WHY_ICONS = ['M4 20V10l8-6 8 6v10h-5v-6H9v6z', 'M4 12h4l3-7 4 14 3-7h2', '
 
 @Component({
   standalone: true,
-  imports: [RouterLink, EcosystemComponent, PlatformArtComponent, ProductShowcaseComponent, ArchitectureComponent, IndustryExplorerComponent, IntegrationMapComponent],
+  imports: [RouterLink, EcosystemComponent, PlatformArtComponent, ArchitectureComponent, IndustryExplorerComponent, IntegrationMapComponent],
   template: `
 <!-- 1 · HERO -->
 <section class="hero">
@@ -91,16 +90,7 @@ const WHY_ICONS = ['M4 20V10l8-6 8 6v10h-5v-6H9v6z', 'M4 12h4l3-7 4 14 3-7h2', '
   </div>
 </section>
 
-<!-- 4 · FEATURED PRODUCTS -->
-<section class="s" id="products">
-  <div class="wrap">
-    <div class="sh"><h2>Technology That Turns Possibilities into Business Outcomes.</h2>
-      <p class="lead">Five MEDHA products, each built for a different job. Pick one to see what it does and where it fits.</p></div>
-    <app-product-showcase/>
-  </div>
-</section>
-
-<!-- 5 · HOW EVERYTHING CONNECTS -->
+<!-- 4 · HOW EVERYTHING CONNECTS -->
 <section class="s band" id="architecture">
   <div class="wrap">
     <div class="sh"><h2>One Connected Architecture. Multiple Business Outcomes.</h2>
@@ -109,7 +99,7 @@ const WHY_ICONS = ['M4 20V10l8-6 8 6v10h-5v-6H9v6z', 'M4 12h4l3-7 4 14 3-7h2', '
   </div>
 </section>
 
-<!-- 6 · DIGITAL ENGINEERING FOUNDATION -->
+<!-- 5 · DIGITAL ENGINEERING FOUNDATION -->
 <section class="s alt" id="engineering">
   <div class="wrap">
     <div class="sh"><h2>{{ eng.headline }}</h2><p class="lead">{{ eng.positioning }}</p></div>
@@ -132,7 +122,7 @@ const WHY_ICONS = ['M4 20V10l8-6 8 6v10h-5v-6H9v6z', 'M4 12h4l3-7 4 14 3-7h2', '
   </div>
 </section>
 
-<!-- 7 · INDUSTRY SOLUTIONS -->
+<!-- 6 · INDUSTRY SOLUTIONS -->
 <section class="s" id="industries">
   <div class="wrap">
     <div class="sh"><h2>Configured for the Way Your Industry Works.</h2>
@@ -141,7 +131,7 @@ const WHY_ICONS = ['M4 20V10l8-6 8 6v10h-5v-6H9v6z', 'M4 12h4l3-7 4 14 3-7h2', '
   </div>
 </section>
 
-<!-- 8 · INTEGRATIONS -->
+<!-- 7 · INTEGRATIONS -->
 <section class="s alt" id="integrations">
   <div class="wrap">
     <div class="sh"><h2>Connects to the Systems You Already Run.</h2>
@@ -151,7 +141,7 @@ const WHY_ICONS = ['M4 20V10l8-6 8 6v10h-5v-6H9v6z', 'M4 12h4l3-7 4 14 3-7h2', '
   </div>
 </section>
 
-<!-- 9 · WHY INBOX MEDIA -->
+<!-- 8 · WHY INBOX MEDIA -->
 <section class="s" id="why">
   <div class="wrap">
     <div class="sh"><h2>Why Inbox Media</h2>
@@ -171,7 +161,7 @@ const WHY_ICONS = ['M4 20V10l8-6 8 6v10h-5v-6H9v6z', 'M4 12h4l3-7 4 14 3-7h2', '
   </div>
 </section>
 
-<!-- 10 · FINAL CTA -->
+<!-- 9 · FINAL CTA -->
 <section class="s band close">
   <div class="wrap close-in">
     <h2>Let's Build a More Connected, Intelligent and Secure Enterprise.</h2>
@@ -233,7 +223,7 @@ const WHY_ICONS = ['M4 20V10l8-6 8 6v10h-5v-6H9v6z', 'M4 12h4l3-7 4 14 3-7h2', '
 .go:hover{gap:.75rem}
 .pc-art{width:100%;max-width:470px;justify-self:center}
 @media(min-width:1001px) and (min-height:820px){.pc{position:sticky;top:calc(var(--nh) + 16px + var(--i) * 16px)}}
-/* 6 engineering */
+/* 5 engineering */
 .found{display:grid;gap:0}
 .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
 .pillar{position:relative;display:grid;gap:.4rem;padding:1.2rem 1.3rem 1.6rem;background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--c);border-radius:var(--r-lg) var(--r-lg) 0 0;text-decoration:none;transition:transform .2s}
@@ -251,7 +241,7 @@ const WHY_ICONS = ['M4 20V10l8-6 8 6v10h-5v-6H9v6z', 'M4 12h4l3-7 4 14 3-7h2', '
 .area ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.4rem}
 .area li{font-size:.9rem;color:var(--fg);padding:.4rem .6rem;border-radius:8px;background:var(--surface);border:1px solid var(--border)}
 .btns.center{justify-content:center;margin-top:2rem}
-/* 9 why */
+/* 8 why */
 .why{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;background:var(--surface)}
 .w{padding:1.5rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
 .w:nth-child(3n){border-right:0}.w:nth-last-child(-n+3){border-bottom:0}
@@ -264,7 +254,7 @@ const WHY_ICONS = ['M4 20V10l8-6 8 6v10h-5v-6H9v6z', 'M4 12h4l3-7 4 14 3-7h2', '
 .pf span{font-size:.84rem;color:var(--fg-2)}
 .pf.cert{gap:.4rem;justify-items:start}.pf.cert .text-link{font-size:.86rem}
 .evid{margin:1.2rem 0 0;font-size:.88rem}
-/* 10 close */
+/* 9 close */
 .close-in{text-align:center;display:grid;justify-items:center}
 .close h2{max-width:22ch;margin-bottom:1rem;font-size:clamp(1.9rem,4vw,3.2rem)}
 .close .lead{max-width:60ch;margin:0 auto 1.8rem}

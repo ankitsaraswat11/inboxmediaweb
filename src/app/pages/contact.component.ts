@@ -3,15 +3,15 @@ import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { FlowComponent } from '../components/flow.component';
-import { CAPABILITIES, AI_SOLUTIONS, FLOW_CONTACT } from '../data';
+import { CAPABILITIES, AI_SOLUTIONS, FLOW_CONTACT, FINDER_GOALS, INDUSTRIES } from '../data';
 import { PLATFORMS, ISO42001 } from '../content/platforms';
-import { SolutionFinderComponent } from '../components/solution-finder.component';
+import { FinderChoice, SolutionFinderComponent } from '../components/solution-finder.component';
 // TODO: point to the real enquiry endpoint (CRM or existing backend) once confirmed.
 export const ENQUIRY_ENDPOINT = '/api/enquiry';
 type K='demo'|'proposal'|'message';
 @Component({standalone:true,imports:[ReactiveFormsModule,FlowComponent,SolutionFinderComponent],template:`
 <section class="s page-hero"><div class="wrap"><p class="eyebrow">Contact</p><h1>Talk to Inbox Media</h1><p class="lead">One short enquiry. We only ask what is relevant to what you need.</p></div></section>
-<section class="s"><div class="wrap narrow">
+<section class="s"><div class="wrap narrow" id="enquiry">
 @if(!type()){<h2>What do you need?</h2><div class="opts">@for(o of opts;track o.k){<button type="button" class="opt" (click)="pick(o.k)"><h3>{{o.t}}</h3><p>{{o.d}}</p></button>}</div>}
 @else{<p><button type="button" class="lnk" (click)="type.set(null)">Change request type</button> &middot; <strong>{{label()}}</strong></p>
 <form [formGroup]="f" (ngSubmit)="send()" novalidate>
@@ -19,6 +19,8 @@ type K='demo'|'proposal'|'message';
 <label>Work email<input formControlName="email" type="email" autocomplete="email"></label>@if(bad('email')){<small class="err">Enter a valid email address.</small>}
 @if(type()!=='message'){<label>Phone number<input formControlName="phone" type="tel" autocomplete="tel"></label>
 <label>Company @if(type()==='proposal'){<span>(required)</span>}<input formControlName="company" autocomplete="organization"></label>@if(bad('company')){<small class="err">Enter your company name.</small>}
+<label>Industry<select formControlName="industry"><option value="">Select one</option>@for(o of industries;track o){<option [value]="o">{{o}}</option>}</select></label>
+<label>What do you want to improve?<select formControlName="goal"><option value="">Select one</option>@for(g of goals;track g.key){<option [value]="g.label">{{g.label}}</option>}</select></label>
 <label>Area of interest<select formControlName="interest"><option value="">Select one</option>@for(o of interests;track o){<option [value]="o">{{o}}</option>}</select></label>@if(bad('interest')){<small class="err">Choose an area of interest.</small>}}
 @if(type()==='demo'){<label>Preferred date (optional)<input type="date" formControlName="date"></label>}
 @if(type()!=='demo'){<label>{{type()==='proposal'?'Your requirements':'Message'}}<textarea formControlName="message" rows="5"></textarea></label>@if(bad('message')){<small class="err">Tell us a little more.</small>}}
@@ -28,17 +30,24 @@ type K='demo'|'proposal'|'message';
 <p role="status" aria-live="polite">@if(status()==='ok'){Thanks. Your enquiry was received.}@if(status()==='fail'){We could not send your enquiry. Please try again or email info&#64;inboxmedia.in.}</p></form>}
 </div></section>
 <section class="s tint"><div class="wrap"><h2>What happens after you submit</h2><app-flow [steps]="flow" label="Enquiry flow"/></div></section>
-<app-solution-finder></app-solution-finder>`,
+<app-solution-finder (discuss)="useFinder($event)"></app-solution-finder>`,
 styles:[`.narrow{max-width:720px}.opts{display:grid;gap:1rem}.opt{text-align:left;background:var(--surface);color:var(--fg);border:1px solid var(--border);border-radius:var(--r-lg);padding:1.2rem 1.4rem;cursor:pointer;font:inherit;transition:border-color .2s,transform .2s;box-shadow:var(--shadow)}.opt:hover,.opt:focus-visible{border-color:var(--primary);transform:translateY(-2px)}.opt p{margin:0}
 form{display:grid;gap:.9rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:clamp(1rem,3vw,2rem);box-shadow:var(--shadow)}label{display:grid;gap:.3rem;font-weight:600}label span{font-weight:400;color:var(--mute)}.chk{display:flex;gap:.6rem;align-items:center;font-weight:400}.chk input{min-height:auto;width:20px;height:20px}
 .err{color:var(--err)}.hp{position:absolute;left:-9999px;opacity:0;height:0}.lnk{background:none;border:0;color:var(--link);cursor:pointer;font:inherit;padding:0;text-decoration:underline}`]})
 export class ContactComponent{
  private fb=inject(FormBuilder);private http=inject(HttpClient);status=signal<'idle'|'sending'|'ok'|'fail'>('idle');type=signal<K|null>(null);flow=FLOW_CONTACT;
  opts:{k:K;t:string;d:string}[]=[{k:'demo',t:'Book a demo',d:'See a product or capability in action.'},{k:'proposal',t:'Request a proposal',d:'Share your requirements and get a scoped response.'},{k:'message',t:'Send a message',d:'A general question or support request.'}];
+ industries=INDUSTRIES.map(i=>i.name);goals=FINDER_GOALS;
  interests=[...PLATFORMS.map(p=>p.name),'Digital Engineering',...CAPABILITIES.map(c=>c.name),...AI_SOLUTIONS.map(a=>a.name),ISO42001.name];
- f=this.fb.nonNullable.group({name:[''],email:[''],phone:[''],company:[''],interest:[''],date:[''],message:[''],consent:[false],website:['']});
+ f=this.fb.nonNullable.group({name:[''],email:[''],phone:[''],company:[''],industry:[''],goal:[''],interest:[''],date:[''],message:[''],consent:[false],website:['']});
  constructor(){inject(ActivatedRoute).queryParamMap.subscribe(p=>{const t=p.get('type');if(t==='demo'||t==='proposal'||t==='message')this.pick(t);
-  const i=p.get('interest');if(i&&this.interests.includes(i))this.f.patchValue({interest:i})})}
+  const i=p.get('interest');if(i&&this.interests.includes(i))this.f.patchValue({interest:i});
+  const ind=p.get('industry'),g=p.get('goal');if(ind||g)this.applyChoice({industry:ind??'',goal:g??''})})}
+ /** "Discuss this recommendation" in the finder: open a proposal request with the finder's selections filled in, then bring the form into view. */
+ useFinder(c:FinderChoice){this.pick('proposal');this.applyChoice(c);
+  setTimeout(()=>{document.getElementById('enquiry')?.scrollIntoView({block:'start'});(document.querySelector('#enquiry [formcontrolname="name"]') as HTMLElement|null)?.focus({preventScroll:true})})}
+ private applyChoice(c:FinderChoice){const g=FINDER_GOALS.find(x=>x.key===c.goal);
+  this.f.patchValue({industry:this.industries.includes(c.industry)?c.industry:'',goal:g?.label??'',...(g&&this.interests.includes(g.interest)?{interest:g.interest}:{})})}
  pick(k:K){this.type.set(k);this.status.set('idle');const R=Validators.required;
   const v=(n:string,x:any[])=>{const c=this.f.get(n)!;c.setValidators(x);c.updateValueAndValidity()};
   v('name',[R]);v('email',[R,Validators.email]);v('consent',[Validators.requiredTrue]);v('company',k==='proposal'?[R]:[]);v('interest',k==='message'?[]:[R]);v('message',k==='demo'?[]:[R])}

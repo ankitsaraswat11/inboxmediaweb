@@ -23,8 +23,8 @@ const LAYERS: Layer[] = [
     trust: 'Evidence collected across the whole journey, not assembled afterwards.', eng: 'Dashboards and analytics on every journey.' }
 ];
 const KAVACH: Layer = { key: 'kavach', name: 'KAVACH', role: 'The Trust Layer, across every layer', color: 'var(--kavach-l)', link: '/platforms/kavach',
-  desc: 'KAVACH is not a final step. Privacy, security and AI governance apply at every layer, from the first integration to the final outcome.',
-  flows: ['Data privacy', 'Information security', 'AI governance', 'Quality management'],
+  desc: 'KAVACH is not a final step. DPDP compliance, privacy, security and AI governance apply at every layer, from the first integration to the final outcome.',
+  flows: ['DPDP compliance', 'Data privacy', 'Information security', 'AI governance', 'Quality management'],
   trust: 'Standards, readiness, advisory and technical controls, each clearly labelled.', eng: 'Secure architecture and modernisation put controls into the systems.' };
 const ENG: Layer = { key: 'eng', name: 'Digital Engineering', role: 'Shared technology foundation', color: 'var(--eng-l)', link: '/digital-engineering',
   desc: 'The engineering foundation that connects the layers: software, APIs, cloud, DevOps and modernisation.',

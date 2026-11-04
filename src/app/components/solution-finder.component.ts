@@ -1,6 +1,9 @@
-import { Component, computed, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { INDUSTRIES } from '../data';
+import { Component, EventEmitter, Output, computed, inject, signal } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { FINDER_GOALS, INDUSTRIES } from '../data';
+
+/** What the visitor picked in the finder. */
+export interface FinderChoice { industry: string; goal: string; }
 
 @Component({
   selector: 'app-solution-finder',
@@ -18,11 +21,7 @@ import { INDUSTRIES } from '../data';
           </label>
           <label>2. What do you want to improve?
             <select [value]="goal()" (change)="goal.set($any($event.target).value)">
-              <option value="communication">Customer communication and alerts</option>
-              <option value="calls">Voice calls and follow-ups</option>
-              <option value="automation">Customer support and conversations</option>
-              <option value="systems">Connect or modernise systems</option>
-              <option value="governance">Privacy, security and AI governance</option>
+              @for (g of goals; track g.key) { <option [value]="g.key">{{ g.label }}</option> }
             </select>
           </label>
           <p class="hint">This is a guided discovery tool, not an automated technical assessment.</p>
@@ -32,14 +31,17 @@ import { INDUSTRIES } from '../data';
           <h3>{{ recommendation().title }}</h3>
           <p>{{ recommendation().detail }}</p>
           <div class="suggestions"><b>Explore</b><span>{{ recommendation().services }}</span></div>
-          <div class="btns"><a class="btn" routerLink="/contact" [queryParams]="{type:'proposal'}">Discuss this recommendation</a><a class="btn ghost" [routerLink]="recommendation().link">{{ recommendation().linkText }}</a></div>
+          <div class="btns"><button type="button" class="btn" (click)="discussThis()">Discuss this recommendation</button><a class="btn ghost" [routerLink]="recommendation().link">{{ recommendation().linkText }}</a></div>
         </article>
       </div>
     </div></section>`,
   styles: [`.finder{background:var(--bg-alt)}.intro{max-width:760px;margin-bottom:1.6rem}.finder-grid{display:grid;grid-template-columns:minmax(260px,.85fr) minmax(300px,1.15fr);gap:1rem;align-items:stretch}.controls,.recommendation{border:1px solid var(--border);border-radius:var(--r-xl);padding:clamp(1rem,2.5vw,1.6rem);background:var(--surface);box-shadow:var(--shadow)}.controls{display:grid;align-content:start;gap:1.1rem}.controls label{display:grid;gap:.5rem;font-weight:650}.controls select{min-height:48px}.hint{font-size:.82rem;margin:0}.recommendation{background:var(--band-bg);color:var(--band-fg);border-color:transparent}.recommendation h3{color:var(--band-fg);font-size:1.55rem;margin:.7rem 0}.recommendation p{color:var(--band-fg-2)}.result-label{color:var(--sutra-l);font-size:.8rem;font-weight:700}.suggestions{border-top:1px solid var(--band-border);padding-top:.9rem;margin:1rem 0;display:grid;gap:.25rem}.suggestions b{font-size:.8rem;color:var(--sutra-l)}.suggestions span{color:var(--band-fg)}.recommendation .btns{margin-top:.4rem}@media(max-width:760px){.finder-grid{grid-template-columns:1fr}}`]
 })
 export class SolutionFinderComponent {
-  industries = INDUSTRIES;
+  industries = INDUSTRIES; goals = FINDER_GOALS;
+  /** Emits the selections. The contact page listens and fills its form; anywhere else the button opens the contact page with them. */
+  @Output() discuss = new EventEmitter<FinderChoice>();
+  private router = inject(Router);
   industry = signal(INDUSTRIES[0].name);
   goal = signal('communication');
   recommendation = computed(() => {
@@ -53,4 +55,9 @@ export class SolutionFinderComponent {
     };
     return choices[this.goal()] ?? choices['communication'];
   });
+  discussThis() {
+    const c: FinderChoice = { industry: this.industry(), goal: this.goal() };
+    if (this.discuss.observed) this.discuss.emit(c);
+    else this.router.navigate(['/contact'], { queryParams: { type: 'proposal', ...c } });
+  }
 }
