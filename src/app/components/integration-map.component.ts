@@ -60,7 +60,7 @@ import { INTEGRATION_GROUPS } from '../data';
   .note-i{font-size:.82rem;margin:1.4rem 0 0;max-width:80ch}
   @keyframes w{from{left:-10px}to{left:100%}}
   @media(max-width:960px){.im{grid-template-columns:1fr 1fr;gap:1rem}.hub{grid-column:1/-1;order:-1}.wire{display:none}}
-  @media(max-width:560px){.im{grid-template-columns:1fr}}
+  @media(max-width:560px){.im{grid-template-columns:minmax(0,1fr)}.cat span{overflow-wrap:anywhere}}
   `]
 })
 export class IntegrationMapComponent {

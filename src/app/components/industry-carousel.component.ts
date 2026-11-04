@@ -80,7 +80,23 @@ blockquote::before{content:"“"}blockquote::after{content:"”"}
 .sl > *{opacity:.35;transition:opacity .6s}
 .sl.on > *{opacity:1}
 @keyframes fillx{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@media(max-width:820px){.tabs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -16px 1.4rem;padding:0 16px}.tabs::-webkit-scrollbar{display:none}.tab{white-space:nowrap;font-size:.95rem;padding:.6rem 1.1rem}.sl{grid-template-columns:1fr}.art{min-height:260px}.copy{padding:0 .4rem .6rem}}
+@media(max-width:820px){
+  .tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;scroll-snap-type:x proximity;margin:0 calc(var(--gut,16px) * -1) 1.2rem;padding:.1rem var(--gut,16px) .3rem}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;min-width:max-content;white-space:nowrap;scroll-snap-align:start;font-size:.95rem;padding:.6rem 1.1rem}
+  .tr{align-items:flex-start}
+  .sl{grid-template-columns:minmax(0,1fr);gap:1.1rem;align-items:start;align-content:start;padding:.8rem}
+  .sl:not(.on){height:0;padding-block:0;overflow:hidden}
+  .art{min-height:220px;padding:1.3rem;border-radius:14px}
+  .ind{font-size:1.1rem}
+  .art h3{font-size:clamp(1.5rem,6.4vw,1.9rem);max-width:none}
+  .copy{padding:0 .3rem .5rem}
+  blockquote{font-size:1.1rem;margin-bottom:1.2rem}
+  .out{font-size:1.02rem}
+  .chips{margin-bottom:1.1rem}
+  .chips .chip{font-size:.9rem}
+  .text-link{font-size:1rem}
+}
 @media(prefers-reduced-motion:reduce){.tab .bar{animation:none;transform:none}}
 `]
 })

@@ -237,7 +237,8 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 .lcs{background-color:var(--bg)}
 
 /* 4 integrations */
-.integ{position:relative;padding:clamp(3rem,6vw,5rem) 0;background-color:var(--bg)}
+.integ{position:relative;overflow-x:clip;padding:clamp(3rem,6vw,5rem) 0;background-color:var(--bg)}
+.integ-in > *{min-width:0}
 .integ-in{display:grid;grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:clamp(1.5rem,4vw,4rem);align-items:center}
 .icard{padding:clamp(1.6rem,3vw,2.6rem);border-radius:24px;background:linear-gradient(170deg,color-mix(in srgb,var(--surface) 92%,transparent),color-mix(in srgb,var(--lavender) 80%,transparent));border:1px solid var(--border);box-shadow:var(--shadow-lg)}
 .icard h2{font-size:clamp(2.4rem,4vw,3.6rem);margin-bottom:.4em}
@@ -247,7 +248,7 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 @keyframes mq{to{transform:translateX(-50%)}}
 .mi{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem .95rem;border-radius:10px;background:var(--surface);border:1px solid var(--border);font:600 .92rem var(--font-body);color:var(--fg);white-space:nowrap}
 .mi i{width:8px;height:8px;border-radius:50%;background:var(--iri);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 10%,transparent)}
-.chipviz{position:relative;height:clamp(380px,46vw,560px)}
+.chipviz{position:relative;overflow:hidden;height:clamp(380px,46vw,560px)}
 .bus{position:absolute;--g:repeating-linear-gradient(var(--dir),transparent 0 6px,#5C86FF 6px 10px,transparent 10px 18px)}
 .bus.v{left:50%;top:-20%;bottom:-20%;width:120px;margin-left:-60px;--dir:90deg;background:var(--g);mask-image:linear-gradient(180deg,transparent,#000 15%,#000 85%,transparent);-webkit-mask-image:linear-gradient(180deg,transparent,#000 15%,#000 85%,transparent)}
 .bus.h{top:50%;left:8%;right:8%;height:120px;margin-top:-60px;--dir:0deg;background:var(--g);mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent);opacity:.85}
@@ -318,7 +319,7 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 
 /* responsive */
 @media(max-width:1000px){
-  .eco-in,.integ-in{grid-template-columns:1fr}
+  .eco-in,.integ-in{grid-template-columns:minmax(0,1fr)}
   .eco .lead{margin-top:1rem}
   .feat,.pg{grid-template-columns:1fr}
   .stats{grid-template-columns:1fr 1fr}.stats > div:nth-child(3){border-left:0}
@@ -327,7 +328,11 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 @media(max-width:700px){
   .hero{min-height:0}
   .fcard{grid-template-columns:1fr}.fc-art{min-height:200px}
-  .chipviz{height:320px}
+  .chipviz{height:300px}
+  .icard{padding:1.4rem 1.2rem;border-radius:20px;min-width:0}
+  .icard h2{font-size:2.1rem}
+  .mq{margin:1.6rem 0 1.4rem}
+  .mi{font-size:.85rem;padding:.5rem .8rem}
   .pc{grid-template-columns:1fr}.th{width:100%;aspect-ratio:2.4}
 }
 @media(prefers-reduced-motion:reduce){.mq-t,.th i,.bus::after,.node,.chip-core svg{animation:none}.ht > span{animation:none}}
