@@ -69,8 +69,7 @@ const SATS: string[][] = [['SMS', 'WhatsApp', 'Voice'], ['AI agents', 'SLMs', 'A
   :host{display:block}
   .eco{position:relative}
   svg{width:100%;height:auto;overflow:visible}
-  .g1{stop-color:var(--primary)}.g2{stop-color:var(--primary-deep)}
-  :host-context([data-theme="dark"]) .g1{stop-color:#8B5CF6}:host-context([data-theme="dark"]) .g2{stop-color:#4C1D95}
+  .g1{stop-color:#8B5CF6}.g2{stop-color:#4C1D95}
   .orbit{fill:none;stroke:var(--border-strong);stroke-dasharray:3 7;transform-origin:280px 236px;animation:spin 60s linear infinite}
   .o2{stroke-opacity:.5;animation-direction:reverse;animation-duration:90s}
   .link{fill:none;stroke:var(--border-strong);stroke-width:1.2;stroke-dasharray:2 6}

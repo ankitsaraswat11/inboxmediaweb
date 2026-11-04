@@ -2,63 +2,85 @@
    THEME TOKENS
    Every colour in the site comes from these tokens. Light is the default;
    [data-theme="dark"] on <html> (set by ThemeService) swaps the palette.
+
+   Design idea: SUTRA means "thread". The site is built like a fabric:
+   "feature surfaces" (header, hero, feature bands, footer) frame quieter
+   content sections, and the three platform colours run through it as
+   threads (saffron SUTRA, violet MEDHA, teal KAVACH).
+   - Light theme: a pink + lavender pastel fabric.
+   - Dark theme:  a deep aubergine night fabric.
+   Feature surfaces read --night / --night-2 / --night-3 and the --glow-*
+   tokens, so they change with the theme like everything else.
    ===================================================================== */
 :root {
-  /* type */
-  --font-display: Sora, Inter, system-ui, sans-serif;
-  --font-body: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --mark: Eczar, Georgia, 'Noto Serif Devanagari', serif; /* platform wordmarks, Latin + Devanagari */
+  /* type: one sans family for everything, Eczar for platform wordmarks (Latin + Devanagari) */
+  --font-display: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mark: Eczar, Georgia, 'Noto Serif Devanagari', serif;
 
   /* layout */
-  --gut: clamp(16px, 3vw, 40px);
-  --nh: 72px;
-  --r-sm: 8px; --r: 12px; --r-lg: 18px; --r-xl: 24px;
+  --gut: clamp(16px, 3.4vw, 48px);
+  --nh: 72px;            /* header height */
+  --r-sm: 8px; --r: 12px; --r-lg: 16px; --r-xl: 22px; --r-2xl: 32px;
+  --ease: cubic-bezier(.2, .8, .2, 1);
 
-  /* ---------- LIGHT: purple & lavender ---------- */
-  --bg: #FFFFFF;
-  --bg-alt: #F4F0FA;          /* secondary background for selected sections */
-  --bg-soft: #F7F4FC;
-  --lavender: #EDE7F6;
-  --surface: #FFFFFF;          /* cards and panels */
-  --surface-2: #FAF8FD;        /* inset areas inside panels */
-  --fg: #211A2E;               /* primary text */
-  --fg-2: #716A7E;             /* secondary text */
-  --border: #E6DFF1;
-  --border-strong: #D3C6EA;
-  --primary: #673AB7;
+  /* ---------- LIGHT: pink + lavender pastel ---------- */
+  --bg: #FFFAFD;                /* blush white */
+  --bg-alt: #FAF5FE;            /* lavender whisper: alternate sections */
+  --bg-soft: #FDF3F8;           /* pink whisper */
+  --lavender: #EEE4FC;
+  --surface: #FFFFFF;
+  --surface-2: #FCF7FD;
+  --fg: #2A1A43;                /* plum ink */
+  --fg-2: #625675;
+  --border: #EEE0F0;
+  --border-strong: #DCC8E7;
+  --primary: #673AB7;           /* Inbox Media violet */
   --primary-deep: #452080;
-  --accent: #8B5CF6;
-  --btn: #673AB7; --btn-hover: #5B2FA6; --btn-fg: #FFFFFF;
+  --accent: #C93F86;            /* pastel theme pink, for small accents and text */
+  --pink: #C93F86; --pink-tint: #FCE6F1;
+  --btn: #673AB7; --btn-hover: #56299F; --btn-fg: #FFFFFF;
   --link: #5B2FA6;
   --focus: #8B5CF6;
-  --glow: rgba(103, 58, 183, .16);
-  --shadow: 0 1px 2px rgba(33, 26, 46, .04), 0 10px 28px rgba(69, 32, 128, .07);
-  --shadow-lg: 0 2px 4px rgba(33, 26, 46, .05), 0 24px 48px rgba(69, 32, 128, .12);
-  --header-bg: rgba(255, 255, 255, .88);
-  --header-border: #EAE3F4;
-  --hero-glow: radial-gradient(60% 70% at 85% 10%, #EDE7F6 0%, rgba(237, 231, 246, 0) 70%), radial-gradient(40% 50% at 0% 100%, #F4F0FA 0%, rgba(244, 240, 250, 0) 70%);
-  --logo-filter: brightness(0) saturate(100%) invert(9%) sepia(19%) saturate(1530%) hue-rotate(226deg) brightness(95%) contrast(95%);
+  --glow: rgba(167, 115, 230, .20);
+  --shadow: 0 1px 2px rgba(42, 26, 67, .04), 0 8px 24px rgba(120, 70, 170, .07);
+  --shadow-lg: 0 2px 6px rgba(42, 26, 67, .06), 0 28px 56px rgba(120, 70, 170, .14);
+  --hero-glow: radial-gradient(60% 70% at 85% 10%, #EEE4FC 0%, rgba(238, 228, 252, 0) 70%);
+  /* the logo file is white: recolour it to plum ink on pastel surfaces */
+  --logo-filter: brightness(0) saturate(100%) invert(10%) sepia(32%) saturate(2400%) hue-rotate(245deg) brightness(92%) contrast(96%);
 
-  /* contrast band (used sparingly: architecture, closing CTA) */
-  --band-bg: radial-gradient(70% 80% at 100% 0%, rgba(139, 92, 246, .45), transparent 60%), linear-gradient(160deg, #2B1554 0%, #3A1C6E 60%, #452080 100%);
-  --band-fg: #FFFFFF;
-  --band-fg-2: #DCD2F2;
-  --band-border: rgba(255, 255, 255, .16);
-  --band-surface: rgba(255, 255, 255, .07);
-  --band-btn: #FFFFFF; --band-btn-fg: #452080; --band-btn-hover: #EDE7F6;
+  /* feature surfaces (header, hero, bands, footer) */
+  --night: #F2E8FC;             /* pastel lavender */
+  --night-2: #FFFFFF;
+  --night-3: #FCE3F0;           /* pastel blush (announcement bar) */
+  --glow-1: rgba(186, 156, 255, .55);   /* lavender bloom */
+  --glow-2: rgba(247, 168, 208, .55);   /* pink bloom */
+  --glow-3: rgba(150, 225, 214, .30);   /* mint, a nod to KAVACH */
+  --hdr-shadow: 0 10px 30px rgba(120, 70, 170, .10);
+  --weave-loose: #8A5CD6; --weave-loose-o: .16;
+  /* thread pattern behind inner-page heroes */
+  --threads: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 520' preserveAspectRatio='xMaxYMid slice' fill='none' stroke-width='1.5' stroke-linecap='round'%3E%3Cpath d='M-20 230C360 270 900 70 1460 120' stroke='%238A5CD6' stroke-opacity='.14'/%3E%3Cpath d='M-20 470C500 480 900 210 1460 400' stroke='%23D0559A' stroke-opacity='.16'/%3E%3Cpath d='M-20 360C260 360 420 150 720 170S1160 360 1460 220' stroke='%23E2703F' stroke-opacity='.62'/%3E%3Cpath d='M-20 400C300 400 480 240 780 250S1180 120 1460 280' stroke='%238B5CF6' stroke-opacity='.6'/%3E%3Cpath d='M-20 440C340 440 540 320 840 310S1220 380 1460 330' stroke='%23149E90' stroke-opacity='.55'/%3E%3Cpath d='M-20 300C420 250 760 430 1460 170' stroke='%23D0559A' stroke-opacity='.18'/%3E%3C/svg%3E");
 
-  /* platform identities */
-  --sutra: #C2410C;  --sutra-tint: #FFF2EC;
-  --medha: #673AB7;  --medha-tint: #F3EDFC;
-  --kavach: #00796B; --kavach-tint: #E7F5F2;
+  /* platform identities (on light surfaces) */
+  --sutra: #C2410C;  --sutra-tint: #FFF0E8;
+  --medha: #673AB7;  --medha-tint: #F2EAFD;
+  --kavach: #00796B; --kavach-tint: #E4F5F1;
   --eng: #3949AB;    --eng-tint: #ECEEFA;
-  /* light variants for use on dark surfaces in either theme */
-  --sutra-l: #FF9A76; --medha-l: #B69CFF; --kavach-l: #4FD1C5; --eng-l: #9FA8DA;
+  /* platform colours on feature surfaces: the full-strength colours on pastel */
+  --sutra-l: #C2410C; --medha-l: #673AB7; --kavach-l: #00796B; --eng-l: #3949AB;
 
   /* status */
   --ok: #2E7D32; --ok-tint: #E8F5E9;
-  --pending: #8D6E00; --pending-tint: #FFF6D6;
+  --pending: #8A6A00; --pending-tint: #FFF5D1;
   --err: #B3261E;
+
+  /* feature band (read directly by the architecture diagram and solution finder) */
+  --band-bg: var(--night);
+  --band-fg: #2A1A43;
+  --band-fg-2: #625675;
+  --band-border: rgba(120, 70, 170, .18);
+  --band-surface: rgba(255, 255, 255, .72);
+  --band-btn: #673AB7; --band-btn-fg: #FFFFFF; --band-btn-hover: #56299F;
 
   /* legacy aliases used by existing page styles */
   --navy: var(--fg); --ink: var(--fg); --mute: var(--fg-2); --line: var(--border);
@@ -68,48 +90,89 @@
   color-scheme: light;
 }
 
-/* ---------- DARK ---------- */
+/* ---------- DARK THEME: deep aubergine night ---------- */
 :root[data-theme="dark"] {
-  --bg: #100D1A;
-  --bg-alt: #191326;
-  --bg-soft: #150F22;
-  --lavender: #2A2040;
-  --surface: #211A30;
-  --surface-2: #1A1428;
+  --bg: #0D0819;
+  --bg-alt: #140D24;
+  --bg-soft: #120B20;
+  --lavender: #261A3E;
+  --surface: #1A1130;
+  --surface-2: #150E28;
   --fg: #FFFFFF;
-  --fg-2: #B7AEC8;
-  --border: #332843;
-  --border-strong: #4A3B63;
-  --primary: #8B5CF6;
-  --primary-deep: #B69CFF;
-  --accent: #B69CFF;
+  --fg-2: #BDB3D1;
+  --border: #2C2142;
+  --border-strong: #43355F;
+  --primary: #9A74FA;
+  --primary-deep: #B9A0FF;
+  --accent: #F49AC8;
+  --pink: #F49AC8; --pink-tint: rgba(244, 154, 200, .10);
   --btn: #7C3AED; --btn-hover: #8B5CF6; --btn-fg: #FFFFFF;
-  --link: #B69CFF;
-  --focus: #B69CFF;
-  --glow: rgba(139, 92, 246, .30);
-  --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 12px 32px rgba(0, 0, 0, .35);
-  --shadow-lg: 0 2px 4px rgba(0, 0, 0, .4), 0 28px 60px rgba(0, 0, 0, .5);
-  --header-bg: rgba(16, 13, 26, .84);
-  --header-border: #2A2138;
-  --hero-glow: radial-gradient(55% 70% at 85% 5%, rgba(139, 92, 246, .28) 0%, transparent 70%), radial-gradient(40% 50% at 0% 100%, rgba(79, 209, 197, .08) 0%, transparent 70%);
+  --link: #C4AEFF;
+  --focus: #B9A0FF;
+  --glow: rgba(139, 92, 246, .28);
+  --shadow: 0 1px 2px rgba(0, 0, 0, .4), 0 10px 28px rgba(0, 0, 0, .35);
+  --shadow-lg: 0 2px 6px rgba(0, 0, 0, .45), 0 28px 60px rgba(0, 0, 0, .55);
+  --hero-glow: radial-gradient(55% 70% at 85% 5%, rgba(139, 92, 246, .22) 0%, transparent 70%);
   --logo-filter: none;
 
-  --band-bg: radial-gradient(70% 80% at 100% 0%, rgba(139, 92, 246, .30), transparent 60%), radial-gradient(50% 60% at 0% 100%, rgba(79, 209, 197, .08), transparent 60%), #191326;
-  --band-fg: #FFFFFF;
-  --band-fg-2: #C9BFDB;
-  --band-border: #3A2E4E;
-  --band-surface: rgba(255, 255, 255, .04);
-  --band-btn: #7C3AED; --band-btn-fg: #FFFFFF; --band-btn-hover: #8B5CF6;
+  /* feature surfaces sit slightly lighter than the page so they still read as bands */
+  --night: #170E2C;
+  --night-2: #21153C;
+  --night-3: #2D1E4D;
+  --glow-1: rgba(139, 92, 246, .26);
+  --glow-2: rgba(255, 158, 115, .08);
+  --glow-3: rgba(79, 209, 197, .08);
+  --hdr-shadow: 0 10px 30px rgba(10, 4, 24, .35);
+  --weave-loose: #FFFFFF; --weave-loose-o: .075;
+  --threads: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 520' preserveAspectRatio='xMaxYMid slice' fill='none' stroke-width='1.4' stroke-linecap='round'%3E%3Cpath d='M-20 230C360 270 900 70 1460 120' stroke='%23fff' stroke-opacity='.07'/%3E%3Cpath d='M-20 470C500 480 900 210 1460 400' stroke='%23fff' stroke-opacity='.07'/%3E%3Cpath d='M-20 360C260 360 420 150 720 170S1160 360 1460 220' stroke='%23FF9E73' stroke-opacity='.62'/%3E%3Cpath d='M-20 400C300 400 480 240 780 250S1180 120 1460 280' stroke='%23B9A0FF' stroke-opacity='.62'/%3E%3Cpath d='M-20 440C340 440 540 320 840 310S1220 380 1460 330' stroke='%234FD1C5' stroke-opacity='.56'/%3E%3Cpath d='M-20 300C420 250 760 430 1460 170' stroke='%23fff' stroke-opacity='.09'/%3E%3C/svg%3E");
 
-  --sutra: #FF9A76;  --sutra-tint: rgba(255, 154, 118, .09);
-  --medha: #B69CFF;  --medha-tint: rgba(182, 156, 255, .10);
+  --sutra: #FF9E73;  --sutra-tint: rgba(255, 158, 115, .09);
+  --medha: #B9A0FF;  --medha-tint: rgba(185, 160, 255, .10);
   --kavach: #4FD1C5; --kavach-tint: rgba(79, 209, 197, .08);
-  --eng: #9FA8DA;    --eng-tint: rgba(159, 168, 218, .09);
+  --eng: #A3ACE0;    --eng-tint: rgba(163, 172, 224, .09);
+  --sutra-l: #FF9E73; --medha-l: #B9A0FF; --kavach-l: #4FD1C5; --eng-l: #A3ACE0;
 
   --ok: #81C784; --ok-tint: rgba(129, 199, 132, .12);
   --pending: #FFD54F; --pending-tint: rgba(255, 213, 79, .10);
   --err: #F2B8B5;
 
+  --band-fg: #FFFFFF;
+  --band-fg-2: #CBC1DF;
+  --band-border: rgba(255, 255, 255, .14);
+  --band-surface: rgba(255, 255, 255, .05);
+  --band-btn: #FFFFFF; --band-btn-fg: #2A1658; --band-btn-hover: #EEE8F8;
+  color-scheme: dark;
+}
+
+/* ---------- NIGHT SCOPE (dark theme only) ----------
+   In the dark theme, feature surfaces use the night palette so shared
+   components (diagrams, chips, cards, buttons) adapt automatically.
+   In the light theme they simply use the pastel tokens above. */
+:root[data-theme="dark"] :is(.on-dark, .band, section.dark, section.s.page-hero, .hdr, footer.site) {
+  --bg: var(--night);
+  --bg-alt: var(--night-2);
+  --bg-soft: var(--night-2);
+  --lavender: rgba(185, 160, 255, .16);
+  --surface: var(--night-2);
+  --surface-2: var(--night-3);
+  --fg: #FFFFFF;
+  --fg-2: #CBC1DF;
+  --border: rgba(255, 255, 255, .13);
+  --border-strong: rgba(255, 255, 255, .26);
+  --primary: #B9A0FF;
+  --primary-deep: #D9CCFF;
+  --accent: #B9A0FF;
+  --btn: #FFFFFF; --btn-hover: #EEE8F8; --btn-fg: #2A1658;
+  --link: #D2C2FF;
+  --focus: #D2C2FF;
+  --glow: rgba(139, 92, 246, .34);
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 12px 30px rgba(0, 0, 0, .3);
+  --shadow-lg: 0 2px 6px rgba(0, 0, 0, .4), 0 30px 60px rgba(0, 0, 0, .45);
+  --sutra: var(--sutra-l);   --sutra-tint: rgba(255, 158, 115, .10);
+  --medha: var(--medha-l);   --medha-tint: rgba(185, 160, 255, .11);
+  --kavach: var(--kavach-l); --kavach-tint: rgba(79, 209, 197, .09);
+  --eng: var(--eng-l);       --eng-tint: rgba(163, 172, 224, .10);
+  color: var(--fg);
   color-scheme: dark;
 }
 

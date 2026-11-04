@@ -2,16 +2,16 @@ import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { FlowComponent } from '../components/flow.component';
 import { CAPABILITIES, AI_SOLUTIONS, FLOW_CONTACT, FINDER_GOALS, INDUSTRIES } from '../data';
 import { PLATFORMS, ISO42001 } from '../content/platforms';
 import { FinderChoice, SolutionFinderComponent } from '../components/solution-finder.component';
 // TODO: point to the real enquiry endpoint (CRM or existing backend) once confirmed.
 export const ENQUIRY_ENDPOINT = '/api/enquiry';
 type K='demo'|'proposal'|'message';
-@Component({standalone:true,imports:[ReactiveFormsModule,FlowComponent,SolutionFinderComponent],template:`
+@Component({standalone:true,imports:[ReactiveFormsModule,SolutionFinderComponent],template:`
 <section class="s page-hero"><div class="wrap"><p class="eyebrow">Contact</p><h1>Talk to Inbox Media</h1><p class="lead">One short enquiry. We only ask what is relevant to what you need.</p></div></section>
-<section class="s"><div class="wrap narrow" id="enquiry">
+<section class="s"><div class="wrap ct">
+<div class="ct-main" id="enquiry">
 @if(!type()){<h2>What do you need?</h2><div class="opts">@for(o of opts;track o.k){<button type="button" class="opt" (click)="pick(o.k)"><h3>{{o.t}}</h3><p>{{o.d}}</p></button>}</div>}
 @else{<p><button type="button" class="lnk" (click)="type.set(null)">Change request type</button> &middot; <strong>{{label()}}</strong></p>
 <form [formGroup]="f" (ngSubmit)="send()" novalidate>
@@ -28,11 +28,17 @@ type K='demo'|'proposal'|'message';
 <input class="hp" formControlName="website" tabindex="-1" autocomplete="off" aria-hidden="true">
 <button class="btn" [disabled]="status()==='sending'">{{status()==='sending'?'Sending...':'Send enquiry'}}</button>
 <p role="status" aria-live="polite">@if(status()==='ok'){Thanks. Your enquiry was received.}@if(status()==='fail'){We could not send your enquiry. Please try again or email info&#64;inboxmedia.in.}</p></form>}
+</div>
+<aside class="ct-side" aria-label="Other ways to reach us">
+  <div class="ct-card"><h2>What happens after you submit</h2>
+    <ol class="vsteps">@for(s of flow;track s.t;let i=$index){<li><span>{{i+1}}</span><div><b>{{s.t}}</b><p>{{s.d}}</p></div></li>}</ol></div>
+  <div class="ct-card"><h2>Prefer email?</h2><p><a class="text-link" href="mailto:info@inboxmedia.in">info&#64;inboxmedia.in</a></p>
+    <h2>Our office</h2><p>619-620, Tower B, 6th Floor, Noida One, Sector 62, Noida, Uttar Pradesh 201309, India</p></div>
+</aside>
 </div></section>
-<section class="s tint"><div class="wrap"><h2>What happens after you submit</h2><app-flow [steps]="flow" label="Enquiry flow"/></div></section>
 <app-solution-finder (discuss)="useFinder($event)"></app-solution-finder>`,
-styles:[`.narrow{max-width:720px}.opts{display:grid;gap:1rem}.opt{text-align:left;background:var(--surface);color:var(--fg);border:1px solid var(--border);border-radius:var(--r-lg);padding:1.2rem 1.4rem;cursor:pointer;font:inherit;transition:border-color .2s,transform .2s;box-shadow:var(--shadow)}.opt:hover,.opt:focus-visible{border-color:var(--primary);transform:translateY(-2px)}.opt p{margin:0}
-form{display:grid;gap:.9rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:clamp(1rem,3vw,2rem);box-shadow:var(--shadow)}label{display:grid;gap:.3rem;font-weight:600}label span{font-weight:400;color:var(--mute)}.chk{display:flex;gap:.6rem;align-items:center;font-weight:400}.chk input{min-height:auto;width:20px;height:20px}
+styles:[`.ct{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(280px,1fr);gap:clamp(1.5rem,4vw,4rem);align-items:start}.ct-main>h2{font-size:clamp(1.7rem,3vw,2.3rem)}.opts{display:grid;gap:.8rem}.opt{position:relative;text-align:left;background:var(--surface);color:var(--fg);border:1px solid var(--border);border-radius:var(--r-lg);padding:1.3rem 3.4rem 1.3rem 1.5rem;cursor:pointer;font:inherit;transition:border-color .2s,background .2s}.opt::after{content:'';position:absolute;right:1.5rem;top:50%;width:9px;height:9px;border-right:2px solid var(--fg-2);border-top:2px solid var(--fg-2);transform:translateY(-50%) rotate(45deg);transition:right .2s,border-color .2s}.opt:hover,.opt:focus-visible{border-color:var(--primary);background:var(--bg-soft)}.opt:hover::after{right:1.25rem;border-color:var(--primary)}.opt h3{margin:0 0 .25rem}.opt p{margin:0}.ct-side{display:grid;gap:1rem;position:sticky;top:calc(var(--nh) + 24px)}.ct-card{padding:1.6rem;border-radius:var(--r-xl);background:var(--bg-alt);border:1px solid var(--border)}.ct-card h2{font-size:1.1rem;letter-spacing:-.01em;margin:0 0 .8rem;max-width:none}.ct-card h2:not(:first-child){margin-top:1.4rem}.ct-card p{margin:0;font-size:.95rem}.vsteps{list-style:none;margin:0;padding:0;display:grid;gap:0}.vsteps li{position:relative;display:grid;grid-template-columns:30px 1fr;gap:.8rem;padding-bottom:1rem}.vsteps li:not(:last-child)::before{content:'';position:absolute;left:14px;top:32px;bottom:4px;width:2px;background:color-mix(in srgb,var(--primary) 30%,transparent)}.vsteps span{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;border:2px solid var(--primary);color:var(--primary);font-weight:600;font-size:.85rem;background:var(--bg-alt)}.vsteps b{display:block;font-size:.98rem;color:var(--fg);margin-top:.2rem}.vsteps p{font-size:.9rem}@media(max-width:900px){.ct{grid-template-columns:1fr}.ct-side{position:static}}
+form{display:grid;gap:1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:clamp(1.2rem,3vw,2.2rem);box-shadow:var(--shadow)}label{display:grid;gap:.4rem;font-weight:600;font-size:.95rem}label span{font-weight:400;color:var(--mute)}.chk{display:flex;gap:.6rem;align-items:center;font-weight:400}.chk input{min-height:auto;width:20px;height:20px}
 .err{color:var(--err)}.hp{position:absolute;left:-9999px;opacity:0;height:0}.lnk{background:none;border:0;color:var(--link);cursor:pointer;font:inherit;padding:0;text-decoration:underline}`]})
 export class ContactComponent{
  private fb=inject(FormBuilder);private http=inject(HttpClient);status=signal<'idle'|'sending'|'ok'|'fail'>('idle');type=signal<K|null>(null);flow=FLOW_CONTACT;

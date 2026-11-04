@@ -3,55 +3,57 @@
    ===================================================================== */
 *, *::before, *::after { box-sizing: border-box }
 html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nh) + 16px); -webkit-text-size-adjust: 100% }
-body { margin: 0; font: 400 1rem/1.65 var(--font-body); color: var(--fg); background: var(--bg); overflow-x: hidden; -webkit-font-smoothing: antialiased }
+body { margin: 0; font: 400 1.0625rem/1.6 var(--font-body); color: var(--fg); background: var(--bg); overflow-x: hidden; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility }
 img, svg { max-width: 100%; display: block }
-h1, h2, h3, h4 { font-family: var(--font-display); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 .5em; color: var(--fg); text-wrap: balance }
-h1 { font-size: clamp(2.2rem, 5vw, 4rem); letter-spacing: -.035em }
-h2 { font-size: clamp(1.7rem, 3.4vw, 2.75rem); letter-spacing: -.03em; max-width: 26ch }
-h3 { font-size: 1.15rem }
-p { margin: 0 0 1em; max-width: 70ch; color: var(--fg-2) }
+
+/* Type scale: tight, slightly narrow headlines; calm body copy. */
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height: 1.12; letter-spacing: -.02em; margin: 0 0 .5em; color: var(--fg); text-wrap: balance }
+h1 { font-size: clamp(2.6rem, 6vw, 4.9rem); line-height: 1.02; letter-spacing: -.03em; font-stretch: 90%; font-weight: 620 }
+h2 { font-size: clamp(2rem, 3.9vw, 3.15rem); line-height: 1.06; letter-spacing: -.026em; font-stretch: 92%; font-weight: 620; max-width: 22ch }
+h3 { font-size: 1.2rem; letter-spacing: -.012em; line-height: 1.25 }
+h4 { font-size: 1rem; letter-spacing: -.005em }
+p { margin: 0 0 1em; max-width: 68ch; color: var(--fg-2) }
 a { color: var(--link) }
-strong, b { color: inherit }
-:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 4px }
+strong, b { color: inherit; font-weight: 600 }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 6px }
 ::selection { background: var(--lavender); color: var(--fg) }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0 }
-.skip { position: absolute; left: var(--gut); top: -60px; z-index: 100; background: var(--btn); color: var(--btn-fg); padding: .6rem 1rem; border-radius: var(--r); text-decoration: none; font-weight: 600 }
+.skip { position: absolute; left: var(--gut); top: -60px; z-index: 100; background: var(--primary); color: #fff; padding: .6rem 1rem; border-radius: var(--r); text-decoration: none; font-weight: 600 }
 .skip:focus { top: 12px }
 
 /* ---------- layout ---------- */
-.wrap { width: min(1280px, calc(100% - 2 * var(--gut))); margin-inline: auto }
-section.s { padding: clamp(56px, 8vw, 104px) 0 }
+.wrap { width: min(1240px, calc(100% - 2 * var(--gut))); margin-inline: auto }
+section.s { padding: clamp(64px, 9vw, 120px) 0 }
 .alt, section.tint { background: var(--bg-alt) }
-.band, section.dark { background: var(--band-bg); color: var(--band-fg) }
-.band h1, .band h2, .band h3, .band h4, section.dark h1, section.dark h2, section.dark h3 { color: var(--band-fg) }
-.band p, section.dark p { color: var(--band-fg-2) }
-.lead { font-size: clamp(1.05rem, 1.45vw, 1.22rem); line-height: 1.7 }
+.band, section.dark { background: var(--night); color: var(--fg) }
+.lead { font-size: clamp(1.08rem, 1.4vw, 1.24rem); line-height: 1.6 }
 
-/* Section header: heading + supporting text */
-.sh { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 1rem 4rem; align-items: end; margin-bottom: clamp(1.8rem, 4vw, 3rem) }
+/* Feature bands get soft blooms (pastel in light, violet in dark) so they never read as flat colour. */
+.band { background: radial-gradient(60% 80% at 100% 0%, var(--glow-1), transparent 60%), radial-gradient(45% 60% at 0% 100%, var(--glow-2), transparent 60%), radial-gradient(35% 50% at 100% 100%, var(--glow-3), transparent 60%), var(--night) }
+
+/* Section header: heading on the left, supporting text on the right */
+.sh { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 1rem 4rem; align-items: end; margin-bottom: clamp(2rem, 4.4vw, 3.4rem) }
 .sh h2 { margin: 0 }
 .sh p { margin: 0 }
-.sh.stack { grid-template-columns: 1fr; gap: .8rem }
+.sh.stack { grid-template-columns: 1fr; gap: .9rem }
 @media (max-width: 900px) { .sh { grid-template-columns: 1fr } }
 
-/* Small kicker above a hero heading (used once per page hero) */
-.eyebrow { display: inline-flex; align-items: center; gap: .55rem; font-size: .88rem; font-weight: 600; color: var(--primary); margin: 0 0 1rem; letter-spacing: .01em }
-.eyebrow::before { content: ""; width: 22px; height: 2px; border-radius: 2px; background: currentColor }
-.band .eyebrow, section.dark .eyebrow { color: var(--medha-l) }
+/* Small context label above a page heading (section name) */
+.eyebrow { display: inline-flex; align-items: center; gap: .55rem; font-size: .9rem; font-weight: 600; color: var(--primary); margin: 0 0 1.1rem }
+.eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent) }
+.eyebrow a { color: inherit }
 
 /* ---------- buttons ---------- */
-.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; min-height: 46px; padding: .72rem 1.3rem; border-radius: var(--r); background: var(--btn); color: var(--btn-fg); text-decoration: none; font: 600 .98rem/1.2 var(--font-body); border: 1px solid transparent; cursor: pointer; transition: background .2s, transform .2s, box-shadow .2s, border-color .2s; box-shadow: 0 6px 18px var(--glow) }
-.btn:hover { background: var(--btn-hover); transform: translateY(-1px) }
-.btn.ghost { background: transparent; color: var(--fg); border-color: var(--border-strong); box-shadow: none }
-.btn.ghost:hover { border-color: var(--primary); color: var(--primary); background: var(--surface) }
-.band .btn:not(.ghost), section.dark .btn:not(.ghost) { background: var(--band-btn); color: var(--band-btn-fg); box-shadow: 0 8px 24px rgba(0, 0, 0, .25) }
-.band .btn:not(.ghost):hover, section.dark .btn:not(.ghost):hover { background: var(--band-btn-hover) }
-.band .btn.ghost, section.dark .btn.ghost { color: var(--band-fg); border-color: rgba(255, 255, 255, .4) }
-.band .btn.ghost:hover, section.dark .btn.ghost:hover { background: rgba(255, 255, 255, .08); color: var(--band-fg) }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 48px; padding: .78rem 1.45rem; border-radius: 999px; background: var(--btn); color: var(--btn-fg); text-decoration: none; font: 600 .98rem/1.2 var(--font-body); border: 1px solid transparent; cursor: pointer; transition: background .2s, border-color .2s, color .2s, box-shadow .2s }
+.btn:hover { background: var(--btn-hover) }
+.btn:active { transform: translateY(1px) }
+.btn.ghost { background: transparent; color: var(--fg); border-color: var(--border-strong) }
+.btn.ghost:hover { border-color: var(--fg); background: color-mix(in srgb, var(--fg) 5%, transparent) }
 .btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round }
+.btn[disabled] { opacity: .6; cursor: progress }
 .btns { display: flex; flex-wrap: wrap; gap: .75rem }
-.text-link { display: inline-flex; align-items: center; gap: .35rem; font-weight: 650; color: var(--link); text-decoration: none }
-.text-link:hover { text-decoration: underline; text-underline-offset: 4px }
+.text-link { display: inline-flex; align-items: center; gap: .35rem; font-weight: 600; color: var(--link); text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); text-underline-offset: 4px; transition: text-decoration-color .2s }
+.text-link:hover { text-decoration-color: currentColor }
 
 /* ---------- panels (dashboard-style surfaces) ---------- */
 .panel-ui { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow) }
@@ -63,10 +65,10 @@ section.s { padding: clamp(56px, 8vw, 104px) 0 }
 @keyframes live { 50% { opacity: .3 } }
 
 /* chips and status pills */
-.chips { display: flex; flex-wrap: wrap; gap: .4rem; list-style: none; margin: 0; padding: 0 }
-.chip { display: inline-flex; align-items: center; gap: .35rem; font-size: .82rem; font-weight: 600; color: var(--fg); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: .28rem .7rem; text-decoration: none }
+.chips { display: flex; flex-wrap: wrap; gap: .45rem; list-style: none; margin: 0; padding: 0 }
+.chip { display: inline-flex; align-items: center; gap: .35rem; font-size: .84rem; font-weight: 500; color: var(--fg); background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: .3rem .78rem; text-decoration: none; line-height: 1.35 }
 a.chip:hover { border-color: var(--primary); color: var(--primary) }
-.pill { display: inline-flex; align-items: center; gap: .35rem; font-size: .74rem; font-weight: 700; border-radius: 6px; padding: .18rem .5rem; letter-spacing: .01em; white-space: nowrap }
+.pill { display: inline-flex; align-items: center; gap: .35rem; font-size: .76rem; font-weight: 600; border-radius: 999px; padding: .2rem .6rem; white-space: nowrap }
 .pill.ok { color: var(--ok); background: var(--ok-tint) }
 .pill.pending { color: var(--pending); background: var(--pending-tint) }
 .pill.info { color: var(--primary); background: var(--lavender) }
@@ -75,36 +77,47 @@ a.chip:hover { border-color: var(--primary); color: var(--primary) }
 .pmark { font-family: var(--mark); font-weight: 800; letter-spacing: .03em; color: var(--c, var(--primary)) }
 .pmark .hi { font-weight: 600; letter-spacing: 0; color: var(--fg); opacity: .78; margin-left: .35em }
 
-/* generic legacy grid + cards used by existing pages */
-.grid { display: grid; gap: 1.1rem; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr)) }
-.item, .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: clamp(1.15rem, 2.2vw, 1.6rem); box-shadow: var(--shadow); transition: transform .22s, border-color .22s, box-shadow .22s }
-.item:hover, .card:hover { transform: translateY(-3px); border-color: var(--border-strong); box-shadow: var(--shadow-lg) }
+/* generic grid + cards used by existing pages */
+.grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)) }
+.item, .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: clamp(1.2rem, 2.2vw, 1.7rem); transition: border-color .2s }
+.item:hover, .card:hover { border-color: var(--border-strong) }
 .item p, .card p { margin: 0 }
-.note { border-left: 3px solid var(--primary); border-radius: 0 var(--r) var(--r) 0; background: var(--bg-soft); color: var(--fg); padding: .9rem 1.1rem; line-height: 1.7 }
-.confirm { display: inline-flex; gap: .45rem; align-items: baseline; font-size: .84rem; color: var(--pending); background: var(--pending-tint); border-radius: var(--r-sm); padding: .4rem .7rem }
+.note { border-left: 2px solid var(--primary); border-radius: 0 var(--r) var(--r) 0; background: var(--bg-soft); color: var(--fg); padding: .95rem 1.15rem; line-height: 1.65; font-size: .96rem }
+.confirm { display: inline-flex; gap: .45rem; align-items: baseline; font-size: .86rem; color: var(--pending); background: var(--pending-tint); border-radius: var(--r-sm); padding: .45rem .75rem }
 
-/* page hero (inner pages) */
-section.s.page-hero { background: var(--hero-glow), var(--bg-alt); color: var(--fg); border-bottom: 1px solid var(--border); padding: clamp(48px, 7vw, 88px) 0 clamp(40px, 6vw, 72px) }
-section.s.page-hero h1 { color: var(--fg); max-width: 20ch; margin-bottom: .8rem }
-section.s.page-hero p { color: var(--fg-2) }
-section.s.page-hero .eyebrow { color: var(--primary) }
+/* ---------- page hero (inner pages) ----------
+   Night background with the thread motif drawn low and to the right. */
+section.s.page-hero {
+  position: relative; isolation: isolate; overflow: hidden;
+  padding: clamp(64px, 9vw, 128px) 0 clamp(56px, 7vw, 96px);
+  background:
+    linear-gradient(90deg, var(--night) 0%, color-mix(in srgb, var(--night) 82%, transparent) 38%, transparent 75%),
+    var(--threads) right bottom / cover no-repeat,
+    radial-gradient(55% 80% at 90% 0%, var(--glow-1), transparent 65%),
+    radial-gradient(40% 70% at 0% 100%, var(--glow-2), transparent 65%),
+    var(--night);
+}
+section.s.page-hero h1 { max-width: 18ch; margin-bottom: 1rem; font-size: clamp(2.4rem, 5.2vw, 4.3rem) }
+section.s.page-hero .lead { max-width: 58ch; color: var(--fg-2) }
+section.s.page-hero .btns { margin-top: 1.8rem }
 
 /* tabs (pill style) */
-.tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1.6rem }
-.tabs button { min-height: 44px; border: 1px solid var(--border); background: var(--surface); color: var(--fg); border-radius: 999px; padding: .5rem 1.05rem; font: 600 .92rem var(--font-body); cursor: pointer; transition: border-color .2s, background .2s, color .2s }
-.tabs button:hover { border-color: var(--primary) }
-.tabs button.on, .tabs button[aria-selected="true"] { background: var(--btn); border-color: var(--btn); color: var(--btn-fg) }
+.tabs { display: flex; flex-wrap: wrap; gap: .45rem; margin: 0 0 1.8rem }
+.tabs button { min-height: 44px; border: 1px solid var(--border); background: var(--surface); color: var(--fg); border-radius: 999px; padding: .5rem 1.1rem; font: 600 .93rem var(--font-body); cursor: pointer; transition: border-color .2s, background .2s, color .2s }
+.tabs button:hover { border-color: var(--border-strong) }
+.tabs button.on, .tabs button[aria-selected="true"] { background: var(--fg); border-color: var(--fg); color: var(--bg) }
 
 /* forms */
-input, select, textarea { font: inherit; color: var(--fg); background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--r-sm); padding: .7rem .8rem; min-height: 46px; width: 100% }
-input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--glow) }
+input, select, textarea { font: inherit; font-size: 1rem; color: var(--fg); background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--r); padding: .75rem .9rem; min-height: 50px; width: 100%; transition: border-color .2s, box-shadow .2s }
+input:hover, select:hover, textarea:hover { border-color: color-mix(in srgb, var(--primary) 45%, var(--border-strong)) }
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px var(--glow) }
 input[type=checkbox] { width: 20px; height: 20px; min-height: 0; accent-color: var(--primary) }
 label { color: var(--fg) }
 
 /* tables */
 table { border-collapse: separate; border-spacing: 0; width: 100% }
-th, td { text-align: left; padding: .9rem 1rem; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--fg-2) }
-thead th { background: var(--bg-alt); color: var(--fg); font-size: .8rem; letter-spacing: .04em }
+th, td { text-align: left; padding: 1rem 1.1rem; border-bottom: 1px solid var(--border); vertical-align: top; color: var(--fg-2) }
+thead th { background: var(--bg-alt); color: var(--fg); font-size: .84rem; font-weight: 600 }
 tbody th { color: var(--fg) }
 
 @media (max-width: 560px) {

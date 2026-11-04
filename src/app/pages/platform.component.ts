@@ -13,7 +13,7 @@ import { INDUSTRY_VIEW } from '../data';
   imports: [RouterLink, PlatformArtComponent, ProductShowcaseComponent],
   template: `
   @if (p(); as p) {
-  <section class="phero" [style.--c]="'var(--' + p.slug + ')'" [style.--t]="'var(--' + p.slug + '-tint)'">
+  <section class="phero on-dark" [style.--c]="'var(--' + p.slug + ')'" [style.--t]="'var(--' + p.slug + '-tint)'">
     <div class="wrap phero-in">
       <div>
         <nav class="pnav" aria-label="Platforms">
@@ -102,25 +102,25 @@ import { INDUSTRY_VIEW } from '../data';
   </section>
   }`,
   styles: [`
-  .phero{background:radial-gradient(70% 90% at 95% 0%,var(--t),transparent 70%),var(--bg);padding:clamp(2.2rem,5vw,4.5rem) 0 clamp(2.4rem,5vw,4rem);border-bottom:1px solid var(--border)}
+  .phero{position:relative;overflow:hidden;background:radial-gradient(55% 75% at 80% 35%,color-mix(in srgb,var(--c) 24%,transparent),transparent 70%),radial-gradient(50% 60% at 0% 0%,var(--glow-1),transparent 65%),radial-gradient(40% 60% at 0% 100%,var(--glow-2),transparent 65%),var(--night);padding:clamp(3rem,6vw,5.5rem) 0 clamp(3rem,6vw,5rem)}
   .phero-in{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(1.5rem,4vw,3.5rem);align-items:center}
   .pnav{display:flex;align-items:center;gap:.35rem;flex-wrap:wrap;margin-bottom:1.5rem}
   .pager{display:inline-grid;place-items:center;height:1.9rem;padding:0 .75rem;border-radius:999px;background:var(--c);color:var(--surface);font:700 .82rem var(--font-display);margin-right:.35rem}
   .pnav a{font:800 .92rem var(--mark);letter-spacing:.06em;color:var(--fg-2);text-decoration:none;padding:.32rem .75rem;border-radius:999px;border:1px solid transparent}
   .pnav a:hover{color:var(--oc)}
-  .pnav a.on{color:var(--oc);border-color:currentColor;background:var(--surface)}
+  .pnav a.on{color:var(--oc);border-color:color-mix(in srgb,currentColor 55%,transparent);background:color-mix(in srgb,var(--surface) 55%,transparent)}
   .layer{margin:0 0 .3rem;font-weight:600;color:var(--c)}
-  h1{font:800 clamp(3.4rem,9vw,7rem)/.95 var(--mark);letter-spacing:.02em;color:var(--c);margin:0}
-  .desc{font:600 clamp(1.2rem,2.2vw,1.6rem)/1.25 var(--font-display);color:var(--fg);margin:.7rem 0 0;max-width:28ch}
+  h1{font:800 clamp(3.6rem,9.5vw,7.6rem)/.92 var(--mark);letter-spacing:.02em;color:var(--c);margin:0}
+  .desc{font:600 clamp(1.25rem,2.3vw,1.7rem)/1.22 var(--font-display);letter-spacing:-.02em;color:var(--fg);margin:.9rem 0 0;max-width:26ch}
   .meaning{margin:1rem 0 0;padding-left:.9rem;border-left:3px solid var(--c);font-style:italic}
   .pos{font-size:1.06rem;color:var(--fg);margin:1rem 0 1.6rem;max-width:56ch}
   .art{width:100%;max-width:480px;justify-self:center;color:var(--c)}
   .groups{display:grid;grid-template-columns:repeat(var(--gc,3),minmax(0,1fr));gap:1rem}
-  .grp{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:clamp(1.1rem,2.4vw,1.6rem);box-shadow:var(--shadow)}
+  .grp{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:clamp(1.2rem,2.4vw,1.8rem)}
   .grp.solo{margin-top:1.6rem}
   .gh{display:grid;grid-template-columns:auto 1fr;gap:.9rem;margin-bottom:1rem}
   .grp.solo .gh{grid-template-columns:1fr}
-  .gn{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--t);color:var(--c);font:700 .9rem var(--font-display)}
+  .gn{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--t);color:var(--c);font:600 .9rem var(--font-display)}
   .gh h3{margin:0 0 .2rem;font-size:1.15rem}.gh p{margin:0;font-size:.92rem}
   .items{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(210px,100%),1fr));gap:.45rem}
   .items li{display:flex;justify-content:space-between;align-items:center;gap:.5rem;font-size:.9rem;font-weight:500;color:var(--fg);padding:.55rem .75rem;border-radius:10px;background:var(--surface-2);border:1px solid var(--border)}
@@ -141,7 +141,7 @@ import { INDUSTRY_VIEW } from '../data';
   .confirm{margin-top:1.2rem}
   .more{margin:1.4rem 0 0}
   .ucs{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
-  .uc{display:flex;flex-direction:column;padding:1.3rem;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--c)}
+  .uc{display:flex;flex-direction:column;padding:1.4rem;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--border);border-top:2px solid var(--c)}
   .uc h3{font-size:1.05rem;margin:0 0 .4rem}.uc p{font-size:.92rem;margin:0 0 1rem}
   .who{margin-top:auto;font-size:.78rem;font-weight:700;color:var(--c)}
   .inds{display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin-top:1.6rem}

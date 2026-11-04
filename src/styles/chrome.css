@@ -1,87 +1,105 @@
 /* =====================================================================
-   SITE CHROME: header, dropdowns, mobile navigation, theme toggle, footer
+   SITE CHROME: announcement bar, header, dropdowns, mobile navigation,
+   theme toggle, footer. Header and footer are feature surfaces: pastel in
+   the light theme, night in the dark theme (see tokens.css).
    ===================================================================== */
+
+/* ---------- announcement bar (scrolls away; the header below stays) ---------- */
+.ann { background: var(--night-3); color: var(--fg); font-size: .9rem; border-bottom: 1px solid var(--border) }
+.ann .wrap { display: flex; align-items: center; justify-content: center; gap: .4rem 1rem; flex-wrap: wrap; min-height: 42px; padding: .45rem 2.4rem; position: relative; text-align: center }
+.ann p { margin: 0; color: var(--fg-2); max-width: none }
+.ann b { color: var(--fg); font-weight: 600 }
+.ann a { color: var(--fg); font-weight: 600; text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--pink) 60%, transparent); text-underline-offset: 3px }
+.ann a:hover { text-decoration-color: var(--pink) }
+.ann .knot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--kavach-l); box-shadow: 0 0 0 4px rgba(79, 209, 197, .2); margin-right: .6rem; vertical-align: middle }
+.ann .x { position: absolute; right: 0; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; border-radius: 50%; border: 0; background: none; color: var(--fg-2); cursor: pointer; display: grid; place-items: center }
+.ann .x:hover { background: color-mix(in srgb, var(--fg) 8%, transparent); color: var(--fg) }
+.ann .x svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round }
+
+/* ---------- header ---------- */
 .hdr { position: sticky; top: 0; z-index: 60 }
-.nav { background: var(--header-bg); backdrop-filter: saturate(160%) blur(14px); -webkit-backdrop-filter: saturate(160%) blur(14px); border-bottom: 1px solid var(--header-border); transition: box-shadow .3s }
-.nav.sc { box-shadow: 0 8px 28px rgba(33, 26, 46, .08) }
-:root[data-theme="dark"] .nav.sc { box-shadow: 0 8px 28px rgba(0, 0, 0, .45) }
+.nav { background: color-mix(in srgb, var(--night) 90%, transparent); backdrop-filter: saturate(160%) blur(16px); -webkit-backdrop-filter: saturate(160%) blur(16px); border-bottom: 1px solid var(--border); transition: box-shadow .3s, background .3s }
+.nav.sc { background: color-mix(in srgb, var(--night) 96%, transparent); box-shadow: var(--hdr-shadow) }
 .row { display: flex; align-items: center; gap: 1rem; height: var(--nh) }
-.brand { display: flex; align-items: center; color: var(--fg); text-decoration: none; font: 700 1.25rem var(--font-display); flex-shrink: 0 }
+.brand { display: flex; align-items: center; color: var(--fg); text-decoration: none; font: 650 1.25rem var(--font-display); letter-spacing: -.02em; flex-shrink: 0 }
 .brand img { height: 38px; width: auto; filter: var(--logo-filter) }
 
-.menu { display: flex; align-items: stretch; height: 100%; margin-left: 1.25rem; gap: .1rem }
+.menu { display: flex; align-items: stretch; height: 100%; margin-left: 1.6rem; gap: .15rem }
 .dd { position: relative; display: flex; align-items: center }
-.dd > a { position: relative; display: flex; align-items: center; gap: .35rem; height: 100%; padding: 0 .7rem; color: var(--fg-2); text-decoration: none; font-weight: 550; font-size: .93rem; white-space: nowrap; transition: color .2s }
-.dd > a::after { content: ""; position: absolute; left: .7rem; right: .7rem; bottom: -1px; height: 2px; border-radius: 2px; background: var(--primary); transform: scaleX(0); transform-origin: left; transition: transform .25s }
+.dd > a { position: relative; display: flex; align-items: center; gap: .35rem; height: 100%; padding: 0 .75rem; color: var(--fg-2); text-decoration: none; font-weight: 500; font-size: .95rem; white-space: nowrap; transition: color .2s }
+.dd > a::after { content: ""; position: absolute; left: 50%; bottom: 14px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: var(--accent); transform: scale(0); transition: transform .25s var(--ease) }
 .dd > a:hover, .dd:focus-within > a, .dd:hover > a { color: var(--fg) }
-.dd > a.on { color: var(--primary) }
-.dd > a.on::after, .dd:hover > a::after { transform: scaleX(1) }
-.dd > a .chev { width: 10px; height: 10px; fill: none; stroke: currentColor; stroke-width: 2; transition: transform .2s }
+.dd > a.on { color: var(--fg) }
+.dd > a.on::after { transform: scale(1) }
+.dd > a .chev { width: 10px; height: 10px; fill: none; stroke: currentColor; stroke-width: 2; transition: transform .2s; opacity: .7 }
 .dd:hover > a .chev, .dd:focus-within > a .chev { transform: rotate(180deg) }
 
-.panel { position: absolute; top: calc(100% - 6px); left: 0; min-width: 260px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); padding: .5rem; visibility: hidden; opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s, visibility .2s; z-index: 5 }
+.panel { position: absolute; top: calc(100% - 4px); left: 0; min-width: 260px; background: var(--night-2); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); padding: .5rem; visibility: hidden; opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s var(--ease), visibility .2s; z-index: 5 }
 .dd:hover .panel, .dd:focus-within .panel { visibility: visible; opacity: 1; transform: none }
-.panel a { display: block; padding: .6rem .75rem; border-radius: var(--r-sm); color: var(--fg); text-decoration: none; font-size: .92rem; font-weight: 500 }
-.panel a:hover, .panel a.on { background: var(--bg-alt); color: var(--primary) }
+.panel a { display: block; padding: .62rem .8rem; border-radius: var(--r-sm); color: var(--fg); text-decoration: none; font-size: .94rem; font-weight: 500 }
+.panel a:hover, .panel a.on { background: color-mix(in srgb, var(--fg) 6%, transparent) }
+.panel a small { display: block; color: var(--fg-2); font-size: .82rem; font-weight: 400; margin-top: .1rem }
 
 /* Platforms mega menu */
-.panel.mega { width: min(900px, calc(100vw - 2 * var(--gut))); padding: .6rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem }
-.mega a.mcol { display: flex; flex-direction: column; gap: .25rem; padding: 1rem 1.05rem; border-radius: var(--r); border: 1px solid transparent }
-.mega a.mcol:hover { background: var(--t); border-color: color-mix(in srgb, var(--c) 25%, transparent); color: var(--fg) }
-.mcol b { font: 800 1.35rem/1 var(--mark); letter-spacing: .04em; color: var(--c) }
-.mcol .mlay { font-size: .78rem; font-weight: 700; color: var(--c) }
-.mcol .mdesc { font-weight: 600; font-size: .9rem; line-height: 1.35; color: var(--fg) }
-.mcol .msub { font-size: .82rem; color: var(--fg-2); line-height: 1.5 }
-.mega .mfoot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: .3rem 1rem; padding: .7rem .9rem; border-top: 1px solid var(--border); margin-top: .2rem }
-.mega .mfoot a { display: inline-flex; padding: .35rem .5rem; font-size: .86rem; font-weight: 600; color: var(--fg-2) }
-.mega .mfoot a:hover { color: var(--primary); background: none }
-.mega .mfoot span { font-size: .8rem; color: var(--fg-2) }
+.panel.mega { width: min(940px, calc(100vw - 2 * var(--gut))); padding: .6rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem; left: -1rem }
+.mega a.mcol { position: relative; display: flex; flex-direction: column; gap: .3rem; padding: 1.1rem 1.15rem 1.15rem; border-radius: var(--r); border: 1px solid transparent; overflow: hidden }
+.mega a.mcol::before { content: ""; position: absolute; left: 1.15rem; right: 1.15rem; top: 0; height: 2px; border-radius: 2px; background: var(--c); opacity: .9 }
+.mega a.mcol:hover { background: var(--t); border-color: color-mix(in srgb, var(--c) 30%, transparent) }
+.mcol b { font: 800 1.4rem/1 var(--mark); letter-spacing: .04em; color: var(--c); margin-top: .2rem }
+.mcol .mlay { font-size: .8rem; font-weight: 600; color: var(--c) }
+.mcol .mdesc { font-weight: 600; font-size: .93rem; line-height: 1.35; color: var(--fg) }
+.mcol .msub { font-size: .85rem; color: var(--fg-2); line-height: 1.5 }
+.mega .mfoot { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: .3rem 1rem; padding: .75rem .9rem .35rem; border-top: 1px solid var(--border); margin-top: .2rem }
+.mega .mfoot a { display: inline-flex; padding: .35rem .5rem; font-size: .88rem; font-weight: 500; color: var(--fg-2) }
+.mega .mfoot a:hover { color: var(--fg); background: none }
+.mega .mfoot span { font-size: .84rem; color: var(--fg-2) }
 
 .tools { margin-left: auto; display: flex; align-items: center; gap: .6rem }
-.tools .btn { min-height: 42px; padding: .55rem 1.05rem; font-size: .92rem; white-space: nowrap }
+.tools .btn { min-height: 42px; padding: .55rem 1.15rem; font-size: .93rem; white-space: nowrap }
 
 /* theme toggle */
-.tt { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border); background: var(--surface); color: var(--fg); display: grid; place-items: center; cursor: pointer; position: relative; overflow: hidden; flex-shrink: 0; transition: border-color .2s, background .2s }
-.tt:hover { border-color: var(--primary); color: var(--primary) }
-.tt svg { position: absolute; width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform .45s cubic-bezier(.2, .8, .2, 1), opacity .3s }
+.tt { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--border); background: transparent; color: var(--fg); display: grid; place-items: center; cursor: pointer; position: relative; overflow: hidden; flex-shrink: 0; transition: border-color .2s, background .2s }
+.tt:hover { border-color: var(--border-strong); background: color-mix(in srgb, var(--fg) 6%, transparent) }
+.tt svg { position: absolute; width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform .45s var(--ease), opacity .3s }
 .tt .moon { transform: translateY(120%) rotate(-40deg); opacity: 0 }
 :root[data-theme="dark"] .tt .sun { transform: translateY(-120%) rotate(40deg); opacity: 0 }
 :root[data-theme="dark"] .tt .moon { transform: none; opacity: 1 }
 
-.burger { display: none; width: 44px; height: 44px; border: 1px solid var(--border); border-radius: var(--r); background: var(--surface); cursor: pointer; padding: 0 }
-.burger span { display: block; width: 20px; height: 2px; background: var(--fg); margin: 4px auto; border-radius: 2px; transition: transform .3s, opacity .3s }
+.burger { display: none; width: 44px; height: 44px; border: 1px solid var(--border); border-radius: 50%; background: transparent; cursor: pointer; padding: 0 }
+.burger span { display: block; width: 18px; height: 2px; background: var(--fg); margin: 4px auto; border-radius: 2px; transition: transform .3s, opacity .3s }
 .burger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg) }
 .burger.open span:nth-child(2) { opacity: 0 }
 .burger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg) }
 
-.mnav { display: none; border-top: 1px solid var(--border); background: var(--bg); max-height: calc(100dvh - var(--nh)); overflow-y: auto; padding: .6rem var(--gut) 1.4rem }
-.mnav > a, .mnav details > summary { display: flex; align-items: center; justify-content: space-between; min-height: 52px; color: var(--fg); text-decoration: none; font-weight: 600; border-bottom: 1px solid var(--border); cursor: pointer; list-style: none }
+.mnav { display: none; border-top: 1px solid var(--border); background: var(--night); max-height: calc(100dvh - var(--nh)); overflow-y: auto; padding: .6rem var(--gut) 1.6rem }
+.mnav > a, .mnav details > summary { display: flex; align-items: center; justify-content: space-between; min-height: 54px; color: var(--fg); text-decoration: none; font-weight: 500; font-size: 1.05rem; border-bottom: 1px solid var(--border); cursor: pointer; list-style: none }
 .mnav details > summary::-webkit-details-marker { display: none }
-.mnav details > summary::after { content: ""; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform .2s; margin-right: 4px }
+.mnav details > summary::after { content: ""; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); transition: transform .2s; margin-right: 4px; opacity: .7 }
 .mnav details[open] > summary::after { transform: rotate(-135deg) }
 .mnav a.on { color: var(--primary) }
-.mplat { display: grid; gap: .5rem; padding: .7rem 0 .9rem }
-.mplat a { display: grid; gap: .1rem; padding: .75rem .9rem; border-radius: var(--r); background: var(--t); text-decoration: none; border: 1px solid color-mix(in srgb, var(--c) 18%, transparent) }
-.mplat b { font: 800 1.1rem var(--mark); letter-spacing: .04em; color: var(--c) }
-.mplat span { font-size: .84rem; color: var(--fg-2) }
+.mplat { display: grid; gap: .5rem; padding: .8rem 0 .9rem }
+.mplat a { display: grid; gap: .1rem; padding: .8rem .95rem; border-radius: var(--r); background: var(--t); text-decoration: none; border: 1px solid color-mix(in srgb, var(--c) 22%, transparent) }
+.mplat b { font: 800 1.15rem var(--mark); letter-spacing: .04em; color: var(--c) }
+.mplat span { font-size: .86rem; color: var(--fg-2) }
 .msubl { display: grid; padding: .3rem 0 .7rem }
-.msubl a { padding: .6rem .9rem; color: var(--fg-2); text-decoration: none; font-weight: 500 }
-.mnav .btn { width: 100%; margin-top: 1.1rem }
+.msubl a { padding: .6rem .95rem; color: var(--fg-2); text-decoration: none; font-weight: 500 }
+.mnav .btn { width: 100%; margin-top: 1.2rem }
 
 /* ---------- footer ---------- */
-footer.site { background: var(--bg-alt); border-top: 1px solid var(--border); color: var(--fg-2); padding: 3.5rem 0 1.5rem; font-size: .92rem }
-:root[data-theme="dark"] footer.site { background: #0B0913 }
-.fg { display: grid; gap: 2rem; grid-template-columns: 1.5fr 1fr 1fr 1fr 1.3fr }
-footer.site h4 { font-size: .95rem; color: var(--fg); margin: 0 0 .8rem; letter-spacing: 0 }
-footer.site a { display: block; color: var(--fg-2); text-decoration: none; padding: .22rem 0 }
-footer.site a:hover { color: var(--primary) }
-footer.site p { color: var(--fg-2); font-size: .9rem }
-footer.site .brand img { height: 36px }
-.fmark { font: 700 .95rem var(--mark); letter-spacing: .04em; color: var(--c) }
-.ftag { font-family: var(--font-display); font-weight: 600; color: var(--fg); font-size: .95rem; margin-top: 1rem }
-.legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--border); margin-top: 2.4rem; padding-top: 1.2rem }
-.soc { display: flex; flex-wrap: wrap; gap: 1.1rem }
-.soc a { padding: 0 }
+footer.site { position: relative; background: radial-gradient(50% 70% at 100% 0%, var(--glow-1), transparent 60%), radial-gradient(40% 70% at 0% 100%, var(--glow-2), transparent 60%), var(--night); color: var(--fg-2); padding: clamp(3.5rem, 7vw, 5.5rem) 0 1.6rem; font-size: .95rem }
+.fg { display: grid; gap: 2.2rem; grid-template-columns: 1.6fr 1fr 1fr 1fr 1.3fr }
+footer.site h4 { font-size: .95rem; font-weight: 600; color: var(--fg); margin: 0 0 1rem; letter-spacing: 0 }
+footer.site a { display: block; color: var(--fg-2); text-decoration: none; padding: .26rem 0; transition: color .2s }
+footer.site a:hover { color: var(--fg) }
+footer.site p { color: var(--fg-2); font-size: .94rem }
+footer.site .brand img { height: 38px }
+.fmark { font: 700 .98rem var(--mark); letter-spacing: .04em; color: var(--c) }
+footer.site .ftag { font-family: var(--font-display); font-weight: 600; color: var(--fg); font-size: 1.25rem; line-height: 1.3; letter-spacing: -.015em; margin: 1.3rem 0 .8rem; max-width: 22ch }
+.fcta { display: inline-flex !important; margin-top: .6rem; padding: .62rem 1.15rem !important; border-radius: 999px; border: 1px solid var(--border-strong); color: var(--fg) !important; font-weight: 600 }
+.fcta:hover { background: color-mix(in srgb, var(--fg) 6%, transparent) }
+.legal { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; border-top: 1px solid var(--border); margin-top: 3rem; padding-top: 1.4rem; font-size: .88rem }
+.soc { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem }
+.soc a { display: inline-block !important; padding: 0 !important }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1240px) {
@@ -91,5 +109,5 @@ footer.site .brand img { height: 36px }
   :root { --nh: 66px }
 }
 @media (max-width: 1100px) { .fg { grid-template-columns: 1fr 1fr 1fr } .fg > :first-child { grid-column: 1 / -1 } }
-@media (max-width: 640px) { .fg { grid-template-columns: 1fr 1fr } }
+@media (max-width: 640px) { .fg { grid-template-columns: 1fr 1fr } .ann { font-size: .84rem } }
 @media (max-width: 420px) { .fg { grid-template-columns: 1fr } }

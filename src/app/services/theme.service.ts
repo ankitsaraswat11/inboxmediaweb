@@ -47,6 +47,6 @@ export class ThemeService {
     }
     root.setAttribute('data-theme', t);
     root.style.colorScheme = t;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', t === 'dark' ? '#100D1A' : '#FFFFFF');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', t === 'dark' ? '#170E2C' : '#F2E8FC');
   }
 }
