@@ -48,8 +48,8 @@
   --shadow: 0 1px 2px rgba(20, 26, 82, .04), 0 10px 30px rgba(43, 68, 209, .07);
   --shadow-lg: 0 2px 6px rgba(20, 26, 82, .06), 0 30px 60px rgba(43, 68, 209, .14);
   --hero-glow: radial-gradient(60% 70% at 85% 10%, #ECEBFB 0%, rgba(236, 235, 251, 0) 70%);
-  /* the logo file is white: recolour it to navy ink on light surfaces */
-  --logo-filter: brightness(0) saturate(100%) invert(10%) sepia(55%) saturate(3000%) hue-rotate(225deg) brightness(85%) contrast(100%);
+  /* the logo file is white: recolour it to Inbox Media purple (#612ACE) on light surfaces */
+  --logo-filter: brightness(0) saturate(100%) invert(33%) sepia(56%) saturate(6605%) hue-rotate(250deg) brightness(78%) contrast(111%);
 
   /* rule lines and iridescent ribbon colours */
   --rule: rgba(20, 26, 82, .055);

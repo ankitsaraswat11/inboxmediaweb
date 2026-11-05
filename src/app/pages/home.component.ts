@@ -247,21 +247,21 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 .mq:hover .mq-t{animation-play-state:paused}
 @keyframes mq{to{transform:translateX(-50%)}}
 .mi{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem .95rem;border-radius:10px;background:var(--surface);border:1px solid var(--border);font:600 .92rem var(--font-body);color:var(--fg);white-space:nowrap}
-.mi i{width:8px;height:8px;border-radius:50%;background:var(--iri);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 10%,transparent)}
+.mi i{width:8px;height:8px;border-radius:50%;background:#37E2A0;box-shadow:0 0 0 3px rgba(55,226,160,.18)}
 .chipviz{position:relative;overflow:hidden;height:clamp(380px,46vw,560px)}
-.bus{position:absolute;--g:repeating-linear-gradient(var(--dir),transparent 0 6px,#5C86FF 6px 10px,transparent 10px 18px)}
+.bus{position:absolute;--g:repeating-linear-gradient(var(--dir),transparent 0 6px,#37E2A0 6px 10px,transparent 10px 18px)}
 .bus.v{left:50%;top:-20%;bottom:-20%;width:120px;margin-left:-60px;--dir:90deg;background:var(--g);mask-image:linear-gradient(180deg,transparent,#000 15%,#000 85%,transparent);-webkit-mask-image:linear-gradient(180deg,transparent,#000 15%,#000 85%,transparent)}
 .bus.h{top:50%;left:8%;right:8%;height:120px;margin-top:-60px;--dir:0deg;background:var(--g);mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent);opacity:.85}
 .bus::after{content:"";position:absolute;inset:0;background:linear-gradient(var(--dir2,180deg),transparent 40%,rgba(255,255,255,.95) 50%,transparent 60%);background-size:100% 300%;animation:busflow 2.6s linear infinite}
 .bus.h::after{--dir2:90deg;background-size:300% 100%;animation-name:busflowh}
 @keyframes busflow{from{background-position:0 100%}to{background-position:0 -200%}}
 @keyframes busflowh{from{background-position:100% 0}to{background-position:-200% 0}}
-.chip-core{position:absolute;left:50%;top:50%;width:clamp(170px,17vw,230px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:14px;padding:12px;background:color-mix(in srgb,#BFD0FF 55%,transparent);box-shadow:0 30px 80px -20px rgba(43,68,209,.45);display:grid;place-items:center}
-.chip-core::before{content:"";position:absolute;inset:12px;border-radius:8px;background:linear-gradient(160deg,#fff,#EEF2FF)}
-:host-context([data-theme="dark"]) .chip-core::before{background:linear-gradient(160deg,#151B45,#0E1333)}
-.chip-core svg{position:relative;width:64px;height:64px;fill:none;stroke:var(--primary);stroke-width:1.8;stroke-linecap:round;animation:breathe 3s ease-in-out infinite}
+.chip-core{position:absolute;left:50%;top:50%;width:clamp(170px,17vw,230px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:14px;padding:12px;background:color-mix(in srgb,#9DF0CF 55%,transparent);box-shadow:0 30px 80px -20px rgba(55,226,160,.45);display:grid;place-items:center}
+.chip-core::before{content:"";position:absolute;inset:12px;border-radius:8px;background:linear-gradient(160deg,#fff,#EAFBF4)}
+:host-context([data-theme="dark"]) .chip-core::before{background:linear-gradient(160deg,#0F2A26,#0B1D1B)}
+.chip-core svg{position:relative;width:64px;height:64px;fill:none;stroke:#1ECF8D;stroke-width:1.8;stroke-linecap:round;animation:breathe 3s ease-in-out infinite}
 @keyframes breathe{50%{transform:scale(1.08)}}
-.pins{position:absolute;inset:-14px;border-radius:18px;background:repeating-linear-gradient(90deg,transparent 0 14px,color-mix(in srgb,#8EA6FF 60%,transparent) 14px 22px) top/100% 14px no-repeat,repeating-linear-gradient(90deg,transparent 0 14px,color-mix(in srgb,#8EA6FF 60%,transparent) 14px 22px) bottom/100% 14px no-repeat,repeating-linear-gradient(0deg,transparent 0 14px,color-mix(in srgb,#8EA6FF 60%,transparent) 14px 22px) left/14px 100% no-repeat,repeating-linear-gradient(0deg,transparent 0 14px,color-mix(in srgb,#8EA6FF 60%,transparent) 14px 22px) right/14px 100% no-repeat;z-index:-1}
+.pins{position:absolute;inset:-14px;border-radius:18px;background:repeating-linear-gradient(90deg,transparent 0 14px,color-mix(in srgb,#37E2A0 60%,transparent) 14px 22px) top/100% 14px no-repeat,repeating-linear-gradient(90deg,transparent 0 14px,color-mix(in srgb,#37E2A0 60%,transparent) 14px 22px) bottom/100% 14px no-repeat,repeating-linear-gradient(0deg,transparent 0 14px,color-mix(in srgb,#37E2A0 60%,transparent) 14px 22px) left/14px 100% no-repeat,repeating-linear-gradient(0deg,transparent 0 14px,color-mix(in srgb,#37E2A0 60%,transparent) 14px 22px) right/14px 100% no-repeat;z-index:-1}
 
 /* 5 cinematic band */
 .cine{position:relative;isolation:isolate;overflow:hidden;padding:clamp(8rem,16vw,14rem) 0 clamp(4rem,8vw,7rem)}
