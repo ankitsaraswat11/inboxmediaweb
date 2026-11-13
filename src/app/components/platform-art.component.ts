@@ -154,6 +154,9 @@ const K_TAGS: Node[] = [
   @keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
   @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(6px,-8px)}}
   @keyframes tick{0%,15%{stroke-dashoffset:60}35%,85%{stroke-dashoffset:0}100%{stroke-dashoffset:60}}
+  /* Phones and touch screens: this SVG repaints every frame while its signals run, and each repaint
+     re-ran the two drop-shadow filters. Drop them there; the shapes themselves are unchanged. */
+  @media(max-width:900px),(hover:none){.core,.shield{filter:none}}
   @media(prefers-reduced-motion:reduce){.sig{display:none}.check{stroke-dashoffset:0}}
   `]
 })

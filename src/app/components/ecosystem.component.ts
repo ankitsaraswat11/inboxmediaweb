@@ -129,6 +129,7 @@ export class EcosystemComponent implements AfterViewInit, OnDestroy {
   private router = inject(Router);
 
   ngAfterViewInit() {
+    if (typeof window === 'undefined') return; // prerender/SSR: browser-only setup
     const reduce = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!reduce) this.timer = setInterval(() => { if (!this.paused && !document.hidden) this.active.set((this.active() + 1) % 3); }, 3200);
   }

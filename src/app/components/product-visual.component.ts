@@ -87,8 +87,8 @@ import { ProductVisual } from '../data';
   .avatar{display:grid;justify-items:center;gap:.6rem;text-align:center}
   .face{position:relative;width:96px;height:96px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--medha-l),var(--medha));box-shadow:0 0 0 8px var(--medha-tint),0 0 0 16px color-mix(in srgb,var(--medha) 8%,transparent);animation:breathe 3s ease-in-out infinite}
   .face i{position:absolute;top:38px;width:9px;height:12px;border-radius:5px;background:#fff;animation:blinkEye 4s infinite}.face i:first-child{left:30px}.face i:nth-child(2){right:30px}
-  .face b{position:absolute;left:36px;right:36px;bottom:26px;height:6px;border-radius:0 0 8px 8px;background:#fff;animation:talk .5s ease-in-out infinite alternate}
-  .wave{display:flex;align-items:center;gap:3px;height:28px}.wave span{width:4px;border-radius:2px;background:var(--medha);height:30%;animation:wave 1s ease-in-out infinite}
+  .face b{position:absolute;left:36px;right:36px;bottom:26px;height:12px;border-radius:0 0 8px 8px;background:#fff;transform-origin:50% 100%;transform:scaleY(.5);animation:talk .5s ease-in-out infinite alternate}
+  .wave{display:flex;align-items:center;gap:3px;height:28px}.wave span{width:4px;border-radius:2px;background:var(--medha);height:100%;transform:scaleY(.3);animation:wave 1s ease-in-out infinite}
   .avatar small{font-size:.72rem;color:var(--fg-2)}
   .chat{display:grid;gap:.45rem}
   .msg{font-size:.82rem;line-height:1.45;padding:.5rem .7rem;border-radius:12px;max-width:92%;color:var(--fg)}
@@ -108,8 +108,10 @@ import { ProductVisual } from '../data';
   .docs{display:flex;flex-wrap:wrap;gap:.4rem}
   .doc{display:inline-flex;align-items:center;gap:.4rem;font-size:.76rem;font-weight:600;color:var(--fg);border:1px solid var(--border);border-radius:8px;padding:.35rem .6rem;background:var(--surface-2)}
   .doc i{width:10px;height:12px;border:1.5px solid var(--fg-2);border-radius:2px}
-  .doc.hot{border-color:var(--medha);background:var(--medha-tint);animation:glow 2.4s ease-in-out infinite}
-  .model{display:flex;align-items:baseline;gap:.6rem;justify-content:center;padding:.55rem;border-radius:10px;border:1px dashed var(--medha);color:var(--medha);font-weight:700;font-size:.85rem;background:repeating-linear-gradient(90deg,transparent 0 10px,var(--medha-tint) 10px 20px);background-size:200% 100%;animation:scan 3s linear infinite}
+  .doc.hot{position:relative;border-color:var(--medha);background:var(--medha-tint)}
+  .doc.hot::after{content:"";position:absolute;inset:-1px;border-radius:inherit;box-shadow:0 0 0 4px var(--medha-tint);opacity:0;animation:glow 2.4s ease-in-out infinite;pointer-events:none}
+  .model{position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:baseline;gap:.6rem;justify-content:center;padding:.55rem;border-radius:10px;border:1px dashed var(--medha);color:var(--medha);font-weight:700;font-size:.85rem}
+  .model::before{content:"";position:absolute;top:0;bottom:0;left:-40px;right:0;z-index:-1;background:repeating-linear-gradient(90deg,transparent 0 10px,var(--medha-tint) 10px 20px);animation:scan .8s linear infinite}
   .model em{font-style:normal;font-weight:500;font-size:.74rem;color:var(--fg-2)}
   .qa{display:grid;gap:.5rem}
   .q{font-size:.8rem;color:var(--fg-2);font-style:italic}
@@ -125,7 +127,7 @@ import { ProductVisual } from '../data';
   .mod{display:grid;grid-template-columns:1fr auto;gap:.1rem .6rem;padding:.55rem .7rem;border:1px solid var(--border);border-radius:10px;background:var(--surface-2)}
   .mod b{font-size:.82rem;color:var(--fg)}.mod small{grid-row:2;font-size:.72rem;color:var(--fg-2)}
   .prog{grid-row:1/3;grid-column:2;align-self:center;width:70px;height:6px;border-radius:3px;background:var(--border);overflow:hidden}
-  .prog i{display:block;height:100%;width:0;background:var(--medha);border-radius:3px;animation:fill 2.2s ease-out forwards}
+  .prog i{display:block;height:100%;width:var(--w);background:var(--medha);border-radius:3px;transform-origin:0 50%;animation:fill 2.2s ease-out both}
   .quiz{font-size:.78rem;color:var(--fg);display:flex;align-items:center;gap:.4rem}.quiz .ok{display:grid;place-items:center;width:18px;height:18px;border-radius:50%;background:var(--ok-tint);color:var(--ok);font-size:.7rem;font-weight:800}
   /* Edge AI */
   .edge{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:center}
@@ -133,8 +135,9 @@ import { ProductVisual } from '../data';
   .site .tag{position:absolute;top:-.7rem;left:.8rem;background:var(--surface);padding:0 .4rem;font-size:.74rem;font-weight:700;color:var(--medha)}
   .box{display:grid;gap:.2rem;padding:.8rem;border-radius:10px;background:var(--medha-tint);position:relative}
   .box b{font-size:.88rem;color:var(--fg)}.box small{font-size:.74rem;color:var(--fg-2)}
-  .chip{position:absolute;right:.8rem;top:.8rem;width:22px;height:22px;border-radius:4px;border:2px solid var(--medha);box-shadow:0 0 0 3px var(--surface),0 0 0 4px var(--medha);animation:pulse 2s ease-in-out infinite}
-  .meter{height:6px;border-radius:3px;background:var(--border);overflow:hidden;margin-top:.4rem}.meter i{display:block;height:100%;width:22%;background:var(--ok);animation:lat 2.6s ease-in-out infinite}
+  .chip{position:absolute;right:.8rem;top:.8rem;width:22px;height:22px;border-radius:4px;border:2px solid var(--medha);box-shadow:0 0 0 3px var(--surface),0 0 0 4px var(--medha)}
+  .chip::after{content:"";position:absolute;inset:-2px;border-radius:4px;box-shadow:0 0 0 3px var(--surface),0 0 0 7px var(--medha-tint);opacity:0;animation:pulse 2s ease-in-out infinite}
+  .meter{height:6px;border-radius:3px;background:var(--border);overflow:hidden;margin-top:.4rem}.meter i{display:block;height:100%;width:30%;background:var(--ok);transform-origin:0 50%;transform:scaleX(.733);animation:lat 2.6s ease-in-out infinite}
   .data{display:flex;align-items:center;gap:.45rem;font-size:.8rem;font-weight:600;color:var(--fg)}
   .lock{width:12px;height:10px;border-radius:2px;background:var(--medha);position:relative;margin-top:4px}.lock::before{content:"";position:absolute;left:2px;top:-6px;width:5px;height:6px;border:2px solid var(--medha);border-bottom:0;border-radius:4px 4px 0 0}
   .cloud{display:grid;justify-items:center;gap:.3rem;opacity:.75}
@@ -144,18 +147,20 @@ import { ProductVisual } from '../data';
   .off{font-size:.7rem;font-weight:700;color:var(--ok);background:var(--ok-tint);border-radius:5px;padding:.1rem .4rem}
   @keyframes breathe{50%{transform:scale(1.03)}}
   @keyframes blinkEye{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
-  @keyframes talk{to{height:12px}}
-  @keyframes wave{0%,100%{height:25%}50%{height:100%}}
+  /* every loop below animates transform or opacity only: the old height/width/box-shadow/background-position
+     keyframes forced layout or repaint on every frame */
+  @keyframes talk{to{transform:none}}
+  @keyframes wave{0%,100%{transform:scaleY(.25)}50%{transform:none}}
   @keyframes dot{0%,60%,100%{opacity:.3;transform:none}30%{opacity:1;transform:translateY(-3px)}}
   @keyframes shake{0%,40%,100%{transform:rotate(0)}10%,30%{transform:rotate(-12deg)}20%{transform:rotate(12deg)}}
   @keyframes ringOut{from{opacity:.7;transform:scale(.85)}to{opacity:0;transform:scale(1.35)}}
-  @keyframes glow{50%{box-shadow:0 0 0 4px var(--medha-tint)}}
-  @keyframes scan{to{background-position:-200% 0}}
-  @keyframes fill{to{width:var(--w)}}
-  @keyframes pulse{50%{box-shadow:0 0 0 3px var(--surface),0 0 0 7px var(--medha-tint)}}
-  @keyframes lat{0%,100%{width:18%}50%{width:30%}}
+  @keyframes glow{50%{opacity:1}}
+  @keyframes scan{to{transform:translate3d(40px,0,0)}}
+  @keyframes fill{from{transform:scaleX(0)}}
+  @keyframes pulse{50%{opacity:1}}
+  @keyframes lat{0%,100%{transform:scaleX(.6)}50%{transform:none}}
   @media(max-width:520px){.aura,.tellco,.trainexl{grid-template-columns:1fr}.avatar{grid-template-columns:auto 1fr;justify-items:start;align-items:center}.avatar small{grid-column:2}.dial{display:none}.src{display:none}.edge{grid-template-columns:1fr}.cloud{grid-auto-flow:column;align-items:center;justify-content:start}}
-  @media(prefers-reduced-motion:reduce){.prog i{width:var(--w)}}
+  @media(prefers-reduced-motion:reduce){.prog i{transform:none}}
   `]
 })
 export class ProductVisualComponent implements OnInit, OnDestroy {
@@ -169,6 +174,7 @@ export class ProductVisualComponent implements OnInit, OnDestroy {
   tick = signal(0);
   private timer?: ReturnType<typeof setInterval>;
   ngOnInit() {
+    if (typeof window === 'undefined') return; // prerender/SSR: browser-only setup
     const reduce = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (this.kind === 'tellco' && !reduce) this.timer = setInterval(() => this.tick.update(t => t + 1), 1400);
   }

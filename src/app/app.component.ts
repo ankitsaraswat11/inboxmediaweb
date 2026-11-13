@@ -1,21 +1,21 @@
 import { Component, HostListener, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { Meta } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
 import { FOUNDED, PRODUCTS } from './data';
 import { PLATFORMS, TAGLINE } from './content/platforms';
 import { ThemeToggleComponent } from './components/theme-toggle.component';
+import { LogoComponent } from './components/logo.component';
 import { ThemeService } from './services/theme.service';
 
 const DESC = 'Inbox Media: an integrated enterprise technology platform for communication, intelligence and digital trust.';
-/* White logo from inboxmedia.in. It always sits on the night-coloured header and footer, so no recolouring is needed. */
 const ANN_KEY = 'im-ann-dpdp';
 function readAnn() { try { return sessionStorage.getItem(ANN_KEY) !== '1'; } catch { return true; } }
-const LOGO = 'https://inboxmedia.in/wp-content/themes/wpinboxmedia/images/logo-white.svg';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, ThemeToggleComponent],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive, ThemeToggleComponent, LogoComponent],
   template: `
 <a class="skip" href="#main" (click)="skip($event)">Skip to content</a>
 @if (ann()) {
@@ -25,8 +25,8 @@ const LOGO = 'https://inboxmedia.in/wp-content/themes/wpinboxmedia/images/logo-w
     <button type="button" class="x" (click)="closeAnn()" aria-label="Dismiss announcement"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12"/></svg></button>
   </div></div>
 }
-<div class="hdr"><header class="nav" [class.sc]="sc()" [class.open]="open()"><div class="wrap row">
-  <a routerLink="/" class="brand" aria-label="Inbox Media home">@if (logoOk()) { <img [src]="logo" alt="Inbox Media" height="38" (error)="logoOk.set(false)"> } @else { Inbox Media }</a>
+<div class="hdr"><header class="nav" [class.open]="open()"><div class="wrap row">
+  <a routerLink="/" class="brand" aria-label="Inbox Media home"><app-logo/></a>
   <nav class="menu" aria-label="Main">
     <div class="dd"><a routerLink="/" routerLinkActive="on" [routerLinkActiveOptions]="{exact:true}">Home</a></div>
     <div class="dd static"><a routerLink="/platforms" [class.on]="section() === 'platforms'" aria-haspopup="true">Platforms<svg class="chev" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg></a>
@@ -74,7 +74,7 @@ const LOGO = 'https://inboxmedia.in/wp-content/themes/wpinboxmedia/images/logo-w
 <footer class="site"><div class="wrap">
   <div class="fg">
     <div>
-      <a routerLink="/" class="brand" aria-label="Inbox Media home">@if (logoOk()) { <img [src]="logo" alt="Inbox Media" height="38"> } @else { Inbox Media }</a>
+      <a routerLink="/" class="brand" aria-label="Inbox Media home"><app-logo/></a>
       <p class="ftag">{{ tagline }}</p>
       <p>An integrated enterprise technology platform, serving enterprises across 8+ industries since {{ founded }}.</p>
       <a class="fcta" routerLink="/contact" [queryParams]="{type:'demo'}">Book a demo</a>
@@ -91,12 +91,13 @@ const LOGO = 'https://inboxmedia.in/wp-content/themes/wpinboxmedia/images/logo-w
 </div></footer>`
 })
 export class AppComponent {
-  plats = PLATFORMS; products = PRODUCTS; logo = LOGO; tagline = TAGLINE; founded = FOUNDED;
+  plats = PLATFORMS; products = PRODUCTS; tagline = TAGLINE; founded = FOUNDED;
   /** Announcement bar: hidden for the rest of the visit once dismissed (per-viewer convenience only). */
   ann = signal(readAnn());
-  logoOk = signal(true); sc = signal(false); open = signal(false);
+  open = signal(false);
   section = signal('');
   private meta = inject(Meta);
+  private doc = inject(DOCUMENT);
   private theme = inject(ThemeService); // instantiated at startup so the theme applies before any page renders
   constructor(r: Router) {
     r.events.subscribe(e => {
@@ -106,12 +107,13 @@ export class AppComponent {
       this.section.set(url.startsWith('/platforms') || url.startsWith('/ai-solutions') || url.startsWith('/capabilities') ? 'platforms' : '');
       let s = r.routerState.snapshot.root; while (s.firstChild) s = s.firstChild;
       this.meta.updateTag({ name: 'description', content: s.data['description'] || DESC });
-      let l = document.querySelector('link[rel=canonical]') as HTMLLinkElement | null;
-      if (!l) { l = document.createElement('link'); l.rel = 'canonical'; document.head.appendChild(l); }
+      let l = this.doc.querySelector('link[rel=canonical]') as HTMLLinkElement | null;
+      if (!l) { l = this.doc.createElement('link'); l.rel = 'canonical'; this.doc.head.appendChild(l); }
       l.href = 'https://inboxmedia.in' + url.replace(/\/$/, '');
     });
   }
-  @HostListener('window:scroll') onScroll() { this.sc.set(window.scrollY > 10); }
+  // No scroll listener: the header (and logo) look identical at every scroll position, and a window:scroll
+  // HostListener here used to run change detection for the whole app on every scroll event.
   @HostListener('document:keydown.escape') onEsc() { this.open.set(false); }
   closeAnn() { this.ann.set(false); try { sessionStorage.setItem(ANN_KEY, '1'); } catch { /* storage unavailable: hides for this page view only */ } }
   skip(e: Event) { e.preventDefault(); const m = document.getElementById('main'); m?.focus(); m?.scrollIntoView(); }

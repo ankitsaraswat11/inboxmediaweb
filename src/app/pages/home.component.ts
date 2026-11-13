@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, NgZone, OnDestroy, inject, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, NgZone, OnDestroy, ViewChild, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { RibbonComponent } from '../components/ribbon.component';
 import { HeroVisualComponent } from '../components/hero-visual.component';
@@ -46,9 +46,11 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 @Component({
   standalone: true,
   imports: [RouterLink, RibbonComponent, HeroVisualComponent, LifecycleComponent, IndustryCarouselComponent, RevealDirective, CountDirective],
+  // Everything in this template is static apart from the `t` signal, so the homepage is skipped by app-wide change detection.
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
 <!-- 1 · HERO -->
-<section class="hero" (mouseenter)="hold(true)" (mouseleave)="hold(false)">
+<section class="hero" #hero>
   <app-ribbon variant="hero" [parallax]="90"/>
   <div class="wrap hin">
     <h1 class="ht">
@@ -60,13 +62,13 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
       <span class="l2">Enterprise</span>
       <span class="l3">Fabric.</span>
     </h1>
-    <p class="lead hl" reveal=".3">Communication, artificial intelligence and digital trust, woven into one integrated technology platform for modern enterprises.</p>
-    <div class="btns hb" reveal=".4">
+    <p class="lead hl in-up" style="--d:.3s">Communication, artificial intelligence and digital trust, woven into one integrated technology platform for modern enterprises.</p>
+    <div class="btns hb in-up" style="--d:.4s">
       <button type="button" class="btn lg" (click)="go('lifecycle')">See how it works <svg class="arr" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       <a class="btn lg ghost" routerLink="/contact" [queryParams]="{type:'demo'}">Book a demo</a>
     </div>
 
-    <a class="fcard" routerLink="/platforms" reveal=".55" (pointermove)="tilt($event)" (pointerleave)="untilt($event)">
+    <a class="fcard in-up" #fcard routerLink="/platforms" style="--d:.55s">
       <span class="fc-copy">
         <span class="fc-k">One platform · three layers</span>
         <b class="fc-t">@for (p of platforms; track p.slug; let l = $last) {<span class="pmark" [style.--c]="'var(--' + p.slug + ')'">{{ p.name }}</span>@if (!l) {<span class="amp"> · </span>}}</b>
@@ -91,12 +93,12 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
       <h2 reveal>Connecting your enterprise across every interaction.</h2>
       <p class="lead" reveal=".15">End-to-end infrastructure for every channel, system and AI agent you run.</p>
     </div>
-    <app-hero-visual/>
+    @defer (on viewport; prefetch on idle) { <app-hero-visual/> } @placeholder { <div class="dph dph-hv" aria-hidden="true"></div> }
   </div>
 </section>
 
 <!-- 3 · LIFECYCLE (pinned + movable) -->
-<section class="lcs" id="lifecycle" aria-label="How Inbox Media works"><app-lifecycle/></section>
+<section class="lcs" id="lifecycle" aria-label="How Inbox Media works">@defer (on viewport; prefetch on idle) { <app-lifecycle/> } @placeholder { <div class="dph dph-lc" aria-hidden="true"></div> }</section>
 
 <!-- 4 · INTEGRATIONS -->
 <section class="integ ruled">
@@ -123,7 +125,7 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
   <app-ribbon variant="band" [parallax]="50"/>
   <div class="wrap">
     <h2 class="cine-h" reveal>Messaging, AI and security, <b>all on one platform.</b></h2>
-    <div class="feat" (pointermove)="spot($event)">
+    <div class="feat" #feat>
       @for (f of feats; track f.t; let i = $index) {
         <article class="ft" [reveal]="i * .08">
           <p>{{ f.t }}</p>
@@ -151,7 +153,7 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 <section class="ind">
   <div class="wrap">
     <div class="sh"><h2 reveal>Configured for the way your industry works.</h2><p class="lead" reveal=".1">Pick your industry below to see how it works for you.</p></div>
-    <app-industry-carousel reveal=".1"/>
+    @defer (on viewport; prefetch on idle) { <app-industry-carousel reveal=".1"/> } @placeholder { <div class="dph dph-ic" aria-hidden="true"></div> }
   </div>
 </section>
 
@@ -192,9 +194,14 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 .hero{position:relative;isolation:isolate;overflow:hidden;min-height:max(100vh,860px);padding:clamp(4.5rem,9vw,7rem) 0 clamp(3rem,6vw,5rem);background:linear-gradient(180deg,var(--bg),color-mix(in srgb,var(--bg) 70%,var(--lavender)))}
 .hin{display:grid;justify-items:center;text-align:center}
 .ht{display:grid;justify-items:center;margin:0;font-size:clamp(3.2rem,8.4vw,7.6rem);line-height:.98;letter-spacing:-.02em}
-.ht > span{display:block;animation:rise 1.2s var(--ease-out) both}
+/* The headline and intro are the page's largest text (its LCP element): they rise into place but are never
+   transparent, so they count as painted on the very first frame. Starting them at opacity 0 delayed LCP. */
+.ht > span{display:block;animation:riseT 1.2s var(--ease-out) both}
 .l1{animation-delay:.05s}.l2{animation-delay:.18s!important}.l3{animation-delay:.3s!important}
-@keyframes rise{from{opacity:0;transform:translateY(40px);filter:blur(10px)}to{opacity:1;transform:none;filter:none}}
+@keyframes rise{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes riseT{from{transform:translateY(28px)}to{transform:none}}
+.in-up{animation:rise 1s var(--ease-out) var(--d,0s) both}
+.hl.in-up{animation-name:riseT}
 .mw{display:inline-grid;vertical-align:bottom;justify-items:start}
 .w{grid-area:1/1;white-space:nowrap;font-style:italic;color:var(--c);padding-right:.06em}
 .w i{display:inline-block;font-style:inherit;opacity:0;transform:translateY(.35em) rotateX(60deg);filter:blur(12px);transition:opacity .55s var(--ease-out),transform .7s var(--ease-out),filter .6s var(--ease-out);transition-delay:calc(var(--k) * 35ms)}
@@ -203,7 +210,7 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 .hl{max-width:56ch;margin:1.8rem auto 2rem}
 .hb{justify-content:center}
 /* hero platform card */
-.fcard{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);width:min(760px,100%);margin-top:clamp(3rem,7vw,5.5rem);border-radius:18px;overflow:hidden;text-align:left;text-decoration:none;color:inherit;background:linear-gradient(120deg,color-mix(in srgb,var(--surface) 92%,transparent),color-mix(in srgb,var(--lavender) 70%,transparent));border:1px solid color-mix(in srgb,var(--border) 80%,#fff);box-shadow:0 40px 80px -40px rgba(43,68,209,.35),inset 0 1px 0 rgba(255,255,255,.7);backdrop-filter:blur(14px);transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .5s var(--ease-out),box-shadow .4s}
+.fcard{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);width:min(760px,100%);margin-top:clamp(3rem,7vw,5.5rem);border-radius:18px;overflow:hidden;text-align:left;text-decoration:none;color:inherit;background:linear-gradient(120deg,color-mix(in srgb,var(--surface) 92%,transparent),color-mix(in srgb,var(--lavender) 70%,transparent));border:1px solid color-mix(in srgb,var(--border) 80%,#fff);box-shadow:0 40px 80px -40px rgba(43,68,209,.35),inset 0 1px 0 rgba(255,255,255,.7);transform:perspective(1000px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .5s var(--ease-out),box-shadow .4s}
 .fcard:hover{box-shadow:0 50px 90px -40px rgba(43,68,209,.5),inset 0 1px 0 rgba(255,255,255,.7)}
 .fc-copy{display:grid;align-content:center;gap:.5rem;padding:clamp(1.4rem,3vw,2.4rem)}
 .fc-k{font:600 .74rem var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
@@ -237,6 +244,11 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 .lcs{background-color:var(--bg)}
 
 /* 4 integrations */
+/* placeholders for deferred components, sized like the real thing so nothing jumps when they load */
+.dph-hv{height:620px}.dph-lc{height:350vh}.dph-ic{height:690px}
+@media(max-width:900px){.dph-hv{height:360px}.dph-lc{height:1270px}.dph-ic{height:790px}}
+/* off-screen sections are not laid out or painted (and their looping animations stop) until scrolled near */
+.eco,.integ,.cine,.trust,.ind,.prods,.close{content-visibility:auto;contain-intrinsic-size:auto 900px}
 .integ{position:relative;overflow-x:clip;padding:clamp(3rem,6vw,5rem) 0;background-color:var(--bg)}
 .integ-in > *{min-width:0}
 .integ-in{display:grid;grid-template-columns:minmax(0,520px) minmax(0,1fr);gap:clamp(1.5rem,4vw,4rem);align-items:center}
@@ -249,13 +261,15 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 .mi{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem .95rem;border-radius:10px;background:var(--surface);border:1px solid var(--border);font:600 .92rem var(--font-body);color:var(--fg);white-space:nowrap}
 .mi i{width:8px;height:8px;border-radius:50%;background:#37E2A0;box-shadow:0 0 0 3px rgba(55,226,160,.18)}
 .chipviz{position:relative;overflow:hidden;height:clamp(380px,46vw,560px)}
-.bus{position:absolute;--g:repeating-linear-gradient(var(--dir),transparent 0 6px,#37E2A0 6px 10px,transparent 10px 18px)}
+.bus{position:absolute;overflow:hidden;--g:repeating-linear-gradient(var(--dir),transparent 0 6px,#37E2A0 6px 10px,transparent 10px 18px)}
 .bus.v{left:50%;top:-20%;bottom:-20%;width:120px;margin-left:-60px;--dir:90deg;background:var(--g);mask-image:linear-gradient(180deg,transparent,#000 15%,#000 85%,transparent);-webkit-mask-image:linear-gradient(180deg,transparent,#000 15%,#000 85%,transparent)}
 .bus.h{top:50%;left:8%;right:8%;height:120px;margin-top:-60px;--dir:0deg;background:var(--g);mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 25%,#000 75%,transparent);opacity:.85}
-.bus::after{content:"";position:absolute;inset:0;background:linear-gradient(var(--dir2,180deg),transparent 40%,rgba(255,255,255,.95) 50%,transparent 60%);background-size:100% 300%;animation:busflow 2.6s linear infinite}
-.bus.h::after{--dir2:90deg;background-size:300% 100%;animation-name:busflowh}
-@keyframes busflow{from{background-position:0 100%}to{background-position:0 -200%}}
-@keyframes busflowh{from{background-position:100% 0}to{background-position:-200% 0}}
+/* the light pulse is a 3x-long gradient strip moved with transform (compositor only);
+   animating background-position here repainted both bus areas on every frame */
+.bus::after{content:"";position:absolute;left:0;top:0;width:100%;height:300%;background:linear-gradient(180deg,transparent 40%,rgba(255,255,255,.95) 50%,transparent 60%);animation:busflow 1.3s linear infinite;will-change:transform}
+.bus.h::after{width:300%;height:100%;background:linear-gradient(90deg,transparent 40%,rgba(255,255,255,.95) 50%,transparent 60%);animation-name:busflowh}
+@keyframes busflow{from{transform:translate3d(0,-66.667%,0)}to{transform:translate3d(0,33.333%,0)}}
+@keyframes busflowh{from{transform:translate3d(-66.667%,0,0)}to{transform:translate3d(33.333%,0,0)}}
 .chip-core{position:absolute;left:50%;top:50%;width:clamp(170px,17vw,230px);aspect-ratio:1;transform:translate(-50%,-50%);border-radius:14px;padding:12px;background:color-mix(in srgb,#9DF0CF 55%,transparent);box-shadow:0 30px 80px -20px rgba(55,226,160,.45);display:grid;place-items:center}
 .chip-core::before{content:"";position:absolute;inset:12px;border-radius:8px;background:linear-gradient(160deg,#fff,#EAFBF4)}
 :host-context([data-theme="dark"]) .chip-core::before{background:linear-gradient(160deg,#0F2A26,#0B1D1B)}
@@ -334,8 +348,20 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
   .mq{margin:1.6rem 0 1.4rem}
   .mi{font-size:.85rem;padding:.5rem .8rem}
   .pc{grid-template-columns:1fr}.th{width:100%;aspect-ratio:2.4}
+  /* quicker hero entrance on phones so the headline (the LCP element) settles sooner */
+  .ht > span{animation-duration:.7s}.l2{animation-delay:.08s!important}.l3{animation-delay:.14s!important}
+  .in-up{animation-duration:.6s;animation-delay:calc(var(--d,0s) * .5)}
 }
-@media(prefers-reduced-motion:reduce){.mq-t,.th i,.bus::after,.node,.chip-core svg{animation:none}.ht > span{animation:none}}
+/* Phones and touch devices: skip the most expensive paint effects.
+   A per-letter blur filter on ~30 glyphs and a 20px blur over half the section are both
+   re-rasterised on the CPU/GPU; the radial gradient underneath is already soft on its own. */
+@media(max-width:900px),(hover:none){
+  .w i{filter:none;transition:opacity .45s var(--ease-out),transform .6s var(--ease-out);transition-delay:calc(var(--k) * 25ms)}
+  .w.on i{transition-delay:calc(.15s + var(--k) * 30ms)}
+  .eco::before{filter:none}
+  .pc:hover{transform:none;box-shadow:none}
+}
+@media(prefers-reduced-motion:reduce){.in-up,.mq-t,.th i,.bus::after,.node,.chip-core svg{animation:none}.ht > span{animation:none}}
 `]
 })
 export class HomeComponent implements AfterViewInit, OnDestroy {
@@ -358,32 +384,81 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   /** Morphing hero word. */
   t = signal(0);
   private held = false;
+  /** The word only cycles while the hero is on screen (no change detection ticks once the visitor has scrolled past). */
+  private heroVisible = true;
   private timer?: ReturnType<typeof setInterval>;
   private zone = inject(NgZone);
+  private off: (() => void)[] = [];
+  @ViewChild('hero') heroEl!: ElementRef<HTMLElement>;
+  @ViewChild('fcard') fcardEl!: ElementRef<HTMLElement>;
+  @ViewChild('feat') featEl!: ElementRef<HTMLElement>;
 
   ngAfterViewInit() {
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (typeof window === 'undefined') return; // prerender/SSR: browser-only setup
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     this.zone.runOutsideAngular(() => {
-      this.timer = setInterval(() => { if (!this.held && !document.hidden) this.zone.run(() => this.t.set((this.t() + 1) % WORDS.length)); }, 3200);
+      const hero = this.heroEl.nativeElement;
+      const io = new IntersectionObserver(([e]) => { this.heroVisible = e.isIntersecting; });
+      io.observe(hero);
+      this.off.push(() => io.disconnect());
+      // Pointer effects are bound outside Angular, so moving the mouse (or a finger) never runs change detection.
+      // They are mouse-only: on touch they did nothing useful but still forced layout reads on every move.
+      this.listen(hero, 'mouseenter', () => { this.held = true; });
+      this.listen(hero, 'mouseleave', () => { this.held = false; });
+      if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduce) {
+        this.bindTilt(this.fcardEl.nativeElement);
+        this.bindSpot(this.featEl.nativeElement);
+      }
+      if (!reduce) {
+        this.timer = setInterval(() => {
+          if (!this.held && this.heroVisible && !document.hidden) this.zone.run(() => this.t.set((this.t() + 1) % WORDS.length));
+        }, 3200);
+      }
     });
   }
-  ngOnDestroy() { clearInterval(this.timer); }
-  hold(v: boolean) { this.held = v; }
+  ngOnDestroy() { clearInterval(this.timer); this.off.forEach(f => f()); }
   go(id: string) { document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
 
-  /** 3D tilt for the hero platform card. */
-  tilt(e: PointerEvent) {
-    const el = e.currentTarget as HTMLElement; const r = el.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-    el.style.setProperty('--ry', (x * 8).toFixed(2) + 'deg'); el.style.setProperty('--rx', (-y * 8).toFixed(2) + 'deg');
+  private listen(el: HTMLElement, type: string, fn: (e: any) => void) {
+    el.addEventListener(type, fn, { passive: true });
+    this.off.push(() => el.removeEventListener(type, fn));
   }
-  untilt(e: PointerEvent) { const el = e.currentTarget as HTMLElement; el.style.setProperty('--ry', '0deg'); el.style.setProperty('--rx', '0deg'); }
 
-  /** Cursor spotlight on the cinematic cards. */
-  spot(e: PointerEvent) {
-    for (const c of Array.from((e.currentTarget as HTMLElement).children) as HTMLElement[]) {
-      const r = c.getBoundingClientRect();
-      c.style.setProperty('--x', (e.clientX - r.left) + 'px'); c.style.setProperty('--y', (e.clientY - r.top) + 'px');
-    }
+  /** 3D tilt for the hero platform card (rect measured once per hover, writes batched per frame). */
+  private bindTilt(el: HTMLElement) {
+    let r: DOMRect | null = null, raf = 0, x = 0, y = 0;
+    const paint = () => { raf = 0; el.style.setProperty('--ry', (x * 8).toFixed(2) + 'deg'); el.style.setProperty('--rx', (-y * 8).toFixed(2) + 'deg'); };
+    this.listen(el, 'pointerenter', () => { r = el.getBoundingClientRect(); });
+    this.listen(el, 'pointermove', (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse') return;
+      r ??= el.getBoundingClientRect();
+      x = (e.clientX - r.left) / r.width - .5; y = (e.clientY - r.top) / r.height - .5;
+      raf ||= requestAnimationFrame(paint);
+    });
+    this.listen(el, 'pointerleave', () => { r = null; cancelAnimationFrame(raf); raf = 0; el.style.setProperty('--ry', '0deg'); el.style.setProperty('--rx', '0deg'); });
+    const reset = () => { r = null; };
+    addEventListener('scroll', reset, { passive: true });
+    this.off.push(() => { removeEventListener('scroll', reset); cancelAnimationFrame(raf); });
+  }
+
+  /** Cursor spotlight on the cinematic cards (card rects measured once per hover, not on every move). */
+  private bindSpot(wrap: HTMLElement) {
+    let rects: DOMRect[] | null = null, raf = 0, cx = 0, cy = 0;
+    const cards = () => Array.from(wrap.children) as HTMLElement[];
+    const paint = () => {
+      raf = 0;
+      cards().forEach((c, i) => { const r = rects![i]; c.style.setProperty('--x', (cx - r.left) + 'px'); c.style.setProperty('--y', (cy - r.top) + 'px'); });
+    };
+    this.listen(wrap, 'pointerenter', () => { rects = null; });
+    this.listen(wrap, 'pointermove', (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse') return;
+      rects ??= cards().map(c => c.getBoundingClientRect());
+      cx = e.clientX; cy = e.clientY;
+      raf ||= requestAnimationFrame(paint);
+    });
+    // rects are viewport-relative, so re-measure after the page scrolls under a resting cursor
+    const reset = () => { rects = null; };
+    addEventListener('scroll', reset, { passive: true });
+    this.off.push(() => { removeEventListener('scroll', reset); cancelAnimationFrame(raf); });
   }
 }

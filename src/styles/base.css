@@ -130,8 +130,11 @@ tbody th { color: var(--fg) }
 /* small uppercase label used on pills and diagrams */
 .tag { display: inline-flex; align-items: center; padding: .35rem .7rem; border-radius: 6px; background: color-mix(in srgb, var(--surface) 86%, transparent); border: 1px solid var(--border); font: 600 .72rem/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; color: var(--fg-2); box-shadow: 0 6px 20px -10px rgba(20, 26, 82, .25) }
 /* scroll reveal (driven by the [reveal] directive; falls back to visible) */
-.rv { opacity: 0; transform: translate3d(0, 28px, 0); filter: blur(6px); transition: opacity .9s var(--ease-out), transform .9s var(--ease-out), filter .9s var(--ease-out); transition-delay: var(--d, 0s) }
-.rv.in { opacity: 1; transform: none; filter: none }
+/* opacity + transform only: both run on the compositor (an animated blur filter repaints every frame) */
+.rv { opacity: 0; transform: translate3d(0, 28px, 0); transition: opacity .9s var(--ease-out), transform .9s var(--ease-out); transition-delay: var(--d, 0s) }
+.rv.in { opacity: 1; transform: none }
+/* reserve the page area so the footer never jumps while a lazy page loads (was the main layout shift) */
+main { display: block; min-height: 100vh; min-height: 100dvh }
 /* arrow icon inside buttons */
 .btn .arr { width: 16px; height: 16px; transition: transform .3s var(--ease) }
 .btn:hover .arr { transform: translateX(3px) }

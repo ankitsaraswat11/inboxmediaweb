@@ -101,19 +101,25 @@ export class WhyComponent implements AfterViewInit, OnDestroy {
   phase(n: string) { return n.split(':')[1]?.trim() || n; }
 
   ngAfterViewInit() {
+    if (typeof window === 'undefined') return; // prerender/SSR: browser-only setup
     const el = this.sc.nativeElement;
-    const on = () => {
+    // Measured at most once per animation frame, and Angular only re-renders when a value actually changed.
+    // (Before, every scroll event forced a layout read of every card plus a full change-detection pass.)
+    let raf = 0;
+    const measure = () => {
+      raf = 0;
       const max = el.scrollWidth - el.clientWidth;
-      const a = max > 0 ? el.scrollLeft / max : 0;
+      const a = max > 0 ? Math.round(Math.min(1, el.scrollLeft / max) * 1000) / 1000 : 0;
       const cards = Array.from(el.querySelectorAll<HTMLElement>('.m:not(.end)'));
       const mid = el.getBoundingClientRect().left + parseFloat(getComputedStyle(el).paddingLeft) + (a > .98 ? el.clientWidth * .5 : 0);
       let best = 0, bd = Infinity;
       cards.forEach((c, i) => { const d = Math.abs(c.getBoundingClientRect().left - mid); if (d < bd) { bd = d; best = i; } });
-      this.zone.run(() => { this.at.set(a); this.cur.set(best); });
+      if (a !== this.at() || best !== this.cur()) this.zone.run(() => { this.at.set(a); this.cur.set(best); });
     };
+    const on = () => { raf ||= requestAnimationFrame(measure); };
     this.zone.runOutsideAngular(() => { el.addEventListener('scroll', on, { passive: true }); addEventListener('resize', on); });
-    this.off = () => { el.removeEventListener('scroll', on); removeEventListener('resize', on); };
-    on();
+    this.off = () => { el.removeEventListener('scroll', on); removeEventListener('resize', on); cancelAnimationFrame(raf); };
+    measure();
   }
   ngOnDestroy() { this.off?.(); }
 

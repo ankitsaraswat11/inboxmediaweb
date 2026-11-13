@@ -1,5 +1,7 @@
 import { ResolveFn, Routes } from '@angular/router';
 import { platformBySlug } from './content/platforms';
+// The homepage is the main landing page, so it ships in the first bundle instead of a second lazy request.
+import { HomeComponent } from './pages/home.component';
 
 const title = (page: string) => `${page} | Inbox Media`;
 const platformTitle: ResolveFn<string> = r => {
@@ -11,7 +13,7 @@ export const routes: Routes = [
   {
     path: '',
     title: 'Inbox Media | Intelligent Infrastructure for Modern Enterprises',
-    loadComponent: () => import('./pages/home.component').then(m => m.HomeComponent),
+    component: HomeComponent,
     data: { description: 'An integrated enterprise technology platform: SUTRA for omnichannel communication, MEDHA for intelligence and automation, KAVACH for digital trust, on a shared digital engineering foundation.' }
   },
   {
@@ -89,7 +91,8 @@ export const routes: Routes = [
   {
     path: 'contact',
     title: title('Contact / Book a Demo'),
-    loadComponent: () => import('./pages/contact.component').then(m => m.ContactComponent),
+    // Lazy child routes: HttpClient is only needed by the enquiry form, so it ships with this page, not the startup bundle.
+    loadChildren: () => import('./pages/contact.routes').then(m => m.CONTACT_ROUTES),
     data: { description: 'Book a demo, request a proposal or send a message to Inbox Media.' }
   },
   { path: '**', redirectTo: '' }

@@ -56,7 +56,10 @@ const CONTROLS = ['Consent captured & logged', 'Data encrypted in transit & at r
   imports: [RouterLink],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-<!-- ===== Desktop: pinned, scroll-driven ===== -->
+<!-- ===== Desktop: pinned, scroll-driven =====
+     Only built on wide screens. On phones this whole scene (SVGs, packets, 20-step reveals) used to be
+     created and hidden with CSS, while its scroll handler still measured the page on every frame. -->
+@if (wide()) {
 <div class="pj" #track [style.height.vh]="stages.length * 110 + 20" [style.--c]="'var(--' + cur().slug + ')'" [style.--t]="'var(--' + cur().slug + '-tint)'">
   <div class="stick">
     <div class="wrap grid">
@@ -181,6 +184,7 @@ const CONTROLS = ['Consent captured & logged', 'Data encrypted in transit & at r
     </div>
   </div>
 </div>
+} @else {
 
 <!-- ===== Mobile: stacked list ===== -->
 <ol class="pjm">
@@ -193,7 +197,8 @@ const CONTROLS = ['Consent captured & logged', 'Data encrypted in transit & at r
       <a class="go" [routerLink]="s.link">Explore {{ s.name }} <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </li>
   }
-</ol>`,
+</ol>
+}`,
   styles: [`
 :host{display:block;position:relative}
 .pj{position:relative}
@@ -330,13 +335,12 @@ const CONTROLS = ['Consent captured & logged', 'Data encrypted in transit & at r
 .sum b{color:var(--kavach);font-size:1.1rem;margin-right:.1em}
 
 /* ---- mobile list ---- */
-.pjm{display:none;list-style:none;margin:0;padding:0 var(--gut);gap:1rem}
+.pjm{display:grid;list-style:none;margin:0;padding:0 var(--gut);gap:1rem}
 .pjm > li{display:grid;gap:.3rem;padding:1.5rem 1.3rem;border-radius:20px;background:linear-gradient(160deg,var(--t),var(--surface) 60%);border:1px solid color-mix(in srgb,var(--c) 22%,var(--border));box-shadow:var(--shadow)}
 .pjm .wm{color:var(--c);margin-bottom:.4rem}
 .pjm .go{justify-self:start;margin:0}
 
 @media(max-width:1180px){.trust{grid-template-columns:1fr;padding-top:1rem;align-content:center}.shield svg{width:120px}.ctrls li{padding:.5rem .8rem;font-size:.86rem}.pr{display:none}}
-@media(max-width:900px){.pj{display:none}.pjm{display:grid}}
 @media(prefers-reduced-motion:reduce){.ring,.core,.pr,.mring,.live::before{animation:none!important}.sig{display:none}}
 `]
 })
@@ -363,29 +367,54 @@ export class LifecycleComponent implements AfterViewInit, OnDestroy {
   mdLive = computed(() => this.stage() === 1 ? this.mdProducts.filter((_, k) => this.step() > 7 + k * 2).length : 0);
   activeControls = computed(() => this.stage() === 2 ? this.controls.filter((_, k) => this.step() > k * 3).length : 0);
 
-  @ViewChild('track') track!: ElementRef<HTMLElement>;
-  @ViewChild('rw') rw!: ElementRef<HTMLElement>;
+  @ViewChild('track') track?: ElementRef<HTMLElement>;
+  @ViewChild('rw') rw?: ElementRef<HTMLElement>;
   private zone = inject(NgZone);
   private host = inject(ElementRef<HTMLElement>);
   private off: (() => void)[] = [];
   private dragging = false;
   private stops: number[] = [];
 
+  /** The pinned scene is only used at 901px and up (matches the old CSS breakpoint). */
+  private mq = typeof matchMedia !== 'undefined' ? matchMedia('(min-width: 901px)') : null;
+  wide = signal(this.mq?.matches ?? true);
+  private stopScene?: () => void;
+
   ngAfterViewInit() {
+    if (typeof window === 'undefined') return; // prerender/SSR: browser-only setup
+    if (this.wide()) this.startScene();
+    const onChange = (e: MediaQueryListEvent) => {
+      this.zone.run(() => this.wide.set(e.matches));
+      if (e.matches) requestAnimationFrame(() => this.startScene());
+      else { this.stopScene?.(); this.stopScene = undefined; }
+    };
+    this.mq?.addEventListener('change', onChange);
+    this.off.push(() => this.mq?.removeEventListener('change', onChange));
+  }
+  ngOnDestroy() { this.stopScene?.(); this.off.forEach(f => f()); }
+
+  private startScene() {
+    if (this.stopScene || !this.track) return;
+    this.dirty = true;
     this.zone.runOutsideAngular(() => {
-      let raf = 0;
-      const on = () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; this.update(); }); };
+      let raf = 0, near = false;
+      const on = () => { if (near && !raf) raf = requestAnimationFrame(() => { raf = 0; this.update(); }); };
+      const onResize = () => { this.dirty = true; on(); };
+      // Only track scroll while the pinned section is on (or about to be on) screen.
+      const io = new IntersectionObserver(([e]) => { near = e.isIntersecting; if (near) { this.dirty = true; on(); } }, { rootMargin: '50% 0px' });
+      io.observe(this.host.nativeElement);
       addEventListener('scroll', on, { passive: true });
-      addEventListener('resize', on);
-      this.off.push(() => { removeEventListener('scroll', on); removeEventListener('resize', on); cancelAnimationFrame(raf); });
+      addEventListener('resize', onResize);
+      this.stopScene = () => { io.disconnect(); removeEventListener('scroll', on); removeEventListener('resize', onResize); cancelAnimationFrame(raf); };
       this.update();
     });
   }
-  ngOnDestroy() { this.off.forEach(f => f()); }
 
   /** Re-measure rail stops after a step expands or collapses. */
-  relayout() { this.update(); }
+  relayout() { if (!this.track) return; this.dirty = true; this.update(); }
 
+  /** Rail stop positions only change when the layout does (resize, stage change), not on every scroll frame. */
+  private dirty = true;
   private measure() {
     const rw = this.rw?.nativeElement; if (!rw) return;
     const top = rw.getBoundingClientRect().top;
@@ -396,23 +425,33 @@ export class LifecycleComponent implements AfterViewInit, OnDestroy {
     }
   }
   private setKnob(y: number) {
-    const rw = this.rw.nativeElement;
+    const rw = this.rw!.nativeElement;
     rw.style.setProperty('--ky', y.toFixed(1) + 'px');
     rw.style.setProperty('--fh', Math.max(0, y - (this.stops[0] || 0)).toFixed(1) + 'px');
   }
   private progress() {
-    const r = this.track.nativeElement.getBoundingClientRect();
+    const r = this.track!.nativeElement.getBoundingClientRect();
     const range = r.height - innerHeight;
     return range > 0 ? Math.min(1, Math.max(0, -r.top / range)) : 0;
   }
   private update() {
     const n = this.stages.length;
+    // reads first (layout), then writes, so a scroll frame never forces an extra layout
     const f = Math.min(n - 0.0001, this.progress() * n);
     const s = Math.floor(f), lp = f - s;
+    if (this.dirty) { this.measure(); this.dirty = false; }
     (this.host.nativeElement as HTMLElement).style.setProperty('--lp', lp.toFixed(3));
     const st = Math.floor(lp * 20);
-    if (s !== this.stage() || st !== this.step()) this.zone.run(() => { this.stage.set(s); this.step.set(st); });
-    this.measure();
+    if (s !== this.stage() || st !== this.step()) {
+      this.zone.run(() => { this.stage.set(s); this.step.set(st); });
+      // the DOM for the new step has just rendered: measure the rail again on the next frame
+      this.dirty = true;
+      requestAnimationFrame(() => { if (this.dirty) { this.measure(); this.dirty = false; this.placeKnob(s, lp); } });
+    }
+    this.placeKnob(s, lp);
+  }
+  private placeKnob(s: number, lp: number) {
+    const n = this.stages.length;
     if (!this.dragging && this.stops.length) {
       const glide = s < n - 1 ? this.smooth(0.8, 1, lp) : 0;
       const a = this.stops[s], b = this.stops[Math.min(n - 1, s + 1)];
@@ -422,7 +461,7 @@ export class LifecycleComponent implements AfterViewInit, OnDestroy {
   private smooth(a: number, b: number, x: number) { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
 
   private scrollToStage(i: number, behavior: ScrollBehavior = 'smooth') {
-    const el = this.track.nativeElement;
+    const el = this.track!.nativeElement;
     const top = el.getBoundingClientRect().top + scrollY;
     const range = el.offsetHeight - innerHeight;
     scrollTo({ top: top + ((i + 0.45) / this.stages.length) * range, behavior });
@@ -437,7 +476,7 @@ export class LifecycleComponent implements AfterViewInit, OnDestroy {
 
   /** Drag the marker vertically: it follows the pointer and the page jumps to the nearest platform. */
   down(e: PointerEvent) {
-    const rw = this.rw.nativeElement;
+    const rw = this.rw!.nativeElement;
     const tgt = e.currentTarget as HTMLElement;
     this.measure();
     this.dragging = true;

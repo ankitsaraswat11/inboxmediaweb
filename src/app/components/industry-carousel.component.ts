@@ -97,6 +97,14 @@ blockquote::before{content:"“"}blockquote::after{content:"”"}
   .chips .chip{font-size:.9rem}
   .text-link{font-size:1rem}
 }
+/* Phones and touch screens: 3 blobs x 8 slides with filter:blur(40px) are replaced by soft radial gradients,
+   which look the same but need no blur pass (the blur was re-run whenever a slide moved). */
+@media(max-width:900px),(hover:none){
+  .art i{filter:none;background:radial-gradient(closest-side,var(--bc),transparent)}
+  .b1{--bc:hsl(var(--h) 90% 75%)}.b2{--bc:hsl(calc(var(--h) + 70) 90% 80%)}.b3{--bc:hsl(calc(var(--h) - 60) 85% 72%)}
+  .art i{transform:scale(1.35)}
+  .sl.on .b1{transform:translate(10%,8%) scale(1.35)}.sl.on .b2{transform:translate(-12%,-6%) scale(1.35)}.sl.on .b3{transform:translate(8%,-10%) scale(1.35)}
+}
 @media(prefers-reduced-motion:reduce){.tab .bar{animation:none;transform:none}}
 `]
 })
@@ -108,6 +116,11 @@ export class IndustryCarouselComponent implements AfterViewInit, OnDestroy {
   dragging = signal(false);
   paused = false;
   @ViewChild('vp') vp!: ElementRef<HTMLElement>;
+  @ViewChild('tr') tr!: ElementRef<HTMLElement>;
+  private host = inject(ElementRef<HTMLElement>);
+  private io?: IntersectionObserver;
+  /** Autoplay only advances while the carousel is on screen. */
+  private visible = true;
   private zone = inject(NgZone);
   private timer?: ReturnType<typeof setInterval>;
 
@@ -116,32 +129,52 @@ export class IndustryCarouselComponent implements AfterViewInit, OnDestroy {
     if (e.key === 'ArrowRight') { this.go(this.i() + 1); e.preventDefault(); }
     if (e.key === 'ArrowLeft') { this.go(this.i() - 1); e.preventDefault(); }
   }
+  /**
+   * Drag / swipe. The move handler runs outside Angular and writes the track's transform straight to the DOM
+   * (one write per animation frame), so a swipe no longer runs change detection on every pointer event.
+   */
   down(e: PointerEvent) {
     if ((e.target as HTMLElement).closest('a,button')) return;
-    const vp = this.vp.nativeElement; const x0 = e.clientX; const w = vp.offsetWidth;
+    const vp = this.vp.nativeElement, tr = this.tr.nativeElement; const x0 = e.clientX; const w = vp.offsetWidth;
     vp.setPointerCapture?.(e.pointerId);
     this.dragging.set(true); this.paused = true;
-    const move = (ev: PointerEvent) => {
-      let d = ev.clientX - x0;
-      const atEdge = (this.i() === 0 && d > 0) || (this.i() === this.items.length - 1 && d < 0);
-      if (atEdge) d *= .35; // rubber-band at the ends
-      this.dx.set(d);
-    };
-    const up = () => {
-      const d = this.dx();
-      this.dragging.set(false); this.dx.set(0); this.paused = false;
-      if (Math.abs(d) > Math.min(90, w * .12)) this.go(this.i() + (d < 0 ? 1 : -1));
-      vp.removeEventListener('pointermove', move); vp.removeEventListener('pointerup', up); vp.removeEventListener('pointercancel', up);
-    };
-    vp.addEventListener('pointermove', move); vp.addEventListener('pointerup', up); vp.addEventListener('pointercancel', up);
+    let d = 0, raf = 0;
+    const base = () => 'translate3d(calc(' + (-this.i() * 100) + '% + ' + this.dx() + 'px),0,0)';
+    const paint = () => { raf = 0; tr.style.transform = 'translate3d(calc(' + (-this.i() * 100) + '% + ' + d.toFixed(1) + 'px),0,0)'; };
+    this.zone.runOutsideAngular(() => {
+      const move = (ev: PointerEvent) => {
+        d = ev.clientX - x0;
+        const atEdge = (this.i() === 0 && d > 0) || (this.i() === this.items.length - 1 && d < 0);
+        if (atEdge) d *= .35; // rubber-band at the ends
+        raf ||= requestAnimationFrame(paint);
+      };
+      const up = () => {
+        cancelAnimationFrame(raf);
+        vp.removeEventListener('pointermove', move); vp.removeEventListener('pointerup', up); vp.removeEventListener('pointercancel', up);
+        this.zone.run(() => {
+          this.dragging.set(false); this.paused = false;
+          if (Math.abs(d) > Math.min(90, w * .12)) this.go(this.i() + (d < 0 ? 1 : -1));
+        });
+        // Angular only rewrites the binding when its value changes, so put the resting position back ourselves
+        tr.style.transform = base();
+      };
+      vp.addEventListener('pointermove', move, { passive: true }); vp.addEventListener('pointerup', up); vp.addEventListener('pointercancel', up);
+    });
   }
   private restart() {
     clearInterval(this.timer);
     if (typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     this.zone.runOutsideAngular(() => {
-      this.timer = setInterval(() => { if (!this.paused && !document.hidden) this.zone.run(() => this.i.set((this.i() + 1) % this.items.length)); }, 6000);
+      this.timer = setInterval(() => { if (!this.paused && this.visible && !document.hidden) this.zone.run(() => this.i.set((this.i() + 1) % this.items.length)); }, 6000);
     });
   }
-  ngAfterViewInit() { this.restart(); }
-  ngOnDestroy() { clearInterval(this.timer); }
+  ngAfterViewInit() {
+    if (typeof window === 'undefined') return; // prerender/SSR: browser-only setup
+    this.restart();
+    if (typeof IntersectionObserver !== 'undefined') this.zone.runOutsideAngular(() => {
+      this.io = new IntersectionObserver(([e]) => { this.visible = e.isIntersecting; });
+      this.io.observe(this.host.nativeElement);
+    });
+  }
+  ngOnDestroy() { clearInterval(this.timer); this.io?.disconnect(); }
 }

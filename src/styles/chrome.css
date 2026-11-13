@@ -20,14 +20,15 @@
 /* ---------- header: floating glass bar that overlays the first section ---------- */
 :root { --hdr-top: 14px; --hdr-space: calc(var(--nh) + var(--hdr-top) * 2) }
 .hdr { position: sticky; top: 0; z-index: 60; padding: var(--hdr-top) var(--gut) 0; height: var(--hdr-space); margin-bottom: calc(var(--hdr-space) * -1); pointer-events: none }
-.nav { pointer-events: auto; width: min(1320px, 100%); margin-inline: auto; border-radius: 16px; background: var(--hdr-bg); backdrop-filter: saturate(180%) blur(22px); -webkit-backdrop-filter: saturate(180%) blur(22px); border: 1px solid color-mix(in srgb, var(--border) 80%, transparent); transition: box-shadow .4s, background .4s, transform .5s var(--ease-out) }
-.nav.sc { box-shadow: var(--hdr-shadow); background: color-mix(in srgb, var(--hdr-bg) 100%, var(--bg) 20%) }
+/* Solid, constant header: it looks exactly the same at every scroll position, so the logo and its colour never change.
+   (No backdrop-filter: re-blurring the page behind a sticky bar on every scroll frame is expensive.) */
+.nav { pointer-events: auto; width: min(1320px, 100%); margin-inline: auto; border-radius: 16px; background: var(--hdr-solid); border: 1px solid color-mix(in srgb, var(--border) 80%, transparent); box-shadow: var(--hdr-shadow) }
 .nav > .wrap.row { width: 100%; padding: 0 clamp(14px, 2vw, 28px) }
 /* the first section of every page extends under the floating header */
 main > * > section:first-child { border-top: var(--hdr-space) solid transparent; background-origin: border-box !important }
 .row { display: flex; align-items: center; gap: 1rem; height: var(--nh) }
 .brand { display: flex; align-items: center; color: var(--fg); text-decoration: none; font: 650 1.25rem var(--font-body); letter-spacing: -.02em; flex-shrink: 0 }
-.brand img { height: 36px; width: auto; filter: var(--logo-filter) }
+.brand app-logo { height: 36px }
 
 .menu { display: flex; align-items: stretch; height: 100%; margin-left: auto; gap: .1rem }
 .dd { position: relative; display: flex; align-items: center }
@@ -40,7 +41,7 @@ main > * > section:first-child { border-top: var(--hdr-space) solid transparent;
 .dd > a .chev { width: 10px; height: 10px; fill: none; stroke: currentColor; stroke-width: 2; transition: transform .2s; opacity: .7 }
 .dd:hover > a .chev, .dd:focus-within > a .chev { transform: rotate(180deg) }
 
-.panel { position: absolute; top: calc(100% - 6px); backdrop-filter: blur(20px); left: 0; min-width: 260px; background: var(--night-2); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); padding: .5rem; visibility: hidden; opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s var(--ease), visibility .2s; z-index: 5 }
+.panel { position: absolute; top: calc(100% - 6px); left: 0; min-width: 260px; background: var(--night-2); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-lg); padding: .5rem; visibility: hidden; opacity: 0; transform: translateY(8px); transition: opacity .2s, transform .2s var(--ease), visibility .2s; z-index: 5 }
 .dd:hover .panel, .dd:focus-within .panel { visibility: visible; opacity: 1; transform: none }
 .panel a { display: block; padding: .62rem .8rem; border-radius: var(--r-sm); color: var(--fg); text-decoration: none; font-size: .94rem; font-weight: 500 }
 .panel a:hover, .panel a.on { background: color-mix(in srgb, var(--fg) 6%, transparent) }
@@ -102,7 +103,7 @@ footer.site h4 { font: 600 .8rem var(--font-body); letter-spacing: .14em; text-t
 footer.site a { display: block; color: var(--fg); text-decoration: none; padding: .32rem 0; transition: color .2s, transform .3s var(--ease) }
 footer.site a:hover { color: var(--primary); transform: translateX(3px) }
 footer.site p { color: var(--fg-2); font-size: .96rem }
-footer.site .brand img { height: 44px }
+footer.site .brand app-logo { height: 44px }
 footer.site .brand:hover { transform: none }
 .fmark { font: 700 .98rem var(--mark); letter-spacing: .04em; color: var(--c) }
 footer.site .ftag { font-family: var(--font-serif); font-weight: 400; color: var(--fg); font-size: 1.5rem; line-height: 1.25; letter-spacing: -.01em; margin: 1.4rem 0 .8rem; max-width: 20ch }

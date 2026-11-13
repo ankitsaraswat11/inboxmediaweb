@@ -28,5 +28,5 @@ export class CountDirective implements AfterViewInit, OnDestroy {
     }, { threshold: .4 });
     this.io.observe(n);
   }
-  ngOnDestroy() { this.io?.disconnect(); cancelAnimationFrame(this.raf); }
+  ngOnDestroy() { this.io?.disconnect(); if (this.raf) cancelAnimationFrame(this.raf); }
 }

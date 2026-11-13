@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface HubNode {
@@ -23,7 +23,10 @@ const R = 225;   // node radius from centre
   template: `
   <div class="hub" (mouseleave)="active = -1">
 
-    <!-- ====== SVG layer: orbits, beams, packets ====== -->
+    <!-- ====== SVG layers ======
+         The two orbit rings live in their own <svg> elements and rotate as whole elements, which the
+         browser does on the GPU. Rotating <g> groups inside one big SVG repainted the full 600x600
+         drawing (beams, packets and all) on every frame. -->
     <svg class="hub__svg" viewBox="0 0 600 600" aria-hidden="true">
       <defs>
         <radialGradient id="hvGlow" cx="50%" cy="50%" r="50%">
@@ -31,32 +34,37 @@ const R = 225;   // node radius from centre
           <stop offset="60%" stop-color="#a855f7" stop-opacity=".08"/>
           <stop offset="100%" stop-color="#a855f7" stop-opacity="0"/>
         </radialGradient>
+      </defs>
+      <circle cx="300" cy="300" r="290" fill="url(#hvGlow)"/>
+      <circle cx="300" cy="300" r="95" fill="none" stroke="currentColor" stroke-opacity=".08"/>
+    </svg>
+
+    <svg class="hub__svg orbit orbit--outer" viewBox="0 0 600 600" aria-hidden="true">
+      <circle cx="300" cy="300" r="225" fill="none" stroke="currentColor"
+              stroke-opacity=".14" stroke-dasharray="2 10" stroke-linecap="round" stroke-width="2"/>
+      <circle cx="525" cy="300" r="4" fill="#3b5bff"/>
+      <circle cx="75" cy="300" r="3" fill="#c026d3"/>
+    </svg>
+    <svg class="hub__svg orbit orbit--inner" viewBox="0 0 600 600" aria-hidden="true">
+      <defs>
+        <linearGradient id="hvBeamO" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#3b5bff"/>
+          <stop offset="100%" stop-color="#c026d3"/>
+        </linearGradient>
+      </defs>
+      <circle cx="300" cy="300" r="150" fill="none" stroke="url(#hvBeamO)"
+              stroke-opacity=".35" stroke-dasharray="60 240" stroke-linecap="round" stroke-width="1.5"/>
+      <circle cx="300" cy="150" r="3.5" fill="#7c3aed"/>
+    </svg>
+
+    <!-- beams + data packets -->
+    <svg class="hub__svg" #beams viewBox="0 0 600 600" aria-hidden="true">
+      <defs>
         <linearGradient id="hvBeam" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stop-color="#3b5bff"/>
           <stop offset="100%" stop-color="#c026d3"/>
         </linearGradient>
-        <filter id="hvSoft" x="-50%" y="-50%" width="200%" height="200%">
-          <feGaussianBlur stdDeviation="3"/>
-        </filter>
       </defs>
-
-      <circle cx="300" cy="300" r="290" fill="url(#hvGlow)"/>
-
-      <!-- rotating orbit rings -->
-      <g class="orbit orbit--outer">
-        <circle cx="300" cy="300" r="225" fill="none" stroke="currentColor"
-                stroke-opacity=".14" stroke-dasharray="2 10" stroke-linecap="round" stroke-width="2"/>
-        <circle cx="525" cy="300" r="4" fill="#3b5bff"/>
-        <circle cx="75" cy="300" r="3" fill="#c026d3"/>
-      </g>
-      <g class="orbit orbit--inner">
-        <circle cx="300" cy="300" r="150" fill="none" stroke="url(#hvBeam)"
-                stroke-opacity=".35" stroke-dasharray="60 240" stroke-linecap="round" stroke-width="1.5"/>
-        <circle cx="300" cy="150" r="3.5" fill="#7c3aed"/>
-      </g>
-      <circle cx="300" cy="300" r="95" fill="none" stroke="currentColor" stroke-opacity=".08"/>
-
-      <!-- beams + data packets -->
       <g *ngFor="let n of nodes; let i = index" class="beam" [class.beam--active]="active === i">
         <path [attr.d]="n.path" class="beam__base"/>
         <path [attr.d]="n.path" class="beam__flow" [style.animationDelay.s]="n.delay"/>
@@ -65,7 +73,8 @@ const R = 225;   // node radius from centre
           <animateMotion [attr.path]="n.path" dur="3.2s" repeatCount="indefinite"
                          [attr.begin]="n.delay + 's'"/>
         </circle>
-        <circle r="7" class="packet packet--halo" filter="url(#hvSoft)">
+        <!-- soft halo: a larger translucent dot instead of an SVG gaussian blur, which was re-run every frame as the packet moved -->
+        <circle r="6.5" class="packet packet--halo">
           <animateMotion [attr.path]="n.path" dur="3.2s" repeatCount="indefinite"
                          [attr.begin]="n.delay + 's'"/>
         </circle>
@@ -143,8 +152,8 @@ const R = 225;   // node radius from centre
     .hub { position: relative; width: 100%; aspect-ratio: 1; }
     .hub__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; color: var(--ink); }
 
-    /* orbits */
-    .orbit { transform-origin: 300px 300px; transform-box: view-box; }
+    /* orbits: whole <svg> elements rotating around their centre (composited) */
+    .orbit { transform-origin: 50% 50%; will-change: transform; }
     .orbit--outer { animation: spin 60s linear infinite; }
     .orbit--inner { animation: spin 22s linear infinite reverse; }
     @keyframes spin { to { transform: rotate(360deg); } }
@@ -161,7 +170,7 @@ const R = 225;   // node radius from centre
     @keyframes flow { from { stroke-dashoffset: 278; } to { stroke-dashoffset: 0; } }
 
     .packet--out { fill: #3b5bff; }
-    .packet--halo { fill: #7c3aed; opacity: .5; }
+    .packet--halo { fill: #7c3aed; opacity: .28; }
     .packet--in { fill: #c026d3; }
 
     /* core */
@@ -246,14 +255,19 @@ const R = 225;   // node radius from centre
       font: 500 11px/1 system-ui, sans-serif; color: var(--muted); white-space: nowrap;
     }
 
+    /* live dot: the pulse is a scaled, fading pseudo-element (transform + opacity) instead of an animated box-shadow, which repainted */
     .dot {
+      position: relative;
       width: 6px; height: 6px; border-radius: 50%;
       background: var(--live);
-      box-shadow: 0 0 0 0 rgba(16,185,129,.6);
-      animation: live 1.8s infinite;
       display: inline-block;
     }
-    @keyframes live { 70% { box-shadow: 0 0 0 6px rgba(16,185,129,0); } 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); } }
+    .dot::after {
+      content: ""; position: absolute; inset: 0; border-radius: 50%;
+      background: rgba(16,185,129,.6);
+      animation: live 1.8s infinite;
+    }
+    @keyframes live { 0% { transform: scale(1); opacity: 1; } 70%, 100% { transform: scale(3); opacity: 0; } }
 
     /* stat chips */
     .chip {
@@ -270,8 +284,18 @@ const R = 225;   // node radius from centre
     .chip--a { left: 70%; top: 9%; animation-delay: .8s; }
     .chip--b { left: 4%; top: 85%; animation-delay: 2s; }
 
+    /* Phones and touch screens: frosted glass is re-blurred on every frame while the cards float, so use a near-solid card instead */
+    @media (max-width: 900px), (hover: none) {
+      :host { --card: color-mix(in srgb, var(--surface, #fff) 94%, transparent); }
+      .node, .chip { backdrop-filter: none; -webkit-backdrop-filter: none; }
+    }
+
+    /* Paused while scrolled out of view (set by the component) */
+    :host(.paused) *, :host(.paused) *::after { animation-play-state: paused !important; }
+
     /* small screens */
     @media (max-width: 640px) {
+      .packet--halo, .packet--in { display: none; }
       .node { padding: 6px; border-radius: 14px; }
       .node__text { display: none; }
       .node__icon { width: 34px; height: 34px; }
@@ -279,13 +303,32 @@ const R = 225;   // node radius from centre
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .orbit, .beam__flow, .core__tile, .core__ring, .node, .chip, .dot { animation: none !important; }
+      .orbit, .beam__flow, .core__tile, .core__ring, .node, .chip, .dot, .dot::after { animation: none !important; }
       .packet { display: none; }
     }
   `]
 })
-export class HeroVisualComponent {
+export class HeroVisualComponent implements AfterViewInit, OnDestroy {
   active = -1;
+  @ViewChild('beams') beams?: ElementRef<SVGSVGElement>;
+  private host = inject(ElementRef<HTMLElement>);
+  private zone = inject(NgZone);
+  private io?: IntersectionObserver;
+
+  /** Stop every CSS and SMIL animation while the diagram is off screen. */
+  ngAfterViewInit() {
+    if (typeof IntersectionObserver === 'undefined') return;
+    const el = this.host.nativeElement as HTMLElement;
+    this.zone.runOutsideAngular(() => {
+      this.io = new IntersectionObserver(([e]) => {
+        el.classList.toggle('paused', !e.isIntersecting);
+        const svg = this.beams?.nativeElement;
+        if (svg) e.isIntersecting ? svg.unpauseAnimations() : svg.pauseAnimations();
+      });
+      this.io.observe(el);
+    });
+  }
+  ngOnDestroy() { this.io?.disconnect(); }
 
   nodes: HubNode[] = ([
     { key: 'agents',   label: 'AI Agents', sub: '24 active',      angle: -90, grad: ['#6366f1', '#a855f7'] },
