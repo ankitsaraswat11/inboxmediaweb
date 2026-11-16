@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FlowComponent, Step } from '../flow.component';
 import { CAPABILITIES, AI_SOLUTIONS, INDUSTRIES, TIMELINE, INTEGRATIONS, RESOURCES, Item, FLOW_CAP, FLOW_AI, FLOW_ABOUT, ROADMAP } from '../data';
 interface P{h:string;intro:string;items:Item[];flow:Step[];flowH:string;note?:string;uh?:string}
-const ABOUT:Item[]=[{name:'Enterprise communication',text:'Messaging, voice and omnichannel journeys that reach customers reliably.'},{name:'AI automation',text:'Voice agents, chatbots and domain-specific models that take over routine work.'},{name:'Digital engineering',text:'Custom software, APIs, cloud and modernisation of legacy systems.'}];
+const ABOUT:Item[]=[{name:'Enterprise communication',text:'Messaging, voice and omnichannel journeys that reach customers reliably.'},{name:'AI automation',text:'Voice agents, chatbots and domain-specific models that take over routine work.'},{name:'ABHIYANTRIKI (engineering)',text:'Custom software, APIs, cloud and modernisation of legacy systems.'}];
 const PAGES:Record<string,P>={
  cap:{h:'Capabilities',intro:'Five service areas. For each: what it is, why it matters, how it works and which industries it serves.',uh:'Serves',note:'These describe what each capability does. Case studies and measured results are published only once verified and approved.',items:CAPABILITIES,flow:FLOW_CAP,flowH:'How a customer need becomes an outcome'},
  ai:{h:'AI Solutions',intro:'Six named solutions, each built for a distinct job.',items:AI_SOLUTIONS,flow:FLOW_AI,flowH:'How to choose and roll out an AI solution'},

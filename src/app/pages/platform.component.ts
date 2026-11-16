@@ -96,7 +96,7 @@ import { INDUSTRY_VIEW } from '../data';
   <!-- Foundation + next -->
   <section class="s">
     <div class="wrap foot">
-      <a class="eng" routerLink="/digital-engineering"><span class="ek">Built on Digital Engineering</span><b>{{ engLine() }}</b><span class="text-link">Explore the foundation</span></a>
+      <a class="eng" routerLink="/abhiyantriki"><span class="ek">Built on ABHIYANTRIKI</span><b>{{ engLine() }}</b><span class="text-link">Explore the foundation</span></a>
       <a class="next" [routerLink]="['/platforms', nextP().slug]" [style.--c]="'var(--' + nextP().slug + ')'"><span class="ek">Next platform</span><b class="pmark">{{ nextP().name }}</b><span>{{ nextP().descriptor }}</span></a>
     </div>
   </section>

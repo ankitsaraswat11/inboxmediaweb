@@ -5,7 +5,7 @@ import { ENGINEERING } from '../content/engineering';
 import { PLATFORMS } from '../content/platforms';
 import { CAPABILITIES } from '../data';
 
-/** /digital-engineering: the shared foundation under SUTRA, MEDHA and KAVACH. */
+/** /abhiyantriki (ABHIYANTRIKI): the shared foundation under SUTRA, MEDHA and KAVACH. */
 @Component({
   standalone: true,
   imports: [RouterLink, FlowComponent],
@@ -13,9 +13,11 @@ import { CAPABILITIES } from '../data';
   <section class="s page-hero eng-hero">
     <div class="wrap">
       <p class="eyebrow">{{ e.role }}</p>
-      <h1>{{ e.headline }}</h1>
+      <h1>{{ e.name }}</h1>
+      <p class="desc">{{ e.headline }}</p>
+      <p class="meaning">{{ e.meaning }}</p>
       <p class="lead">{{ e.positioning }}</p>
-      <div class="btns"><a class="btn" routerLink="/contact" [queryParams]="{type:'proposal', interest: 'Digital Engineering'}">Discuss an engineering requirement</a><a class="btn ghost" routerLink="/contact" [queryParams]="{type:'demo'}">Book a demo</a></div>
+      <div class="btns"><a class="btn" routerLink="/contact" [queryParams]="{type:'proposal', interest: 'ABHIYANTRIKI'}">Discuss an engineering requirement</a><a class="btn ghost" routerLink="/contact" [queryParams]="{type:'demo'}">Book a demo</a></div>
     </div>
   </section>
 
@@ -41,7 +43,7 @@ import { CAPABILITIES } from '../data';
           <a class="pwc" [routerLink]="['/platforms', p.slug]" [style.--c]="'var(--' + p.slug + ')'"><b class="pmark">{{ p.name }}</b><span class="lay">{{ p.layer }}</span><p>{{ e.enables[p.slug] }}</p></a>
         }
       </div>
-      <div class="base"><b>Digital Engineering</b><span>APIs · cloud · DevOps · modernisation · engineering teams</span></div>
+      <div class="base"><b>{{ e.name }}</b><strong class="layer-label">The Engineering Layer</strong><span>APIs · cloud · DevOps · modernisation · engineering teams</span></div>
     </div>
   </section>
 
@@ -60,7 +62,10 @@ import { CAPABILITIES } from '../data';
   </section>`,
   styles: [`
   .eng-hero .eyebrow{color:var(--eng)}
-  .eng-hero h1{max-width:16ch}
+  .eng-hero h1{max-width:none}
+  .eng-hero h1 .hi{font-size:.55em;font-weight:600;color:var(--eng);white-space:nowrap}
+  .eng-hero .desc{margin:.4rem 0 0;font:600 1.25rem var(--font-display)}
+  .eng-hero .meaning{margin:1rem 0 0;padding-left:.9rem;border-left:3px solid var(--eng);font-style:italic}
   .eng-hero .btns{margin-top:1.6rem}
   .areas{display:grid;gap:1.4rem}
   .area{display:grid;grid-template-columns:120px 1fr;gap:1.2rem;align-items:start;padding-top:1.4rem;border-top:1px solid var(--border)}
@@ -73,7 +78,7 @@ import { CAPABILITIES } from '../data';
   .pwc{display:grid;gap:.3rem;align-content:start;padding:1.4rem;border-radius:var(--r-lg) var(--r-lg) 0 0;background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--c);text-decoration:none}
   .pwc .pmark{font-size:1.5rem}.lay{font-size:.82rem;font-weight:600;color:var(--c)}.pwc p{margin:.3rem 0 0;color:var(--fg)}
   .base{display:flex;flex-wrap:wrap;gap:.4rem 1rem;align-items:baseline;justify-content:center;margin-top:.8rem;padding:1.1rem;border-radius:var(--r-lg);background:var(--eng-tint);border:1px solid color-mix(in srgb,var(--eng) 30%,transparent)}
-  .base b{font:700 1.1rem var(--font-display);color:var(--eng)}.base span{color:var(--fg-2);font-size:.92rem}
+  .base b{font:700 1.1rem var(--font-display);color:var(--eng)}.base .layer-label{font-size:.94rem;font-weight:650;color:var(--fg)}.base span{color:var(--fg-2);font-size:.92rem}
   .was{margin:2rem 0 1rem;padding:1.4rem;border-radius:var(--r-xl);border:1px solid var(--border);background:var(--surface)}
   .was h3{margin:0 0 .8rem}.was dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:1rem;margin:0}
   .was dt{font-weight:700;font-size:.85rem;color:var(--fg)}.was dd{margin:.2rem 0 0;color:var(--fg-2);font-size:.92rem}
@@ -85,6 +90,6 @@ import { CAPABILITIES } from '../data';
 export class EngineeringComponent {
   e = ENGINEERING; platforms = PLATFORMS;
   areas = (['build', 'connect', 'run', 'scale'] as const).map(k => ({ key: k, label: ENGINEERING.areas[k], items: ENGINEERING.services.filter(s => s.area === k) }));
-  /** Existing capability copy for Digital Engineering & IT Services, preserved here. */
-  cap = CAPABILITIES.find(c => c.name === 'Digital Engineering & IT Services');
+  /** Existing capability copy for ABHIYANTRIKI Engineering & IT Services, preserved here. */
+  cap = CAPABILITIES.find(c => c.name === 'ABHIYANTRIKI Engineering & IT Services');
 }

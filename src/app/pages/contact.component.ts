@@ -44,7 +44,7 @@ export class ContactComponent{
  private fb=inject(FormBuilder);private http=inject(HttpClient);status=signal<'idle'|'sending'|'ok'|'fail'>('idle');type=signal<K|null>(null);flow=FLOW_CONTACT;
  opts:{k:K;t:string;d:string}[]=[{k:'demo',t:'Book a demo',d:'See a product or capability in action.'},{k:'proposal',t:'Request a proposal',d:'Share your requirements and get a scoped response.'},{k:'message',t:'Send a message',d:'A general question or support request.'}];
  industries=INDUSTRIES.map(i=>i.name);goals=FINDER_GOALS;
- interests=[...PLATFORMS.map(p=>p.name),'Digital Engineering',...CAPABILITIES.map(c=>c.name),...AI_SOLUTIONS.map(a=>a.name),ISO42001.name];
+ interests=[...PLATFORMS.map(p=>p.name),'ABHIYANTRIKI',...CAPABILITIES.map(c=>c.name),...AI_SOLUTIONS.map(a=>a.name),ISO42001.name];
  f=this.fb.nonNullable.group({name:[''],email:[''],phone:[''],company:[''],industry:[''],goal:[''],interest:[''],date:[''],message:[''],consent:[false],website:['']});
  constructor(){inject(ActivatedRoute).queryParamMap.subscribe(p=>{const t=p.get('type');if(t==='demo'||t==='proposal'||t==='message')this.pick(t);
   const i=p.get('interest');if(i&&this.interests.includes(i))this.f.patchValue({interest:i});

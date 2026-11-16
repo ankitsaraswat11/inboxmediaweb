@@ -14,7 +14,7 @@ export const routes: Routes = [
     path: '',
     title: 'Inbox Media | Intelligent Infrastructure for Modern Enterprises',
     component: HomeComponent,
-    data: { description: 'An integrated enterprise technology platform: SUTRA for omnichannel communication, MEDHA for intelligence and automation, KAVACH for digital trust, on a shared digital engineering foundation.' }
+    data: { description: 'An integrated enterprise technology platform: SUTRA for omnichannel communication, MEDHA for intelligence and automation, KAVACH for digital trust, on ABHIYANTRIKI, the shared engineering foundation.' }
   },
   {
     path: 'platforms',
@@ -29,16 +29,17 @@ export const routes: Routes = [
     data: { description: 'Inbox Media platforms: SUTRA (communication fabric), MEDHA (intelligence engine) and KAVACH (trust fabric).' }
   },
   {
-    path: 'digital-engineering',
-    title: title('Digital Engineering'),
+    path: 'abhiyantriki',
+    title: title('ABHIYANTRIKI'),
     loadComponent: () => import('./pages/engineering.component').then(m => m.EngineeringComponent),
     data: { description: 'Custom software, APIs, cloud, DevOps and IT modernisation: the shared engineering foundation under SUTRA, MEDHA and KAVACH.' }
   },
+  { path: 'digital-engineering', redirectTo: 'abhiyantriki', pathMatch: 'full' },
   {
     path: 'capabilities',
     title: title('Capabilities'),
     loadComponent: () => import('./pages/capabilities.component').then(m => m.CapabilitiesComponent),
-    data: { description: 'Five capability domains and where each sits: communication, voice and omnichannel in SUTRA, conversational AI in MEDHA, digital engineering as the shared foundation.' }
+    data: { description: 'Five capability domains and where each sits: communication, voice and omnichannel in SUTRA, conversational AI in MEDHA, ABHIYANTRIKI as the shared engineering foundation.' }
   },
   {
     path: 'ai-solutions',

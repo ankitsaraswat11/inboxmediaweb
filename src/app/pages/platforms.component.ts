@@ -14,7 +14,7 @@ import { ENGINEERING } from '../content/engineering';
       <div>
         <p class="eyebrow">Platforms</p>
         <h1>Three platforms. One connected enterprise.</h1>
-        <p class="lead">{{ tagline }} SUTRA connects, MEDHA makes things intelligent and KAVACH protects, all on a shared digital engineering foundation.</p>
+        <p class="lead">{{ tagline }} SUTRA connects, MEDHA makes things intelligent and KAVACH protects, all on ABHIYANTRIKI, the shared engineering foundation.</p>
       </div>
       <app-ecosystem class="eco"/>
     </div>

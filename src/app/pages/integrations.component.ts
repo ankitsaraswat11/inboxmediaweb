@@ -21,7 +21,7 @@ import { IntegrationMapComponent } from '../components/integration-map.component
     </div></section>
     <section class="s"><div class="wrap"><h2>A typical connection journey</h2><app-flow [steps]="flow" label="Integration journey"/>
       <p class="note">This is a conceptual architecture. Actual connectors, APIs, hosting, security controls and data flows must be confirmed during technical discovery.</p>
-      <div class="btns"><a class="btn" routerLink="/contact" [queryParams]="{type:'proposal', interest: 'Digital Engineering'}">Discuss an integration</a><a class="btn ghost" routerLink="/digital-engineering">Digital Engineering</a></div></div></section>`,
+      <div class="btns"><a class="btn" routerLink="/contact" [queryParams]="{type:'proposal', interest: 'ABHIYANTRIKI'}">Discuss an integration</a><a class="btn ghost" routerLink="/abhiyantriki">ABHIYANTRIKI</a></div></div></section>`,
   styles: [`
   .ig{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))}
   .it{padding:1.4rem;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--border)}

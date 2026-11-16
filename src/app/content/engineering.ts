@@ -1,8 +1,9 @@
-/* Digital Engineering: the shared foundation under SUTRA, MEDHA and KAVACH. */
+/* ABHIYANTRIKI: the shared engineering foundation under SUTRA, MEDHA and KAVACH. */
 export interface EngService { name: string; text: string; area: 'build' | 'connect' | 'run' | 'scale'; }
 
 export const ENGINEERING = {
-  name: 'Digital Engineering',
+  name: 'ABHIYANTRIKI',
+  meaning: 'Abhiyantriki means engineering: the craft of designing and building the systems that carry communication, intelligence and trust.',
   role: 'Shared Technology Foundation',
   headline: 'Built to Integrate. Engineered to Scale.',
   positioning: 'Our engineering capabilities connect, build and scale the digital infrastructure that powers communication, intelligence and enterprise trust.',

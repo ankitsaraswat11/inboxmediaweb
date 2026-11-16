@@ -72,7 +72,7 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
       <span class="fc-copy">
         <span class="fc-k">One platform · three layers</span>
         <b class="fc-t">@for (p of platforms; track p.slug; let l = $last) {<span class="pmark" [style.--c]="'var(--' + p.slug + ')'">{{ p.name }}</span>@if (!l) {<span class="amp"> · </span>}}</b>
-        <span class="fc-s">On a shared Digital Engineering foundation, serving enterprises since {{ founded }}.</span>
+        <span class="fc-s">On ABHIYANTRIKI, the shared engineering foundation, serving enterprises since {{ founded }}.</span>
         <span class="fc-b">Explore platforms <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </span>
       <span class="fc-art" aria-hidden="true">

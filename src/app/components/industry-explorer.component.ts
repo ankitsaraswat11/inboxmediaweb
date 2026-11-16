@@ -25,7 +25,7 @@ import { PLATFORMS } from '../content/platforms';
           <h4>Relevant platforms</h4>
           <div class="pl">
             @for (p of plats(x.platforms); track p.slug) { <a class="pchip" [routerLink]="['/platforms', p.slug]" [style.--c]="'var(--' + p.slug + ')'" [style.--t]="'var(--' + p.slug + '-tint)'">{{ p.name }}<small>{{ p.short }}</small></a> }
-            @if (x.engineering) { <a class="pchip" routerLink="/digital-engineering" style="--c:var(--eng);--t:var(--eng-tint)">Engineering<small>Shared foundation</small></a> }
+            @if (x.engineering) { <a class="pchip" routerLink="/abhiyantriki" style="--c:var(--eng);--t:var(--eng-tint)">ABHIYANTRIKI<small>Shared foundation</small></a> }
           </div>
           @if (x.products.length) {
             <h4>Relevant products</h4>

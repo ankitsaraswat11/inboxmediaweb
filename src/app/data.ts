@@ -4,7 +4,7 @@ export const CAPABILITIES_RAW: Item[] = [
  {name:'Voice & Telephony',text:'IVR systems, cloud telephony, toll-free and virtual numbers, OBD calling, contact center solutions and voice broadcasting.'},
  {name:'Conversational AI & Automation',text:'AI voice agents, WhatsApp Business automation, conversational bots, lead qualification, multilingual engagement and sentiment analysis.'},
  {name:'Omnichannel Engagement Platform',text:'Unified orchestration across SMS, WhatsApp, voice, email, RCS and push, with a single dashboard, workflow automation and real-time analytics.'},
- {name:'Digital Engineering & IT Services',text:'Custom software development, web and mobile apps, cloud and DevOps, IT modernization, CMS platforms and on-demand engineering teams.'}];
+ {name:'ABHIYANTRIKI Engineering & IT Services',text:'Custom software development, web and mobile apps, cloud and DevOps, IT modernization, CMS platforms and on-demand engineering teams.'}];
 const CAP_INFO:Record<string,Partial<Item>>={
  'Communication Infrastructure':{
   what:'Software and APIs that send your SMS, OTP, RCS and notification traffic reliably and in line with telecom rules.',
@@ -30,7 +30,7 @@ const CAP_INFO:Record<string,Partial<Item>>={
   how:'You define a journey once. The platform decides which channel to use, triggers each message through workflow automation, and shows what is working in one dashboard with real-time analytics.',
   uses:['Ecommerce & Retail','BFSI','Telecom','Education'],
   benefit:'One coordinated customer journey, and one place to see what is working.'},
- 'Digital Engineering & IT Services':{
+ 'ABHIYANTRIKI Engineering & IT Services':{
   what:'Engineering teams and services that build, run and modernise the apps and systems around your communication.',
   why:'Communication tools only deliver value when they connect to your own systems, and legacy software slows every change.',
   how:'We build apps and APIs that connect your CRM and internal systems, set up cloud and DevOps for reliable releases, modernise legacy systems step by step, and add engineers to your team on demand.',
@@ -85,7 +85,7 @@ export const INDUSTRIES: Item[] = [
   what:'Shipment status alerts, delivery confirmation calls, address verification and customer notifications.',
   why:'Failed deliveries and "where is my parcel" calls are expensive. Customers want real-time updates without chasing anyone.',
   how:'The notification engine triggers SMS and WhatsApp alerts at each shipment stage. Outbound calling and IVR confirm addresses and delivery slots. Custom software and APIs connect to your tracking and dispatch systems, with connectors confirmed per project.',
-  uses:['Communication Infrastructure','Voice & Telephony','Digital Engineering & IT Services'],
+  uses:['Communication Infrastructure','Voice & Telephony','ABHIYANTRIKI Engineering & IT Services'],
   benefit:'Fewer failed deliveries and inbound status calls, with customers kept informed automatically.'},
  {name:'Government',
   text:'Citizen notifications, helplines and AI governance for public sector bodies.',
@@ -98,8 +98,8 @@ export const INDUSTRIES: Item[] = [
   text:'Voice, IVR and messaging infrastructure and AI for telecom operators and service providers.',
   what:'Voice, IVR, cloud telephony, toll-free and virtual numbers, and messaging APIs for operators and their enterprise customers.',
   why:'Telecom brands handle huge volumes of calls and messages, and customers expect quick resolution on the channel they choose.',
-  how:'Cloud telephony and IVR route and automate calls. Messaging APIs deliver notifications at scale. Custom SLM can power a telecom-specific assistant, and digital engineering supports platform modernisation.',
-  uses:['Voice & Telephony','Communication Infrastructure','Custom SLM','Digital Engineering & IT Services'],
+  how:'Cloud telephony and IVR route and automate calls. Messaging APIs deliver notifications at scale. Custom SLM can power a telecom-specific assistant, and ABHIYANTRIKI engineering supports platform modernisation.',
+  uses:['Voice & Telephony','Communication Infrastructure','Custom SLM','ABHIYANTRIKI Engineering & IT Services'],
   benefit:'Calls and messages are handled at scale, with routine support automated and platforms modernised.'}];
 export const TIMELINE: Item[] = [
  {name:'2009: The Foundation',text:'We began with a mission to build reliable, scalable telecom infrastructure for enterprises across India, focused on connectivity, messaging and mission-critical communication systems.'},
@@ -122,11 +122,11 @@ export const SOLVE = [
  {t:'Customer communication',d:'Reach customers reliably with SMS, OTP, WhatsApp, RCS and email.',c:'See communication infrastructure',u:'/capabilities'},
  {t:'Voice automation',d:'Route and automate calls with IVR, cloud telephony and outbound calling.',c:'See voice and telephony',u:'/capabilities'},
  {t:'AI implementation',d:'Add voice agents, domain models or on-site AI to your operations.',c:'Explore AI solutions',u:'/ai-solutions'},
- {t:'Software engineering',d:'Build, connect or modernise apps, APIs and cloud systems.',c:'See digital engineering',u:'/capabilities'}];
+ {t:'Software engineering',d:'Build, connect or modernise apps, APIs and cloud systems.',c:'See ABHIYANTRIKI',u:'/capabilities'}];
 export const THEMES = [
  {t:'Reliable communication',d:'Messages, OTPs and calls that reach customers on the channel they actually use.'},
  {t:'Intelligent automation',d:'AI agents and bots that handle routine conversations, bookings and follow-ups.'},
- {t:'Digital engineering',d:'Custom software, apps and cloud systems that connect everything together.'}];
+ {t:'ABHIYANTRIKI',d:'Custom software, apps and cloud systems that connect everything together.'}];
 export type ProductVisual='aura'|'tellco'|'slm'|'trainexl'|'edge';
 export interface Product { name:string; text:string; flow:Step[]; deploy:string; integ:string; note?:string; what?:string; why?:string; how?:string; who?:string[]; benefit?:string; tagline?:string; caps?:string[]; visual?:ProductVisual; }
 const TBC='To be confirmed with the product team before publishing.';
@@ -225,7 +225,7 @@ const INDUSTRY_DETAIL: Record<string, IndustryDetail> = {
     workflow: ['Citizen notices go out through bulk messaging and IVR', 'Multilingual voice and WhatsApp bots answer routine queries', 'Edge AI keeps processing on-premise', 'ISO 42001 readiness and TrainExl support governance and staff training'] },
   'Telecom': { platforms: ['sutra', 'medha'], engineering: true,
     challenges: ['Huge call and message volumes', 'Customers expect quick resolution on any channel', 'Legacy platforms slow down change'],
-    workflow: ['Cloud telephony and IVR route and automate calls', 'Messaging APIs deliver notifications at scale', 'A Custom SLM powers a telecom-specific assistant', 'Digital engineering modernises the platforms underneath'] }
+    workflow: ['Cloud telephony and IVR route and automate calls', 'Messaging APIs deliver notifications at scale', 'A Custom SLM powers a telecom-specific assistant', 'ABHIYANTRIKI engineering modernises the platforms underneath'] }
 };
 export const INDUSTRY_VIEW = INDUSTRIES.map(i => ({
   ...i, ...INDUSTRY_DETAIL[i.name],
@@ -260,6 +260,6 @@ export const FINDER_GOALS: FinderGoal[] = [
   { key: 'communication', label: 'Customer communication and alerts', interest: 'SUTRA' },
   { key: 'calls', label: 'Voice calls and follow-ups', interest: 'Voice & Telephony' },
   { key: 'automation', label: 'Customer support and conversations', interest: 'MEDHA' },
-  { key: 'systems', label: 'Connect or modernise systems', interest: 'Digital Engineering' },
+  { key: 'systems', label: 'Connect or modernise systems', interest: 'ABHIYANTRIKI' },
   { key: 'governance', label: 'Privacy, security and AI governance', interest: 'KAVACH' }
 ];

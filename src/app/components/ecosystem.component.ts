@@ -16,7 +16,7 @@ const SATS: string[][] = [['SMS', 'WhatsApp', 'Voice'], ['AI agents', 'SLMs', 'A
   template: `
   <div class="eco" (mouseleave)="resume()">
     <svg viewBox="0 0 560 584" role="img" aria-labelledby="eco-t">
-      <title id="eco-t">Inbox Media at the centre, connected to SUTRA (communication), MEDHA (intelligence) and KAVACH (trust), on a shared digital engineering foundation</title>
+      <title id="eco-t">Inbox Media at the centre, connected to SUTRA (communication), MEDHA (intelligence) and KAVACH (trust), on ABHIYANTRIKI, the shared engineering foundation</title>
       <defs>
         <radialGradient id="eco-core" cx="50%" cy="40%" r="65%"><stop offset="0" class="g1"/><stop offset="1" class="g2"/></radialGradient>
       </defs>
@@ -54,7 +54,7 @@ const SATS: string[][] = [['SMS', 'WhatsApp', 'Voice'], ['AI agents', 'SLMs', 'A
       <!-- shared foundation -->
       <g class="found">
         <rect x="70" y="540" width="420" height="34" rx="10"/>
-        <text x="280" y="562">Digital Engineering · shared foundation</text>
+        <text x="280" y="562">ABHIYANTRIKI · The Engineering Layer · shared foundation</text>
         @for (n of nodes; track n.p.slug) { <line class="fl" [attr.x1]="n.x" [attr.y1]="n.y + 62" [attr.x2]="n.x" y2="540"/> }
       </g>
     </svg>

@@ -36,10 +36,10 @@ function readAnn() { try { return sessionStorage.getItem(ANN_KEY) !== '1'; } cat
             <span class="mlay">{{ p.layer }}</span><b>{{ p.name }}</b><span class="mdesc">{{ p.descriptor }}</span><span class="msub">{{ p.summary }}</span>
           </a>
         }
-        <div class="mfoot"><span>Also</span><a routerLink="/ai-solutions">AI products</a><a routerLink="/capabilities">All capabilities</a><a routerLink="/digital-engineering">Digital Engineering foundation</a></div>
+        <div class="mfoot"><span>Also</span><a routerLink="/ai-solutions">AI products</a><a routerLink="/capabilities">All capabilities</a><a routerLink="/abhiyantriki">ABHIYANTRIKI foundation</a></div>
       </div>
     </div>
-    <div class="dd"><a routerLink="/digital-engineering" routerLinkActive="on">Digital Engineering</a></div>
+    <div class="dd"><a routerLink="/abhiyantriki" routerLinkActive="on">ABHIYANTRIKI</a></div>
     <div class="dd"><a routerLink="/industries" routerLinkActive="on">Industries</a></div>
     <div class="dd"><a routerLink="/resources" routerLinkActive="on">Resources</a></div>
     <div class="dd"><a routerLink="/about" routerLinkActive="on" aria-haspopup="true">About<svg class="chev" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5l3 3 3-3"/></svg></a>
@@ -62,7 +62,7 @@ function readAnn() { try { return sessionStorage.getItem(ANN_KEY) !== '1'; } cat
       <div class="mplat">@for (p of plats; track p.slug) { <a [routerLink]="['/platforms', p.slug]" [style.--c]="'var(--' + p.slug + ')'" [style.--t]="'var(--' + p.slug + '-tint)'"><b>{{ p.name }}</b><span>{{ p.descriptor }}</span></a> }</div>
       <div class="msubl"><a routerLink="/ai-solutions">AI products</a><a routerLink="/capabilities">All capabilities</a></div>
     </details>
-    <a routerLink="/digital-engineering" routerLinkActive="on">Digital Engineering</a>
+    <a routerLink="/abhiyantriki" routerLinkActive="on">ABHIYANTRIKI</a>
     <a routerLink="/industries" routerLinkActive="on">Industries</a>
     <a routerLink="/resources" routerLinkActive="on">Resources</a>
     <details><summary>About</summary><div class="msubl"><a routerLink="/about">About Inbox Media</a><a routerLink="/about/why-inbox-media">Why Inbox Media</a><a routerLink="/about/certifications">Certifications</a></div></details>
@@ -81,7 +81,7 @@ function readAnn() { try { return sessionStorage.getItem(ANN_KEY) !== '1'; } cat
     </div>
     <div><h4>Platforms</h4>
       @for (p of plats; track p.slug) { <a [routerLink]="['/platforms', p.slug]"><span class="fmark" [style.--c]="'var(--' + p.slug + ')'">{{ p.name }}</span> {{ p.short }}</a> }
-      <a routerLink="/digital-engineering">Digital Engineering</a><a routerLink="/capabilities">All capabilities</a>
+      <a routerLink="/abhiyantriki">ABHIYANTRIKI</a><a routerLink="/capabilities">All capabilities</a>
     </div>
     <div><h4>AI products</h4>@for (a of products; track a.name) { <a routerLink="/ai-solutions" [queryParams]="{p: a.name}">{{ a.name }}</a> }</div>
     <div><h4>Company</h4><a routerLink="/about">About</a><a routerLink="/about/why-inbox-media">Why Inbox Media</a><a routerLink="/about/certifications">Certifications</a><a routerLink="/industries">Industries</a><a routerLink="/integrations">Integrations</a><a routerLink="/resources">Resources</a></div>
