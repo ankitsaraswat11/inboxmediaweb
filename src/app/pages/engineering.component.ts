@@ -5,7 +5,7 @@ import { ENGINEERING } from '../content/engineering';
 import { PLATFORMS } from '../content/platforms';
 import { CAPABILITIES } from '../data';
 
-/** /abhiyantriki (ABHIYANTRIKI): the shared foundation under SUTRA, MEDHA and KAVACH. */
+/** /abhiyantriki (Abhiyantriki): the shared foundation under SUTRA, MEDHA, KAVACH and SHROTAS. */
 @Component({
   standalone: true,
   imports: [RouterLink, FlowComponent],
@@ -17,7 +17,7 @@ import { CAPABILITIES } from '../data';
       <p class="desc">{{ e.headline }}</p>
       <p class="meaning">{{ e.meaning }}</p>
       <p class="lead">{{ e.positioning }}</p>
-      <div class="btns"><a class="btn" routerLink="/contact" [queryParams]="{type:'proposal', interest: 'ABHIYANTRIKI'}">Discuss an engineering requirement</a><a class="btn ghost" routerLink="/contact" [queryParams]="{type:'demo'}">Book a demo</a></div>
+      <div class="btns"><a class="btn" routerLink="/contact" [queryParams]="{type:'proposal', interest: 'Abhiyantriki'}">Discuss an engineering requirement</a><a class="btn ghost" routerLink="/contact" [queryParams]="{type:'demo'}">Book a demo</a></div>
     </div>
   </section>
 
@@ -90,6 +90,6 @@ import { CAPABILITIES } from '../data';
 export class EngineeringComponent {
   e = ENGINEERING; platforms = PLATFORMS;
   areas = (['build', 'connect', 'run', 'scale'] as const).map(k => ({ key: k, label: ENGINEERING.areas[k], items: ENGINEERING.services.filter(s => s.area === k) }));
-  /** Existing capability copy for ABHIYANTRIKI Engineering & IT Services, preserved here. */
-  cap = CAPABILITIES.find(c => c.name === 'ABHIYANTRIKI Engineering & IT Services');
+  /** Existing capability copy for Abhiyantriki Engineering & IT Services, preserved here. */
+  cap = CAPABILITIES.find(c => c.name === 'Abhiyantriki Engineering & IT Services');
 }

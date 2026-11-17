@@ -1,8 +1,8 @@
 /* =====================================================================
-   SUTRA · MEDHA · KAVACH — platform content
+   SUTRA · MEDHA · KAVACH · SHROTAS — platform content
    One file per concern keeps copy editable without touching components.
    ===================================================================== */
-export type PlatformSlug = 'sutra' | 'medha' | 'kavach';
+export type PlatformSlug = 'sutra' | 'medha' | 'kavach' | 'shrotas';
 
 /**
  * KAVACH items are labelled so visitors can tell what kind of offer each one is.
@@ -134,8 +134,51 @@ export const PLATFORMS: Platform[] = [
       answer: 'KAVACH builds privacy, security and AI governance into SUTRA and MEDHA from the start.'
     },
     capabilities: []
+  },
+  {
+    slug: 'shrotas', name: 'SHROTAS', hi: 'स्रोतस', layer: 'The Awareness Layer', area: 'Media & Social Intelligence',
+    descriptor: 'Media & Social Intelligence Platform', short: 'Intelligence Radar', tagline: 'Hear everything.',
+    meaning: 'Shrotas (स्रोतस) means the streams and channels through which news and public conversation flow.',
+    positioning: 'SHROTAS turns social media, news and TV coverage into real-time intelligence, so enterprises know what is being said, how people feel and what needs a response.',
+    summary: 'Social listening and media monitoring across ten sources, with sentiment, trends and alerts.',
+    highlights: ['Social Listening', 'Media Monitoring', 'Sentiment Analysis', 'Hindi & Hinglish', 'Trend Detection', 'Real-time Alerts', 'Competitor Benchmarking', 'Executive Reports'],
+    groups: [
+      { title: 'MyRadar 360', text: 'The SHROTAS product: one radar for social media, news and TV.',
+        items: ['Unified Monitoring', 'Sentiment & Emotion', 'Trend & Spike Detection', 'Competitive Benchmarking', 'Real-time Alerts', 'Executive Reporting'].map(name => ({ name })) },
+      { title: 'Social Media Monitoring', text: 'Six platforms where conversations start and spread.',
+        items: ['X (Twitter)', 'YouTube', 'Instagram', 'Facebook', 'Reddit', 'LinkedIn'].map(name => ({ name })) },
+      { title: 'Media Monitoring', text: 'Four streams where stories get reported.',
+        items: ['News (web)', 'Newspapers (e-paper)', 'Television', 'News on X'].map(name => ({ name })) }
+    ],
+    useCases: [
+      { title: 'Brand reputation', text: 'See what customers say about you and your rivals, across every platform, every day.', who: 'Brands & retail' },
+      { title: 'Crisis early warning', text: 'Get alerted when complaints or negative coverage start to spike, before they trend.', who: 'PR & communications' },
+      { title: 'Outage and scam chatter', text: 'Catch payment failures and phishing scams being discussed online, early.', who: 'BFSI, telecom' },
+      { title: 'Public feedback on policy', text: 'Understand how citizens react to announcements, by topic and by region.', who: 'Government' }
+    ],
+    challenge: {
+      title: 'Blind spots in public conversation', text: 'A story can start on YouTube, Reddit, TV or the morning paper. Teams often hear about it late, and from someone else.',
+      symptoms: ['Mentions tracked by hand, platform by platform', 'Hindi and Hinglish posts missed or misread', 'Crises spotted only after they trend'],
+      answer: 'SHROTAS watches all ten sources in one place and alerts you while a story is still small.'
+    },
+    capabilities: []
   }
 ];
+
+/** The SHROTAS product. */
+export const MYRADAR = {
+  name: 'MyRadar 360',
+  line: 'See beyond the noise. Understand the signals.',
+  text: 'Social media, news and TV, tracked in one place. Know what people say, how they feel and what needs action, as it happens.',
+  sources: { social: 6, media: 4 },
+  features: [
+    { t: 'Unified monitoring', d: 'Every mention from 10 sources, in one feed.' },
+    { t: 'Sentiment & emotion', d: 'Hindi, Hinglish and regional languages too.' },
+    { t: 'Trend & spike detection', d: 'Catch a story while it is still small.' },
+    { t: 'Real-time alerts', d: 'Know the moment it matters.' }
+  ]
+};
+
 
 /** ISO 42001 AI Readiness moved from AI products to KAVACH: it is a governance service, not an AI product. Original copy preserved. */
 export const ISO42001 = {
@@ -151,4 +194,4 @@ export const ISO42001 = {
 };
 
 export const platformBySlug = (s: string | null | undefined) => PLATFORMS.find(p => p.slug === s);
-export const TAGLINE = 'Connect Everything. Think Intelligently. Operate with Trust.';
+export const TAGLINE = 'Connect Everything. Think Intelligently. Operate with Trust. Hear Everything.';

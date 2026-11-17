@@ -41,6 +41,27 @@ const K_TAGS: Node[] = [
   ['AI governance', 68, 205, 'ISO 42001 readiness, AI risk assessment and model oversight.']
 ].map(([l, x, y, d]) => ({ l: l as string, x: x as number, y: y as number, w: pill(l as string), d: d as string }));
 
+/* ---------- SHROTAS: ten sources flowing into one radar ---------- */
+const RC = { x: 220, y: 205 };
+const SHROTAS_NODES: Node[] = [
+  ['X', 'Posts, replies and trending hashtags.'],
+  ['YouTube', 'Videos, titles and comments.'],
+  ['Instagram', 'Public posts, reels and comments.'],
+  ['Facebook', 'Public pages, posts and comments.'],
+  ['Reddit', 'Communities and discussion threads.'],
+  ['LinkedIn', 'Company and leadership updates.'],
+  ['News', 'Online news sites and portals.', true],
+  ['E-papers', 'Daily newspaper editions.', true],
+  ['TV', 'News channel coverage.', true],
+  ['News on X', 'Media-house handles on X.', true]
+].map(([l, d, media], i) => {
+  const r = (-90 + i * 36) * Math.PI / 180, x = +(RC.x + 168 * Math.cos(r)).toFixed(1), y = +(RC.y + 160 * Math.sin(r)).toFixed(1);
+  const mx = (RC.x + x) / 2, my = (RC.y + y) / 2, dx = x - RC.x, dy = y - RC.y;
+  // drawn from the source into the core, so signals flow inward
+  return { l: l as string, x, y, w: pill(l as string), d: d as string, sys: !!media, path: `M${x},${y} Q${(mx + dy * .18).toFixed(1)},${(my - dx * .18).toFixed(1)} ${RC.x},${RC.y}` };
+});
+const BLIPS = [[286, 132, 0], [150, 262, 900], [300, 268, 1700], [168, 150, 2500]].map(([x, y, d]) => ({ x, y, d }));
+
 @Component({
   selector: 'app-platform-art',
   standalone: true,
@@ -87,6 +108,28 @@ const K_TAGS: Node[] = [
         @for (n of outputs; track n.l) {
           <g class="nd solid" [class.hot]="cap() === n" tabindex="0" (mouseenter)="cap.set(n)" (focus)="cap.set(n)" (blur)="cap.set(null)" [attr.transform]="'translate(' + (n.x - n.w / 2) + ' ' + (n.y - 16) + ')'">
             <rect [attr.width]="n.w" height="32" rx="16"/><text [attr.x]="n.w / 2" y="21">{{ n.l }}</text>
+          </g>
+        }
+      </svg>
+    }
+    @case ('shrotas') {
+      <svg viewBox="0 0 440 410" role="img" aria-label="SHROTAS radar: X, YouTube, Instagram, Facebook, Reddit, LinkedIn, news, e-papers, TV and news on X flowing into MyRadar 360">
+        <circle class="rg" cx="220" cy="205" r="62"/>
+        <circle class="rg" cx="220" cy="205" r="108"/>
+        <circle class="rg dash spin" cx="220" cy="205" r="140"/>
+        <g class="sweep"><path class="wedge" d="M220 205 L220 65 A140 140 0 0 1 319 106 Z"/></g>
+        @for (b of blips; track $index) { <circle class="blip" [attr.cx]="b.x" [attr.cy]="b.y" r="4" [style.animation-delay.ms]="b.d"/> }
+        @for (n of shrotas; track n.l; let i = $index) {
+          <path class="th" [class.hot]="cap() === n" [attr.d]="n.path"/>
+          <path class="sig" pathLength="100" [attr.d]="n.path" [style.animation-delay.ms]="i * 280"/>
+        }
+        <circle class="halo" cx="220" cy="205" r="64"/>
+        <circle class="core" cx="220" cy="205" r="52"/>
+        <text class="mk" x="220" y="204">SHROTAS</text>
+        <text class="sub" x="220" y="222">MyRadar 360</text>
+        @for (n of shrotas; track n.l) {
+          <g class="nd" [class.sys]="n.sys" [class.hot]="cap() === n" tabindex="0" (mouseenter)="cap.set(n)" (focus)="cap.set(n)" (blur)="cap.set(null)" [attr.transform]="'translate(' + (n.x - n.w / 2) + ' ' + (n.y - 16) + ')'">
+            <rect [attr.width]="n.w" height="32" [attr.rx]="n.sys ? 8 : 16"/><text [attr.x]="n.w / 2" y="21">{{ n.l }}</text>
           </g>
         }
       </svg>
@@ -146,6 +189,10 @@ const K_TAGS: Node[] = [
   .check{fill:none;stroke:var(--surface);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:tick 4s ease-in-out infinite}
   .orbit{transform-origin:220px 205px}.o1{animation:spin 10s linear infinite}.o2{animation:spin 16s linear infinite reverse}
   .sat{fill:currentColor}
+  .sweep{transform-origin:220px 205px;animation:spin 6s linear infinite}
+  .wedge{fill:currentColor;fill-opacity:.14}
+  .blip{fill:currentColor;transform-box:fill-box;transform-origin:center;animation:blip 3.4s ease-in-out infinite}
+  .sub{fill:var(--surface);font:600 10.5px var(--font-body);letter-spacing:.04em;text-anchor:middle;opacity:.9}
   .caption{min-height:3em;margin:.5rem auto 0;max-width:46ch;text-align:center;font-size:.88rem;line-height:1.5;color:var(--fg-2)}
   .caption b{color:currentColor;margin-right:.25rem}
   .caption span{opacity:.8}
@@ -153,17 +200,19 @@ const K_TAGS: Node[] = [
   @keyframes spin{to{transform:rotate(360deg)}}
   @keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
   @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(6px,-8px)}}
+  @keyframes blip{0%,100%{opacity:.2;transform:scale(.7)}40%{opacity:1;transform:scale(1.25)}}
   @keyframes tick{0%,15%{stroke-dashoffset:60}35%,85%{stroke-dashoffset:0}100%{stroke-dashoffset:60}}
   /* Phones and touch screens: this SVG repaints every frame while its signals run, and each repaint
      re-ran the two drop-shadow filters. Drop them there; the shapes themselves are unchanged. */
   @media(max-width:900px),(hover:none){.core,.shield{filter:none}}
-  @media(prefers-reduced-motion:reduce){.sig{display:none}.check{stroke-dashoffset:0}}
+  @media(prefers-reduced-motion:reduce){.sig{display:none}.check{stroke-dashoffset:0}.sweep,.blip{animation:none}}
   `]
 })
 export class PlatformArtComponent {
   @Input({ required: true }) slug!: PlatformSlug;
   @Input() hint = 'Hover or tab through the diagram to see what each part does.';
   cap = signal<Node | null>(null);
+  shrotas = SHROTAS_NODES; blips = BLIPS;
   sutra = SUTRA_NODES; inputs = M_IN; outputs = M_OUT; agents = M_AG; mesh = MESH; ktags = K_TAGS;
   particles = Array.from({ length: 16 }, (_, i) => ({ x: 150 + ((i * 53) % 150), y: 70 + ((i * 97) % 280), d: i * 380 }));
 }

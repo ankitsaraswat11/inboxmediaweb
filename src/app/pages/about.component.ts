@@ -10,7 +10,7 @@ import { FlowComponent } from '../components/flow.component';
   imports: [RouterLink, FlowComponent],
   template: `
     <section class="s page-hero"><div class="wrap"><p class="eyebrow">About the company</p><h1>An integrated enterprise technology platform</h1>
-      <p class="lead">Inbox Media brings communication infrastructure, intelligent automation, digital trust and engineering (ABHIYANTRIKI) together to support enterprise operations. {{ tagline }}</p></div></section>
+      <p class="lead">Inbox Media brings communication infrastructure, intelligent automation, digital trust, media intelligence and engineering (Abhiyantriki) together to support enterprise operations. {{ tagline }}</p></div></section>
     <section class="s"><div class="wrap">
       <div class="intro"><h2>One partner across connected business needs</h2>
         <p>From customer notifications and cloud telephony to AI-led conversations, governance and custom software, the portfolio is organised around the practical systems businesses use to communicate and operate. Serving enterprises since {{ founded }}.</p></div>
@@ -22,7 +22,7 @@ import { FlowComponent } from '../components/flow.component';
             <a class="kid" [routerLink]="['/platforms', p.slug]" [style.--c]="'var(--' + p.slug + ')'"><b class="pmark">{{ p.name }}</b><span>{{ p.descriptor }}</span></a>
           }
         </div>
-        <a class="base" routerLink="/abhiyantriki"><b>ABHIYANTRIKI</b><span>{{ eng.role }}</span></a>
+        <a class="base" routerLink="/abhiyantriki"><b>Abhiyantriki</b><span>{{ eng.role }}</span></a>
       </div>
     </div></section>
     <section class="s alt"><div class="wrap"><h2>Explore the portfolio</h2><app-flow [steps]="flow" label="Inbox Media portfolio journey"/>

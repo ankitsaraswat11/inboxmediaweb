@@ -6,7 +6,7 @@ import { RESOURCES } from '../data';
   standalone: true,
   imports: [RouterLink],
   template: `
-    <section class="s page-hero"><div class="wrap"><p class="eyebrow">Insights &amp; learning</p><h1>Resources</h1><p class="lead">Practical topics to help teams evaluate communication, AI and engineering (ABHIYANTRIKI) decisions.</p></div></section>
+    <section class="s page-hero"><div class="wrap"><p class="eyebrow">Insights &amp; learning</p><h1>Resources</h1><p class="lead">Practical topics to help teams evaluate communication, AI and engineering (Abhiyantriki) decisions.</p></div></section>
     <section class="s"><div class="wrap"><div class="grid">
       @for (item of items; track item.name; let i = $index) {
         <article class="item resource"><span>Guide {{ i + 1 }}</span><h2>{{ item.name }}</h2><p>{{ item.text }}</p><a routerLink="/contact" [queryParams]="{type:'message'}">Ask our team about this topic</a></article>

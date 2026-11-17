@@ -17,8 +17,8 @@ import { INTEGRATION_GROUPS } from '../data';
     <div class="hub">
       <div class="core">
         <span class="lbl">Inbox Media platforms</span>
-        <div class="trio"><b style="--c:var(--sutra)">SUTRA</b><b style="--c:var(--medha)">MEDHA</b><b style="--c:var(--kavach)">KAVACH</b></div>
-        <span class="base">on ABHIYANTRIKI</span>
+        <div class="trio"><b style="--c:var(--sutra)">SUTRA</b><b style="--c:var(--medha)">MEDHA</b><b style="--c:var(--kavach)">KAVACH</b><b style="--c:var(--shrotas)">SHROTAS</b></div>
+        <span class="base">on Abhiyantriki</span>
       </div>
       <div class="det" aria-live="polite">
         <h3>{{ cur().name }}</h3>

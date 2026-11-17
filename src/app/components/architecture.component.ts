@@ -26,12 +26,12 @@ const KAVACH: Layer = { key: 'kavach', name: 'KAVACH', role: 'The Trust Layer, a
   desc: 'KAVACH is not a final step. DPDP compliance, privacy, security and AI governance apply at every layer, from the first integration to the final outcome.',
   flows: ['DPDP compliance', 'Data privacy', 'Information security', 'AI governance', 'Quality management'],
   trust: 'Standards, readiness, advisory and technical controls, each clearly labelled.', eng: 'Secure architecture and modernisation put controls into the systems.' };
-const ENG: Layer = { key: 'eng', name: 'ABHIYANTRIKI', role: 'Shared technology foundation', color: 'var(--eng-l)', link: '/abhiyantriki',
+const ENG: Layer = { key: 'eng', name: 'Abhiyantriki', role: 'Shared technology foundation', color: 'var(--eng-l)', link: '/abhiyantriki',
   desc: 'The engineering foundation that connects the layers: software, APIs, cloud, DevOps and modernisation.',
   flows: ['APIs & integration', 'Cloud', 'DevOps', 'IT modernisation', 'Engineering teams'],
   trust: 'Security built into architecture and delivery pipelines.', eng: 'Builds, connects and scales everything above it.' };
 
-/** Interactive architecture: Business Systems → SUTRA → MEDHA → Outcomes, wrapped by KAVACH, connected by ABHIYANTRIKI. For dark (band) backgrounds. */
+/** Interactive architecture: Business Systems → SUTRA → MEDHA → Outcomes, wrapped by KAVACH, connected by Abhiyantriki. For dark (band) backgrounds. */
 @Component({
   selector: 'app-architecture',
   standalone: true,
@@ -40,7 +40,7 @@ const ENG: Layer = { key: 'eng', name: 'ABHIYANTRIKI', role: 'Shared technology 
   <div class="ar">
     <div class="dia">
       <button type="button" class="eng" [class.on]="sel() === 'eng'" (click)="sel.set('eng')" [attr.aria-pressed]="sel() === 'eng'">
-        <span>ABHIYANTRIKI</span>
+        <span>Abhiyantriki</span>
       </button>
       <div class="frame" [class.on]="sel() === 'kavach'">
         <button type="button" class="kv" (click)="sel.set('kavach')" [attr.aria-pressed]="sel() === 'kavach'">
@@ -63,7 +63,7 @@ const ENG: Layer = { key: 'eng', name: 'ABHIYANTRIKI', role: 'Shared technology 
       <ul class="flows">@for (f of cur().flows; track f) { <li>{{ f }}</li> }</ul>
       <dl>
         <div><dt><i class="dk"></i>KAVACH at this layer</dt><dd>{{ cur().trust }}</dd></div>
-        <div><dt><i class="de"></i>ABHIYANTRIKI at this layer</dt><dd>{{ cur().eng }}</dd></div>
+        <div><dt><i class="de"></i>Abhiyantriki at this layer</dt><dd>{{ cur().eng }}</dd></div>
       </dl>
       @if (cur().link) { <a class="btn ghost" [routerLink]="cur().link">Explore {{ cur().name }}</a> }
     </div>

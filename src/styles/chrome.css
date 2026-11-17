@@ -50,7 +50,7 @@ main > * > section:first-child { border-top: var(--hdr-space) solid transparent;
 /* Platforms mega menu */
 .nav { position: relative }
 .dd.static { position: static }
-.panel.mega { top: calc(100% + 8px); left: 50%; transform: translate(-50%, 8px); width: min(960px, calc(100vw - 2 * var(--gut))); padding: .6rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: .4rem }
+.panel.mega { top: calc(100% + 8px); left: 50%; transform: translate(-50%, 8px); width: min(1120px, calc(100vw - 2 * var(--gut))); padding: .6rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: .4rem }
 .dd:hover .panel.mega, .dd:focus-within .panel.mega { transform: translate(-50%, 0) }
 .panel.mega::before { content: ""; position: absolute; left: 0; right: 0; top: -16px; height: 16px }
 .mega a.mcol { position: relative; display: flex; flex-direction: column; gap: .3rem; padding: 1.1rem 1.15rem 1.15rem; border-radius: var(--r); border: 1px solid transparent; overflow: hidden }

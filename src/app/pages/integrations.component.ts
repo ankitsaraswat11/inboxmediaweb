@@ -9,7 +9,7 @@ import { IntegrationMapComponent } from '../components/integration-map.component
   imports: [RouterLink, FlowComponent, IntegrationMapComponent],
   template: `
     <section class="s page-hero"><div class="wrap"><p class="eyebrow">Connected technology</p><h1>Integrations &amp; Technology</h1>
-      <p class="lead">A practical view of how channels, business systems, AI, cloud and your own applications connect to SUTRA, MEDHA and KAVACH.</p></div></section>
+      <p class="lead">A practical view of how channels, business systems, AI, cloud and your own applications connect to SUTRA, MEDHA, KAVACH and SHROTAS.</p></div></section>
     <section class="s"><div class="wrap"><app-integration-map/></div></section>
     <section class="s alt"><div class="wrap">
       <h2>What connects, and how</h2>
@@ -21,7 +21,7 @@ import { IntegrationMapComponent } from '../components/integration-map.component
     </div></section>
     <section class="s"><div class="wrap"><h2>A typical connection journey</h2><app-flow [steps]="flow" label="Integration journey"/>
       <p class="note">This is a conceptual architecture. Actual connectors, APIs, hosting, security controls and data flows must be confirmed during technical discovery.</p>
-      <div class="btns"><a class="btn" routerLink="/contact" [queryParams]="{type:'proposal', interest: 'ABHIYANTRIKI'}">Discuss an integration</a><a class="btn ghost" routerLink="/abhiyantriki">ABHIYANTRIKI</a></div></div></section>`,
+      <div class="btns"><a class="btn" routerLink="/contact" [queryParams]="{type:'proposal', interest: 'Abhiyantriki'}">Discuss an integration</a><a class="btn ghost" routerLink="/abhiyantriki">Abhiyantriki</a></div></div></section>`,
   styles: [`
   .ig{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))}
   .it{padding:1.4rem;border-radius:var(--r-lg);background:var(--surface);border:1px solid var(--border)}

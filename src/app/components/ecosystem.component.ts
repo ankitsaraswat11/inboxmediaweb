@@ -4,10 +4,10 @@ import { PLATFORMS } from '../content/platforms';
 
 const C = { x: 280, y: 236 };
 const R = 172;
-/** Platform node positions on the orbit: SUTRA top-left, MEDHA top-right, KAVACH bottom. */
-const POS = [-150, -30, 90].map(a => ({ x: +(C.x + R * Math.cos(a * Math.PI / 180)).toFixed(1), y: +(C.y + R * Math.sin(a * Math.PI / 180)).toFixed(1), a }));
+/** Platform node positions on the orbit: SUTRA top-left, MEDHA top-right, KAVACH bottom-right, SHROTAS bottom-left. */
+const POS = [-135, -45, 45, 135].map(a => ({ x: +(C.x + R * Math.cos(a * Math.PI / 180)).toFixed(1), y: +(C.y + R * Math.sin(a * Math.PI / 180)).toFixed(1), a }));
 /** Satellite capabilities around each platform, placed outward from the centre. */
-const SATS: string[][] = [['SMS', 'WhatsApp', 'Voice'], ['AI agents', 'SLMs', 'Automation'], ['Privacy', 'Security', 'Governance']];
+const SATS: string[][] = [['SMS', 'WhatsApp', 'Voice'], ['AI agents', 'SLMs', 'Automation'], ['Privacy', 'Security', 'Governance'], ['Social', 'News & TV', 'Sentiment']];
 
 @Component({
   selector: 'app-ecosystem',
@@ -16,7 +16,7 @@ const SATS: string[][] = [['SMS', 'WhatsApp', 'Voice'], ['AI agents', 'SLMs', 'A
   template: `
   <div class="eco" (mouseleave)="resume()">
     <svg viewBox="0 0 560 584" role="img" aria-labelledby="eco-t">
-      <title id="eco-t">Inbox Media at the centre, connected to SUTRA (communication), MEDHA (intelligence) and KAVACH (trust), on ABHIYANTRIKI, the shared engineering foundation</title>
+      <title id="eco-t">Inbox Media at the centre, connected to SUTRA (communication), MEDHA (intelligence), KAVACH (trust) and SHROTAS (media and social intelligence), on Abhiyantriki, the shared engineering foundation</title>
       <defs>
         <radialGradient id="eco-core" cx="50%" cy="40%" r="65%"><stop offset="0" class="g1"/><stop offset="1" class="g2"/></radialGradient>
       </defs>
@@ -54,8 +54,8 @@ const SATS: string[][] = [['SMS', 'WhatsApp', 'Voice'], ['AI agents', 'SLMs', 'A
       <!-- shared foundation -->
       <g class="found">
         <rect x="70" y="540" width="420" height="34" rx="10"/>
-        <text x="280" y="562">ABHIYANTRIKI · The Engineering Layer · shared foundation</text>
-        @for (n of nodes; track n.p.slug) { <line class="fl" [attr.x1]="n.x" [attr.y1]="n.y + 62" [attr.x2]="n.x" y2="540"/> }
+        <text x="280" y="562">Abhiyantriki · The Engineering Layer · shared foundation</text>
+        @for (n of nodes; track n.p.slug) { @if (n.y > c.y) { <line class="fl" [attr.x1]="n.x" [attr.y1]="n.y + 62" [attr.x2]="n.x" y2="540"/> } }
       </g>
     </svg>
     <div class="cap" aria-live="polite" [style.--c]="'var(--' + cur().slug + ')'">
@@ -117,7 +117,7 @@ export class EcosystemComponent implements AfterViewInit, OnDestroy {
     });
     return { p, ...pos, sats };
   });
-  links = [[0, 1], [1, 2], [2, 0]].map(([a, b]) => {
+  links = PLATFORMS.map((_, i) => [i, (i + 1) % PLATFORMS.length]).map(([a, b]) => {
     const A = POS[a], B = POS[b], mx = (A.x + B.x) / 2, my = (A.y + B.y) / 2;
     const qx = C.x + (mx - C.x) * 1.55, qy = C.y + (my - C.y) * 1.55;
     return `M${A.x},${A.y} Q${qx.toFixed(1)},${qy.toFixed(1)} ${B.x},${B.y}`;
@@ -131,7 +131,7 @@ export class EcosystemComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit() {
     if (typeof window === 'undefined') return; // prerender/SSR: browser-only setup
     const reduce = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reduce) this.timer = setInterval(() => { if (!this.paused && !document.hidden) this.active.set((this.active() + 1) % 3); }, 3200);
+    if (!reduce) this.timer = setInterval(() => { if (!this.paused && !document.hidden) this.active.set((this.active() + 1) % PLATFORMS.length); }, 3200);
   }
   ngOnDestroy() { clearInterval(this.timer); }
   hover(i: number) { this.paused = true; this.active.set(i); }

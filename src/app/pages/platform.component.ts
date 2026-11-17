@@ -4,7 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { PlatformArtComponent } from '../components/platform-art.component';
 import { ProductShowcaseComponent } from '../components/product-showcase.component';
-import { ISO42001, PLATFORMS, TRUST_KINDS, TrustKind, platformBySlug } from '../content/platforms';
+import { ISO42001, MYRADAR, PLATFORMS, TRUST_KINDS, TrustKind, platformBySlug } from '../content/platforms';
 import { ENGINEERING } from '../content/engineering';
 import { INDUSTRY_VIEW } from '../data';
 
@@ -53,6 +53,25 @@ import { INDUSTRY_VIEW } from '../data';
             @for (k of kinds; track k.key) { <div><span class="kind" [attr.data-k]="k.key">{{ k.label }}</span><p>{{ k.text }}</p></div> }
           </div>
         }
+        @if (p.slug === 'shrotas') {
+          <div class="prod">
+            <div class="prod-copy">
+              <span class="prod-k">Our product</span>
+              <h3>{{ mr.name }}</h3>
+              <p class="prod-line">{{ mr.line }}</p>
+              <p>{{ mr.text }}</p>
+              <div class="prod-n">
+                <div><b>{{ mr.sources.social }}</b><span>Social platforms</span></div>
+                <div><b>{{ mr.sources.media }}</b><span>Media streams</span></div>
+                <div><b>1</b><span>Unified view</span></div>
+              </div>
+              <a class="btn" routerLink="/contact" [queryParams]="{type:'demo', interest: mr.name}">Book a {{ mr.name }} demo</a>
+            </div>
+            <ul class="prod-f">
+              @for (f of mr.features; track f.t) { <li><b>{{ f.t }}</b><span>{{ f.d }}</span></li> }
+            </ul>
+          </div>
+        }
         <div class="groups" [style.--gc]="p.groups.length === 4 ? 2 : 3">
           @for (g of p.groups; track g.title; let gi = $index) {
             <div class="grp">
@@ -96,7 +115,7 @@ import { INDUSTRY_VIEW } from '../data';
   <!-- Foundation + next -->
   <section class="s">
     <div class="wrap foot">
-      <a class="eng" routerLink="/abhiyantriki"><span class="ek">Built on ABHIYANTRIKI</span><b>{{ engLine() }}</b><span class="text-link">Explore the foundation</span></a>
+      <a class="eng" routerLink="/abhiyantriki"><span class="ek">Built on Abhiyantriki</span><b>{{ engLine() }}</b><span class="text-link">Explore the foundation</span></a>
       <a class="next" [routerLink]="['/platforms', nextP().slug]" [style.--c]="'var(--' + nextP().slug + ')'"><span class="ek">Next platform</span><b class="pmark">{{ nextP().name }}</b><span>{{ nextP().descriptor }}</span></a>
     </div>
   </section>
@@ -152,6 +171,18 @@ import { INDUSTRY_VIEW } from '../data';
   .next{background:var(--surface)}.next .pmark{font-size:2.4rem;line-height:1}.next span:last-child{color:var(--fg);font-weight:600}
   .eng:hover,.next:hover{transform:translateY(-3px);border-color:var(--border-strong)}
   .ek{font-size:.8rem;font-weight:700;color:var(--fg-2)}
+.prod{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(1.2rem,3vw,2.5rem);align-items:center;margin-bottom:1.2rem;padding:clamp(1.4rem,3vw,2.4rem);border-radius:var(--r-xl);border:1px solid color-mix(in srgb,var(--c) 35%,var(--border));background:radial-gradient(70% 90% at 100% 0%,var(--t),transparent 70%),var(--surface)}
+  .prod-copy{display:grid;gap:.7rem;justify-items:start}
+  .prod-k{font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--c)}
+  .prod h3{margin:0;font:700 clamp(1.8rem,3.4vw,2.6rem)/1.05 var(--font-display);letter-spacing:-.02em;color:var(--fg)}
+  .prod-line{margin:0;font-style:italic;color:var(--c);font-weight:600}
+  .prod-copy p{margin:0;max-width:52ch}
+  .prod-n{display:flex;flex-wrap:wrap;gap:1.6rem;margin:.4rem 0 .6rem}
+  .prod-n div{display:grid}.prod-n b{font:700 2rem/1 var(--font-display);color:var(--c)}.prod-n span{font-size:.82rem;color:var(--fg-2)}
+  .prod-f{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
+  .prod-f li{display:grid;gap:.15rem;padding:.85rem 1rem;border-radius:12px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--c)}
+  .prod-f b{color:var(--fg);font-weight:650}.prod-f span{font-size:.92rem;color:var(--fg-2)}
+  @media(max-width:900px){.prod{grid-template-columns:1fr}}
 .grp .items{grid-template-columns:repeat(auto-fill,minmax(min(200px,100%),1fr))}
   @media(max-width:1100px){.groups{grid-template-columns:1fr}}
   @media(max-width:1000px){.ucs{grid-template-columns:1fr 1fr}.legend{grid-template-columns:1fr 1fr}.iso{grid-template-columns:1fr}}
@@ -160,7 +191,7 @@ import { INDUSTRY_VIEW } from '../data';
   `]
 })
 export class PlatformComponent {
-  all = PLATFORMS; iso = ISO42001;
+  all = PLATFORMS; iso = ISO42001; mr = MYRADAR;
   kinds = (Object.keys(TRUST_KINDS) as TrustKind[]).map(k => ({ key: k, ...TRUST_KINDS[k] }));
   private route = inject(ActivatedRoute);
   private router = inject(Router);

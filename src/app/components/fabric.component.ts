@@ -27,7 +27,7 @@ import { PLATFORMS, PlatformSlug } from '../data';
         <span class="lbl"><b>{{ sutra.name }}</b><span>{{ sutra.layer }}</span></span><em>{{ sutra.tagline }}</em>
       </a>
     </div>
-    <figcaption>Delivered with Inbox Media ABHIYANTRIKI engineering &amp; IT services</figcaption>
+    <figcaption>Delivered with Inbox Media Abhiyantriki engineering &amp; IT services</figcaption>
   </figure>`,
   styles: [`
   :host{display:block}

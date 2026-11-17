@@ -4,7 +4,7 @@ import { EcosystemComponent } from '../components/ecosystem.component';
 import { PLATFORMS, TAGLINE } from '../content/platforms';
 import { ENGINEERING } from '../content/engineering';
 
-/** /platforms: one place to compare SUTRA, MEDHA and KAVACH before choosing one. */
+/** /platforms: one place to compare SUTRA, MEDHA, KAVACH and SHROTAS before choosing one. */
 @Component({
   standalone: true,
   imports: [RouterLink, EcosystemComponent],
@@ -13,8 +13,8 @@ import { ENGINEERING } from '../content/engineering';
     <div class="wrap ph">
       <div>
         <p class="eyebrow">Platforms</p>
-        <h1>Three platforms. One connected enterprise.</h1>
-        <p class="lead">{{ tagline }} SUTRA connects, MEDHA makes things intelligent and KAVACH protects, all on ABHIYANTRIKI, the shared engineering foundation.</p>
+        <h1>Four platforms. One connected enterprise.</h1>
+        <p class="lead">{{ tagline }} SUTRA connects, MEDHA makes things intelligent, KAVACH protects and SHROTAS listens, all on Abhiyantriki, the shared engineering foundation.</p>
       </div>
       <app-ecosystem class="eco"/>
     </div>
@@ -42,7 +42,7 @@ import { ENGINEERING } from '../content/engineering';
   .ph{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2rem;align-items:center}
   .eco{max-width:500px;justify-self:center;width:100%}
   .cmp{border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;background:var(--surface);box-shadow:var(--shadow)}
-  .cr{display:grid;grid-template-columns:180px repeat(3,minmax(0,1fr));border-top:1px solid var(--border)}
+  .cr{display:grid;grid-template-columns:160px repeat(4,minmax(0,1fr));border-top:1px solid var(--border)}
   .cr:first-child{border-top:0}
   .cr>span{padding:1rem 1.1rem;color:var(--fg);font-size:.94rem;border-left:1px solid var(--border)}
   .cr>span:first-child{border-left:0;font-weight:700;font-size:.85rem;color:var(--fg-2);background:var(--surface-2)}
@@ -51,7 +51,9 @@ import { ENGINEERING } from '../content/engineering';
   .mob{display:none;gap:.8rem}
   .mp{display:grid;gap:.3rem;padding:1.2rem;border-radius:var(--r-lg);background:var(--t);border:1px solid color-mix(in srgb,var(--c) 25%,transparent);text-decoration:none}
   .mp .pmark{font-size:1.7rem}.mp b{color:var(--fg)}.mp span{color:var(--fg-2);font-size:.92rem}
-  @media(max-width:900px){.ph{grid-template-columns:1fr}.cmp{display:none}.mob{display:grid}}
+  @media(max-width:1060px){.cmp{display:none}.mob{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:900px){.ph{grid-template-columns:1fr}}
+  @media(max-width:620px){.mob{grid-template-columns:1fr}}
   `]
 })
 export class PlatformsComponent { platforms = PLATFORMS; eng = ENGINEERING; tagline = TAGLINE; }

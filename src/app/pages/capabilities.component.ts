@@ -10,7 +10,7 @@ import { FlowComponent } from '../components/flow.component';
   imports: [RouterLink, FlowComponent],
   template: `
     <section class="s page-hero"><div class="wrap"><p class="eyebrow">What we do</p><h1>Capabilities</h1>
-      <p class="lead">Five capability domains, organised into the platforms: communication, voice and omnichannel engagement in SUTRA, conversational AI in MEDHA, and ABHIYANTRIKI as the shared engineering foundation.</p></div></section>
+      <p class="lead">Five capability domains, organised into the platforms: communication, voice and omnichannel engagement in SUTRA, conversational AI in MEDHA, and Abhiyantriki as the shared engineering foundation.</p></div></section>
     <section class="s"><div class="wrap">
       <div class="cap-grid">
         @for (item of items; track item.name; let i = $index) {
@@ -48,6 +48,6 @@ export class CapabilitiesComponent {
   flow = FLOW_CAP;
   items = CAPABILITIES.map(c => {
     const p = PLATFORMS.find(x => x.capabilities.includes(c.name));
-    return { ...c, home: p ? { key: p.slug, label: p.name, link: '/platforms/' + p.slug } : { key: 'eng', label: 'ABHIYANTRIKI', link: '/abhiyantriki' } };
+    return { ...c, home: p ? { key: p.slug, label: p.name, link: '/platforms/' + p.slug } : { key: 'eng', label: 'Abhiyantriki', link: '/abhiyantriki' } };
   });
 }

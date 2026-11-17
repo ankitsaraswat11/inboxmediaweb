@@ -25,7 +25,8 @@ import { FOUNDED, INDUSTRIES, PRODUCTS } from '../data';
 const WORDS = [
   { w: 'Connected', c: 'var(--sutra)' },
   { w: 'Intelligent', c: 'var(--medha)' },
-  { w: 'Trusted', c: 'var(--kavach)' }
+  { w: 'Trusted', c: 'var(--kavach)' },
+  { w: 'Informed', c: 'var(--shrotas)' }
 ];
 const PRODUCT_LINE: Record<string, string> = {
   'Aura AI': 'Voice, avatar and visual AI for front desks, support and training.',
@@ -58,11 +59,11 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
         @for (x of words; track x.w; let i = $index) {
           <span class="w" [class.on]="t() === i" [class.pre]="i < t()" [style.--c]="x.c">@for (ch of x.w.split(''); track $index; let k = $index) {<i [style.--k]="k">{{ ch }}</i>}</span>
         }
-      </span><span class="sr-only">Connected, Intelligent and Trusted</span></span>
+      </span><span class="sr-only">Connected, Intelligent, Trusted and Informed</span></span>
       <span class="l2">Enterprise</span>
       <span class="l3">Fabric.</span>
     </h1>
-    <p class="lead hl in-up" style="--d:.3s">Communication, artificial intelligence and digital trust, woven into one integrated technology platform for modern enterprises.</p>
+    <p class="lead hl in-up" style="--d:.3s">Communication, artificial intelligence, digital trust and media intelligence, woven into one integrated technology platform for modern enterprises.</p>
     <div class="btns hb in-up" style="--d:.4s">
       <button type="button" class="btn lg" (click)="go('lifecycle')">See how it works <svg class="arr" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
       <a class="btn lg ghost" routerLink="/contact" [queryParams]="{type:'demo'}">Book a demo</a>
@@ -70,9 +71,9 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 
     <a class="fcard in-up" #fcard routerLink="/platforms" style="--d:.55s">
       <span class="fc-copy">
-        <span class="fc-k">One platform · three layers</span>
+        <span class="fc-k">One platform · four layers</span>
         <b class="fc-t">@for (p of platforms; track p.slug; let l = $last) {<span class="pmark" [style.--c]="'var(--' + p.slug + ')'">{{ p.name }}</span>@if (!l) {<span class="amp"> · </span>}}</b>
-        <span class="fc-s">On ABHIYANTRIKI, the shared engineering foundation, serving enterprises since {{ founded }}.</span>
+        <span class="fc-s">On Abhiyantriki, the shared engineering foundation, serving enterprises since {{ founded }}.</span>
         <span class="fc-b">Explore platforms <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </span>
       <span class="fc-art" aria-hidden="true">
@@ -124,10 +125,10 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 <section class="cine inverse">
   <app-ribbon variant="band" [parallax]="50"/>
   <div class="wrap">
-    <h2 class="cine-h" reveal>Messaging, AI and security, <b>all on one platform.</b></h2>
+    <h2 class="cine-h" reveal>Messaging, AI, security and media intelligence, <b>all on one platform.</b></h2>
     <div class="feat" #feat>
       @for (f of feats; track f.t; let i = $index) {
-        <article class="ft" [reveal]="i * .08">
+        <article class="ft" [class.wide]="f.wide" [reveal]="i * .08">
           <p>{{ f.t }}</p>
           <span class="fi">@for (d of f.icons; track d) { <svg viewBox="0 0 24 24"><path [attr.d]="d"/></svg> }</span>
         </article>
@@ -142,7 +143,7 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
     <h2 class="big" reveal>The connected foundation for enterprises across <b><span [countTo]="industries.length" [from]="1"></span> industries.</b></h2>
     <div class="stats">
       <div reveal=".05"><b [countTo]="founded" [from]="1990"></b><span>Serving enterprises since</span></div>
-      <div reveal=".12"><b>3<em>+1</em></b><span>Platforms on a shared engineering foundation</span></div>
+      <div reveal=".12"><b>4<em>+1</em></b><span>Platforms on a shared engineering foundation</span></div>
       <div reveal=".19"><b [countTo]="products.length" [from]="0"></b><span>In-house AI products</span></div>
       <div reveal=".26"><b [countTo]="industries.length" [from]="0"></b><span>Industries with configured workflows</span></div>
     </div>
@@ -181,7 +182,7 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
   <app-ribbon variant="cta" [parallax]="70"/>
   <div class="wrap close-in">
     <h2 reveal>Let's keep your enterprise connected, intelligent &amp; <b lang="hi">सुरक्षित.</b></h2>
-    <p class="lead" reveal=".1">Tell us what you need to connect, automate or protect first. We will map where SUTRA, MEDHA, KAVACH and our engineers fit.</p>
+    <p class="lead" reveal=".1">Tell us what you need to connect, automate or protect first. We will map where SUTRA, MEDHA, KAVACH, SHROTAS and our engineers fit.</p>
     <div class="btns" reveal=".2">
       <a class="btn lg" routerLink="/contact" [queryParams]="{type:'demo'}">Talk to us</a>
       <a class="btn lg ghost" routerLink="/contact" [queryParams]="{type:'proposal'}">Request a proposal</a>
@@ -245,8 +246,9 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 
 /* 4 integrations */
 /* placeholders for deferred components, sized like the real thing so nothing jumps when they load */
-.dph-hv{height:620px}.dph-lc{height:350vh}.dph-ic{height:690px}
+.dph-hv{height:620px}.dph-lc{height:460vh}.dph-ic{height:690px}
 @media(max-width:900px){.dph-hv{height:360px}.dph-lc{height:1270px}.dph-ic{height:790px}}
+@media(max-width:600px){.dph-lc{height:1700px}}
 /* off-screen sections are not laid out or painted (and their looping animations stop) until scrolled near */
 .eco,.integ,.cine,.trust,.ind,.prods,.close{content-visibility:auto;contain-intrinsic-size:auto 900px}
 .integ{position:relative;overflow-x:clip;padding:clamp(3rem,6vw,5rem) 0;background-color:var(--bg)}
@@ -281,6 +283,7 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 .cine{position:relative;isolation:isolate;overflow:hidden;padding:clamp(8rem,16vw,14rem) 0 clamp(4rem,8vw,7rem)}
 .cine-h{margin:0 auto clamp(4rem,9vw,8rem);text-align:center;max-width:17ch;font-size:clamp(2.6rem,5.6vw,5rem);line-height:1.1;color:#fff}
 .feat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem}
+.ft.wide{grid-column:1/-1;min-height:clamp(180px,18vw,240px)}
 .ft{position:relative;overflow:hidden;min-height:clamp(240px,26vw,340px);display:grid;align-content:space-between;gap:2rem;padding:clamp(1.6rem,3.6vw,3.6rem);border-radius:16px;background:linear-gradient(160deg,#0D1130,#05060F 70%);border:1px solid rgba(255,255,255,.12)}
 .ft::before{content:"";position:absolute;inset:0;background:radial-gradient(420px circle at var(--x,-100%) var(--y,-100%),rgba(110,140,255,.22),transparent 60%);pointer-events:none}
 .ft::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:radial-gradient(300px circle at var(--x,-100%) var(--y,-100%),rgba(160,180,255,.8),transparent 60%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
@@ -372,14 +375,16 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     { t: 'Omnichannel', x: 30, y: 16, d: 'M4 5h16v11H8l-4 4z' },
     { t: 'AI agents', x: 18, y: 42, d: 'M12 3l2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5z' },
     { t: 'DPDP & trust', x: 34, y: 66, d: 'M12 3l7 3v5c0 4-3 7.5-7 9-4-1.5-7-5-7-9V6z' },
+    { t: 'Social listening', x: 56, y: 40, d: 'M12 12m-8 0a8 8 0 1 0 16 0a8 8 0 1 0-16 0M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0-8 0M12 12l5-5' },
     { t: 'APIs', x: 60, y: 88, d: 'M8 8l-5 4 5 4M16 8l5 4-5 4' }
   ];
   feats = [
     { t: 'Run SMS, WhatsApp, RCS, voice and email from one orchestrated communication fabric.', icons: ['M4 6h16M4 12h16M4 18h10', 'M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3zM5 11a7 7 0 0 0 14 0M12 18v3', 'M4 5h16v11H8l-4 4z'] },
     { t: 'AI that runs where your data rules say: public cloud, private cloud, on-premise or offline at the edge.', icons: ['M7 7h10v10H7zM10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4'] },
     { t: 'Plugs into the CRM, ERP and helpdesk you already run, through REST APIs and webhooks.', icons: ['M9 7V3M15 7V3M7 7h10v4a5 5 0 0 1-10 0zM12 16v5'] },
-    { t: 'Privacy, security and AI governance built in from day one, not bolted on later.', icons: ['M12 2.8l7.5 2.8v5.8c0 4.4-3.1 7.8-7.5 9.4-4.4-1.6-7.5-5-7.5-9.4V5.6zM8.6 12l2.4 2.4 4.4-4.6'] }
-  ];
+    { t: 'Privacy, security and AI governance built in from day one, not bolted on later.', icons: ['M12 2.8l7.5 2.8v5.8c0 4.4-3.1 7.8-7.5 9.4-4.4-1.6-7.5-5-7.5-9.4V5.6zM8.6 12l2.4 2.4 4.4-4.6'] },
+    { t: 'Hear what people say about you across social media, news and TV, with SHROTAS and MyRadar 360.', wide: true, icons: ['M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0-18 0M12 12m-5 0a5 5 0 1 0 10 0a5 5 0 1 0-10 0M12 12l6-6', 'M4 5h16v11H8l-4 4z', 'M3 7h18v12H3zM8 3l4 4 4-4'] }
+  ] as { t: string; icons: string[]; wide?: boolean }[];
 
   /** Morphing hero word. */
   t = signal(0);
