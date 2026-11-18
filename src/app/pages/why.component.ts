@@ -37,7 +37,7 @@ import { RevealDirective } from '../components/reveal.directive';
       }
       <li class="m end">
         <span class="yr">Next</span><span class="pin"><i></i></span>
-        <div class="cd cta"><h3>Your chapter</h3><p>See what SUTRA, MEDHA, KAVACH and SHROTAS could do for your organisation.</p><a class="btn" routerLink="/contact" [queryParams]="{type:'demo'}">Book a demo</a></div>
+        <div class="cd cta"><h3>Your chapter</h3><p>See what SUTRA, MEDHA, KAVACH and SROTAS could do for your organisation.</p><a class="btn" routerLink="/contact" [queryParams]="{type:'demo'}">Book a demo</a></div>
       </li>
     </ol>
   </div>

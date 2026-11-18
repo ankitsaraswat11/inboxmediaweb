@@ -9,7 +9,7 @@ import { IntegrationMapComponent } from '../components/integration-map.component
   imports: [RouterLink, FlowComponent, IntegrationMapComponent],
   template: `
     <section class="s page-hero"><div class="wrap"><p class="eyebrow">Connected technology</p><h1>Integrations &amp; Technology</h1>
-      <p class="lead">A practical view of how channels, business systems, AI, cloud and your own applications connect to SUTRA, MEDHA, KAVACH and SHROTAS.</p></div></section>
+      <p class="lead">A practical view of how channels, business systems, AI, cloud and your own applications connect to SUTRA, MEDHA, KAVACH and SROTAS.</p></div></section>
     <section class="s"><div class="wrap"><app-integration-map/></div></section>
     <section class="s alt"><div class="wrap">
       <h2>What connects, and how</h2>

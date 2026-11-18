@@ -77,8 +77,8 @@
   --medha: #673AB7;  --medha-tint: #F2ECFD;
   --kavach: #00796B; --kavach-tint: #E3F5F1;
   --eng: #2B44D1;    --eng-tint: #ECEFFC;
-  --shrotas: #BE185D; --shrotas-tint: #FDEDF4;
-  --sutra-l: #C2410C; --medha-l: #673AB7; --kavach-l: #00796B; --eng-l: #2B44D1; --shrotas-l: #BE185D;
+  --srotas: #BE185D; --srotas-tint: #FDEDF4;
+  --sutra-l: #C2410C; --medha-l: #673AB7; --kavach-l: #00796B; --eng-l: #2B44D1; --srotas-l: #BE185D;
 
   /* status */
   --ok: #2E7D32; --ok-tint: #E8F5E9;
@@ -145,8 +145,8 @@
   --medha: #B9A0FF;  --medha-tint: rgba(185, 160, 255, .10);
   --kavach: #4FD1C5; --kavach-tint: rgba(79, 209, 197, .08);
   --eng: #8EA0FF;    --eng-tint: rgba(142, 160, 255, .09);
-  --shrotas: #FF8FBF; --shrotas-tint: rgba(255, 143, 191, .09);
-  --sutra-l: #FF9E73; --medha-l: #B9A0FF; --kavach-l: #4FD1C5; --eng-l: #8EA0FF; --shrotas-l: #FF8FBF;
+  --srotas: #FF8FBF; --srotas-tint: rgba(255, 143, 191, .09);
+  --sutra-l: #FF9E73; --medha-l: #B9A0FF; --kavach-l: #4FD1C5; --eng-l: #8EA0FF; --srotas-l: #FF8FBF;
 
   --ok: #81C784; --ok-tint: rgba(129, 199, 132, .12);
   --pending: #FFD54F; --pending-tint: rgba(255, 213, 79, .10);

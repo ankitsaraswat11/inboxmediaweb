@@ -41,9 +41,9 @@ const K_TAGS: Node[] = [
   ['AI governance', 68, 205, 'ISO 42001 readiness, AI risk assessment and model oversight.']
 ].map(([l, x, y, d]) => ({ l: l as string, x: x as number, y: y as number, w: pill(l as string), d: d as string }));
 
-/* ---------- SHROTAS: major platforms and news media flowing into one radar ---------- */
+/* ---------- SROTAS: major platforms and news media flowing into one radar ---------- */
 const RC = { x: 220, y: 205 };
-const SHROTAS_NODES: Node[] = [
+const SROTAS_NODES: Node[] = [
   ['X', 'Posts, replies and trending hashtags.'],
   ['YouTube', 'Videos, titles and comments.'],
   ['Instagram', 'Public posts, reels and comments.'],
@@ -111,22 +111,22 @@ const BLIPS = [[286, 132, 0], [150, 262, 900], [300, 268, 1700], [168, 150, 2500
         }
       </svg>
     }
-    @case ('shrotas') {
-      <svg viewBox="0 0 440 410" role="img" aria-label="SHROTAS radar: X, YouTube, Instagram, Facebook, Reddit, LinkedIn, news websites, e-papers and news on X flowing into MyRadar 360">
+    @case ('srotas') {
+      <svg viewBox="0 0 440 410" role="img" aria-label="SROTAS radar: X, YouTube, Instagram, Facebook, Reddit, LinkedIn, news websites, e-papers and news on X flowing into MyRadar 360">
         <circle class="rg" cx="220" cy="205" r="62"/>
         <circle class="rg" cx="220" cy="205" r="108"/>
         <circle class="rg dash spin" cx="220" cy="205" r="140"/>
         <g class="sweep"><path class="wedge" d="M220 205 L220 65 A140 140 0 0 1 319 106 Z"/></g>
         @for (b of blips; track $index) { <circle class="blip" [attr.cx]="b.x" [attr.cy]="b.y" r="4" [style.animation-delay.ms]="b.d"/> }
-        @for (n of shrotas; track n.l; let i = $index) {
+        @for (n of srotas; track n.l; let i = $index) {
           <path class="th" [class.hot]="cap() === n" [attr.d]="n.path"/>
           <path class="sig" pathLength="100" [attr.d]="n.path" [style.animation-delay.ms]="i * 280"/>
         }
         <circle class="halo" cx="220" cy="205" r="64"/>
         <circle class="core" cx="220" cy="205" r="52"/>
-        <text class="mk" x="220" y="204">SHROTAS</text>
+        <text class="mk" x="220" y="204">SROTAS</text>
         <text class="sub" x="220" y="222">MyRadar 360</text>
-        @for (n of shrotas; track n.l) {
+        @for (n of srotas; track n.l) {
           <g class="nd" [class.sys]="n.sys" [class.hot]="cap() === n" tabindex="0" (mouseenter)="cap.set(n)" (focus)="cap.set(n)" (blur)="cap.set(null)" [attr.transform]="'translate(' + (n.x - n.w / 2) + ' ' + (n.y - 16) + ')'">
             <rect [attr.width]="n.w" height="32" [attr.rx]="n.sys ? 8 : 16"/><text [attr.x]="n.w / 2" y="21">{{ n.l }}</text>
           </g>
@@ -211,7 +211,7 @@ export class PlatformArtComponent {
   @Input({ required: true }) slug!: PlatformSlug;
   @Input() hint = 'Hover or tab through the diagram to see what each part does.';
   cap = signal<Node | null>(null);
-  shrotas = SHROTAS_NODES; blips = BLIPS;
+  srotas = SROTAS_NODES; blips = BLIPS;
   sutra = SUTRA_NODES; inputs = M_IN; outputs = M_OUT; agents = M_AG; mesh = MESH; ktags = K_TAGS;
   particles = Array.from({ length: 16 }, (_, i) => ({ x: 150 + ((i * 53) % 150), y: 70 + ((i * 97) % 280), d: i * 380 }));
 }

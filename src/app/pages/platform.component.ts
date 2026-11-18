@@ -53,7 +53,7 @@ import { INDUSTRY_VIEW } from '../data';
             @for (k of kinds; track k.key) { <div><span class="kind" [attr.data-k]="k.key">{{ k.label }}</span><p>{{ k.text }}</p></div> }
           </div>
         }
-        @if (p.slug === 'shrotas') {
+        @if (p.slug === 'srotas') {
           <div class="prod">
             <div class="prod-copy">
               <span class="prod-k">Our product</span>

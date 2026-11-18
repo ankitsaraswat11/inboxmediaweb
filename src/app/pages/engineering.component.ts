@@ -5,7 +5,7 @@ import { ENGINEERING } from '../content/engineering';
 import { PLATFORMS } from '../content/platforms';
 import { CAPABILITIES } from '../data';
 
-/** /abhiyantriki (Abhiyantriki): the shared foundation under SUTRA, MEDHA, KAVACH and SHROTAS. */
+/** /abhiyantriki (Abhiyantriki): the shared foundation under SUTRA, MEDHA, KAVACH and SROTAS. */
 @Component({
   standalone: true,
   imports: [RouterLink, FlowComponent],

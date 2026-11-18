@@ -25,7 +25,7 @@ Open `src/app/app.routes.server.ts` and make it:
       {
         path: 'platforms/:slug',
         renderMode: RenderMode.Prerender,
-        async getPrerenderParams() { return [{ slug: 'sutra' }, { slug: 'medha' }, { slug: 'kavach' }, { slug: 'shrotas' }]; }
+        async getPrerenderParams() { return [{ slug: 'sutra' }, { slug: 'medha' }, { slug: 'kavach' }, { slug: 'srotas' }]; }
       },
       { path: '**', renderMode: RenderMode.Prerender }
     ];

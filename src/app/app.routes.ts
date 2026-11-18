@@ -14,25 +14,25 @@ export const routes: Routes = [
     path: '',
     title: 'Inbox Media | Intelligent Infrastructure for Modern Enterprises',
     component: HomeComponent,
-    data: { description: 'An integrated enterprise technology platform: SUTRA for omnichannel communication, MEDHA for intelligence and automation, KAVACH for digital trust, SHROTAS for media and social intelligence, on Abhiyantriki, the shared engineering foundation.' }
+    data: { description: 'An integrated enterprise technology platform: SUTRA for omnichannel communication, MEDHA for intelligence and automation, KAVACH for digital trust, SROTAS for media and social intelligence, on Abhiyantriki, the shared engineering foundation.' }
   },
   {
     path: 'platforms',
     title: title('Platforms'),
     loadComponent: () => import('./pages/platforms.component').then(m => m.PlatformsComponent),
-    data: { description: 'Compare SUTRA, MEDHA, KAVACH and SHROTAS: the communication, intelligence, trust and awareness layers of Inbox Media.' }
+    data: { description: 'Compare SUTRA, MEDHA, KAVACH and SROTAS: the communication, intelligence, trust and awareness layers of Inbox Media.' }
   },
   {
     path: 'platforms/:slug',
     title: platformTitle,
     loadComponent: () => import('./pages/platform.component').then(m => m.PlatformComponent),
-    data: { description: 'Inbox Media platforms: SUTRA (communication fabric), MEDHA (intelligence engine), KAVACH (trust fabric) and SHROTAS (media and social intelligence).' }
+    data: { description: 'Inbox Media platforms: SUTRA (communication fabric), MEDHA (intelligence engine), KAVACH (trust fabric) and SROTAS (media and social intelligence).' }
   },
   {
     path: 'abhiyantriki',
     title: title('Abhiyantriki'),
     loadComponent: () => import('./pages/engineering.component').then(m => m.EngineeringComponent),
-    data: { description: 'Custom software, APIs, cloud, DevOps and IT modernisation: the shared engineering foundation under SUTRA, MEDHA, KAVACH and SHROTAS.' }
+    data: { description: 'Custom software, APIs, cloud, DevOps and IT modernisation: the shared engineering foundation under SUTRA, MEDHA, KAVACH and SROTAS.' }
   },
   { path: 'digital-engineering', redirectTo: 'abhiyantriki', pathMatch: 'full' },
   {

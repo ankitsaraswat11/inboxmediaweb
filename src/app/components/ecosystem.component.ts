@@ -4,7 +4,7 @@ import { PLATFORMS } from '../content/platforms';
 
 const C = { x: 280, y: 236 };
 const R = 172;
-/** Platform node positions on the orbit: SUTRA top-left, MEDHA top-right, KAVACH bottom-right, SHROTAS bottom-left. */
+/** Platform node positions on the orbit: SUTRA top-left, MEDHA top-right, KAVACH bottom-right, SROTAS bottom-left. */
 const POS = [-135, -45, 45, 135].map(a => ({ x: +(C.x + R * Math.cos(a * Math.PI / 180)).toFixed(1), y: +(C.y + R * Math.sin(a * Math.PI / 180)).toFixed(1), a }));
 /** Satellite capabilities around each platform, placed outward from the centre. */
 const SATS: string[][] = [['SMS', 'WhatsApp', 'Voice'], ['AI agents', 'SLMs', 'Automation'], ['Privacy', 'Security', 'Governance'], ['Social', 'News', 'Sentiment']];
@@ -16,7 +16,7 @@ const SATS: string[][] = [['SMS', 'WhatsApp', 'Voice'], ['AI agents', 'SLMs', 'A
   template: `
   <div class="eco" (mouseleave)="resume()">
     <svg viewBox="0 0 560 584" role="img" aria-labelledby="eco-t">
-      <title id="eco-t">Inbox Media at the centre, connected to SUTRA (communication), MEDHA (intelligence), KAVACH (trust) and SHROTAS (media and social intelligence), on Abhiyantriki, the shared engineering foundation</title>
+      <title id="eco-t">Inbox Media at the centre, connected to SUTRA (communication), MEDHA (intelligence), KAVACH (trust) and SROTAS (media and social intelligence), on Abhiyantriki, the shared engineering foundation</title>
       <defs>
         <radialGradient id="eco-core" cx="50%" cy="40%" r="65%"><stop offset="0" class="g1"/><stop offset="1" class="g2"/></radialGradient>
       </defs>

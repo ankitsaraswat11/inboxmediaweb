@@ -8,7 +8,7 @@ import { PLATFORMS, PlatformSlug } from '../content/platforms';
      01 Communication → SUTRA   (channel hub: messages fan out to every channel)
      02 AI            → MEDHA   (AI tech stack → MEDHA core → the five AI products)
      03 Compliance & Security → KAVACH (shield drawing in, controls switching on)
-     04 Media & Social Intelligence → SHROTAS (radar picks up every source, mentions stream in)
+     04 Media & Social Intelligence → SROTAS (radar picks up every source, mentions stream in)
 
    Movable: a vertical rail on the left. Drag its marker up/down, click a
    platform, or use the arrow keys, and the page scrolls to that platform.
@@ -27,7 +27,7 @@ export const STAGES: Stage[] = [
   mk('sutra', 'Communication', 'SMS, OTP, WhatsApp, RCS, voice and email run on one compliant communication fabric, so every customer is reached on the channel they actually use.', ['SMS & OTP', 'WhatsApp API', 'RCS', 'IVR & Voice']),
   mk('medha', 'Artificial Intelligence', 'AI voice agents and chatbots understand intent, reply in your customer’s language and complete the task, handing over to a person only when needed.', ['AI agents', 'Voice AI', 'Multilingual', 'Custom SLM']),
   mk('kavach', 'Compliance & Security', 'Consent, encryption, access control and audit trails are built into every flow, with DPDP compliance and AI governance from day one.', ['DPDP', 'Consent', 'Encryption', 'Audit logs']),
-  mk('shrotas', 'Media & Social Intelligence', 'MyRadar 360 listens across major platforms and news media, reads sentiment in Hindi and Hinglish, alerts you while a story is still small, and turns complaints on X into tracked tickets.', ['Social listening', 'News & e-papers', 'Sentiment', 'Engagement on X'])
+  mk('srotas', 'Media & Social Intelligence', 'MyRadar 360 listens across major platforms and news media, reads sentiment in Hindi and Hinglish, alerts you while a story is still small, and turns complaints on X into tracked tickets.', ['Social listening', 'News & e-papers', 'Sentiment', 'Engagement on X'])
 ];
 
 const CHANNELS = ['SMS', 'WhatsApp', 'RCS', 'Voice', 'Email', 'Push'];
@@ -50,7 +50,7 @@ const mdCol = (n: number, top: number, bottom: number) => Array.from({ length: n
 const mdCurve = (x1: number, y1: number, x2: number, y2: number) => { const m = (x1 + x2) / 2; return `M${x1} ${y1} C${m} ${y1} ${m} ${y2} ${x2} ${y2}`; };
 const MD_TECH_POS = mdCol(MD_TECH.length, 80, 400).map(y => ({ x: 92, y, d: mdCurve(150, y, MD_C.x - 58, MD_C.y) }));
 const MD_PROD_POS = mdCol(MD_PRODUCTS.length, 92, 388).map(y => ({ x: 500, y, d: mdCurve(MD_C.x + 58, MD_C.y, 428, y) }));
-/* SHROTAS radar: the sources MyRadar 360 monitors, and a sample of incoming mentions. */
+/* SROTAS radar: the sources MyRadar 360 monitors, and a sample of incoming mentions. */
 const SR_SOURCES = ['X', 'YouTube', 'Instagram', 'Facebook', 'Reddit', 'LinkedIn', 'News', 'E-papers', 'News on X'];
 const SR_FEED = [
   { src: 'YouTube', t: 'Review: setup was quick and simple', s: 'pos', l: 'Positive' },
@@ -189,13 +189,13 @@ const CONTROLS = ['Consent captured & logged', 'Data encrypted in transit & at r
             </ul>
           </div>
 
-          <!-- 04 SHROTAS: radar + mention feed -->
+          <!-- 04 SROTAS: radar + mention feed -->
           <div class="v listen" [class.on]="stage() === 3">
             <div class="rdr">
               <span class="rr r1"></span><span class="rr r2"></span><span class="rr r3"></span>
               <span class="sweep"></span>
               @for (b of srBlips; track $index; let k = $index) { <span class="bl" [class.in]="stage() === 3 && step() > 3 + k * 3" [style.left.%]="b.x" [style.top.%]="b.y"></span> }
-              <span class="score"><b>SHROTAS</b><small lang="hi">स्रोतस</small></span>
+              <span class="score"><b>SROTAS</b><small lang="hi">श्रोता</small></span>
               @for (n of srNodes; track n.l; let k = $index) {
                 <span class="src" [class.lit]="stage() === 3 && step() > k * 1.5" [style.left.%]="n.x" [style.top.%]="n.y"><i></i>{{ n.l }}</span>
               }
@@ -240,7 +240,7 @@ const CONTROLS = ['Consent captured & logged', 'Data encrypted in transit & at r
 .rail-wrap{position:relative;padding-left:44px}
 .rail{position:absolute;left:12px;top:0;bottom:0;width:24px;cursor:pointer;touch-action:none}
 .rail::before{content:"";position:absolute;left:11px;top:var(--r0,14px);bottom:var(--r1,14px);width:2px;background:var(--border-strong);border-radius:2px}
-.fill{position:absolute;left:11px;top:var(--r0,14px);width:2px;height:var(--fh,0px);border-radius:2px;background:linear-gradient(180deg,var(--sutra),var(--medha),var(--kavach),var(--shrotas));transition:height .25s var(--ease)}
+.fill{position:absolute;left:11px;top:var(--r0,14px);width:2px;height:var(--fh,0px);border-radius:2px;background:linear-gradient(180deg,var(--sutra),var(--medha),var(--kavach),var(--srotas));transition:height .25s var(--ease)}
 .knob{position:absolute;left:12px;top:0;width:24px;height:24px;border-radius:50%;background:var(--surface);border:2px solid var(--c);box-shadow:0 0 0 6px color-mix(in srgb,var(--c) 16%,transparent),0 8px 18px -6px color-mix(in srgb,var(--c) 60%,transparent);transform:translateY(calc(var(--ky,14px) - 12px));transition:transform .25s var(--ease),border-color .5s,box-shadow .5s;cursor:grab;z-index:2;touch-action:none}
 .knob::after{content:"";position:absolute;inset:5px;border-radius:50%;background:var(--c);transition:background .5s}
 .knob:hover{box-shadow:0 0 0 9px color-mix(in srgb,var(--c) 18%,transparent)}
@@ -364,33 +364,33 @@ const CONTROLS = ['Consent captured & logged', 'Data encrypted in transit & at r
 .ctrls li.sum{background:none;border:0;padding:.3rem .2rem 0;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
 .sum b{color:var(--kavach);font-size:1.1rem;margin-right:.1em}
 
-/* SHROTAS listen */
+/* SROTAS listen */
 .listen{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(1rem,2.6vw,2rem);padding:0 clamp(1rem,3vw,2.4rem)}
 .rdr{position:relative;width:min(100%,360px);aspect-ratio:1;justify-self:center;container-type:inline-size}
-.rr{position:absolute;inset:0;margin:auto;border-radius:50%;border:1.5px solid color-mix(in srgb,var(--shrotas) 22%,transparent)}
+.rr{position:absolute;inset:0;margin:auto;border-radius:50%;border:1.5px solid color-mix(in srgb,var(--srotas) 22%,transparent)}
 .r1{width:42%;height:42%}.r2{width:70%;height:70%}.r3{width:98%;height:98%;border-style:dashed}
-.sweep{position:absolute;inset:1%;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 290deg,color-mix(in srgb,var(--shrotas) 30%,transparent) 360deg);animation:spin 5s linear infinite}
-.score{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34%;aspect-ratio:1;border-radius:50%;display:grid;place-content:center;text-align:center;color:#fff;background:radial-gradient(circle at 35% 30%,#FF9CC6,#BE185D 72%);box-shadow:0 0 0 10px color-mix(in srgb,var(--shrotas) 12%,transparent),0 22px 46px -16px var(--shrotas);animation:beat2 2.4s ease-in-out infinite}
+.sweep{position:absolute;inset:1%;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 290deg,color-mix(in srgb,var(--srotas) 30%,transparent) 360deg);animation:spin 5s linear infinite}
+.score{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34%;aspect-ratio:1;border-radius:50%;display:grid;place-content:center;text-align:center;color:#fff;background:radial-gradient(circle at 35% 30%,#FF9CC6,#BE185D 72%);box-shadow:0 0 0 10px color-mix(in srgb,var(--srotas) 12%,transparent),0 22px 46px -16px var(--srotas);animation:beat2 2.4s ease-in-out infinite}
 .score b{font:800 clamp(.8rem,5.2cqi,1.15rem)/1 var(--mark);letter-spacing:.05em}.score small{font:600 clamp(.7rem,4cqi,.9rem) var(--mark);opacity:.85}
-@keyframes beat2{50%{box-shadow:0 0 0 16px color-mix(in srgb,var(--shrotas) 9%,transparent),0 22px 46px -16px var(--shrotas)}}
-.bl{position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--shrotas);opacity:0;transform:scale(.4);transition:opacity .4s,transform .5s var(--ease)}
+@keyframes beat2{50%{box-shadow:0 0 0 16px color-mix(in srgb,var(--srotas) 9%,transparent),0 22px 46px -16px var(--srotas)}}
+.bl{position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--srotas);opacity:0;transform:scale(.4);transition:opacity .4s,transform .5s var(--ease)}
 .bl.in{opacity:1;transform:none;animation:blipp 2.4s ease-in-out infinite}
-@keyframes blipp{50%{box-shadow:0 0 0 8px color-mix(in srgb,var(--shrotas) 18%,transparent)}}
+@keyframes blipp{50%{box-shadow:0 0 0 8px color-mix(in srgb,var(--srotas) 18%,transparent)}}
 .src{position:absolute;transform:translate(-50%,-50%);display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .6rem;border-radius:999px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow);font:600 clamp(.66rem,3.4cqi,.78rem) var(--font-body);color:var(--fg-3);white-space:nowrap;transition:color .4s,border-color .4s,transform .5s var(--ease)}
 .src i{width:7px;height:7px;border-radius:50%;background:var(--border-strong);transition:background .4s,box-shadow .4s}
-.src.lit{color:var(--fg);border-color:color-mix(in srgb,var(--shrotas) 45%,transparent);transform:translate(-50%,-50%) scale(1.04)}
-.src.lit i{background:var(--shrotas);box-shadow:0 0 0 3px color-mix(in srgb,var(--shrotas) 20%,transparent)}
+.src.lit{color:var(--fg);border-color:color-mix(in srgb,var(--srotas) 45%,transparent);transform:translate(-50%,-50%) scale(1.04)}
+.src.lit i{background:var(--srotas);box-shadow:0 0 0 3px color-mix(in srgb,var(--srotas) 20%,transparent)}
 .feed{display:grid;gap:.55rem;align-content:center}
 .fk{margin:0 0 .2rem;font:700 .72rem var(--font-body);letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
 .mn{display:grid;grid-template-columns:auto 1fr;gap:.15rem .6rem;align-items:center;padding:.6rem .8rem;border-radius:12px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow);font-size:.82rem;opacity:0;transform:translateX(16px);transition:opacity .5s var(--ease-out),transform .6s var(--ease-out)}
 .mn.in{opacity:1;transform:none}
-.mn b{grid-row:span 2;padding:.2rem .45rem;border-radius:6px;background:var(--shrotas-tint);color:var(--shrotas);font-size:.72rem}
+.mn b{grid-row:span 2;padding:.2rem .45rem;border-radius:6px;background:var(--srotas-tint);color:var(--srotas);font-size:.72rem}
 .mn span{color:var(--fg);line-height:1.35}
 .mn em{font-style:normal;font-weight:700;font-size:.72rem}
-.mn em[data-s="pos"]{color:var(--ok)}.mn em[data-s="neu"]{color:var(--fg-2)}.mn em[data-s="neg"]{color:var(--shrotas)}
-.sv{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.4rem .8rem;margin-top:.3rem;padding:.6rem .9rem;border-radius:12px;background:var(--shrotas-tint);font:600 .82rem var(--font-body);color:var(--fg-2)}
-.sv b{color:var(--shrotas);font-size:1.02rem}
-.al{color:var(--shrotas);opacity:0;transform:translateX(10px);transition:opacity .5s,transform .5s var(--ease-out)}
+.mn em[data-s="pos"]{color:var(--ok)}.mn em[data-s="neu"]{color:var(--fg-2)}.mn em[data-s="neg"]{color:var(--srotas)}
+.sv{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.4rem .8rem;margin-top:.3rem;padding:.6rem .9rem;border-radius:12px;background:var(--srotas-tint);font:600 .82rem var(--font-body);color:var(--fg-2)}
+.sv b{color:var(--srotas);font-size:1.02rem}
+.al{color:var(--srotas);opacity:0;transform:translateX(10px);transition:opacity .5s,transform .5s var(--ease-out)}
 .al.in{opacity:1;transform:none}
 @media(max-width:1180px){.listen{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:.8rem;padding:0 1rem}.mn{padding:.5rem .65rem;font-size:.78rem}}
 
@@ -426,7 +426,7 @@ export class LifecycleComponent implements AfterViewInit, OnDestroy {
   /** How many MEDHA products have lit up so far. */
   mdLive = computed(() => this.stage() === 1 ? this.mdProducts.filter((_, k) => this.step() > 7 + k * 2).length : 0);
   srFeed = SR_FEED;
-  /** SHROTAS source chips placed around the radar (percent of the radar box). */
+  /** SROTAS source chips placed around the radar (percent of the radar box). */
   srNodes = SR_SOURCES.map((l, k) => { const a = (-90 + k * 360 / SR_SOURCES.length) * Math.PI / 180; return { l, x: +(50 + 47 * Math.cos(a)).toFixed(1), y: +(50 + 47 * Math.sin(a)).toFixed(1) }; });
   srBlips = [[66, 30], [30, 62], [68, 68], [38, 32]].map(([x, y]) => ({ x, y }));
   srLive = computed(() => this.stage() === 3 ? this.srNodes.filter((_, k) => this.step() > k * 1.5).length : 0);

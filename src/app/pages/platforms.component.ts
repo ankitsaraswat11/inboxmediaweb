@@ -4,7 +4,7 @@ import { EcosystemComponent } from '../components/ecosystem.component';
 import { PLATFORMS, TAGLINE } from '../content/platforms';
 import { ENGINEERING } from '../content/engineering';
 
-/** /platforms: one place to compare SUTRA, MEDHA, KAVACH and SHROTAS before choosing one. */
+/** /platforms: one place to compare SUTRA, MEDHA, KAVACH and SROTAS before choosing one. */
 @Component({
   standalone: true,
   imports: [RouterLink, EcosystemComponent],
@@ -14,7 +14,7 @@ import { ENGINEERING } from '../content/engineering';
       <div>
         <p class="eyebrow">Platforms</p>
         <h1>Four platforms. One connected enterprise.</h1>
-        <p class="lead">{{ tagline }} SUTRA connects, MEDHA makes things intelligent, KAVACH protects and SHROTAS listens, all on Abhiyantriki, the shared engineering foundation.</p>
+        <p class="lead">{{ tagline }} SUTRA connects, MEDHA makes things intelligent, KAVACH protects and SROTAS listens, all on Abhiyantriki, the shared engineering foundation.</p>
       </div>
       <app-ecosystem class="eco"/>
     </div>

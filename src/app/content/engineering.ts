@@ -1,4 +1,4 @@
-/* Abhiyantriki: the shared engineering foundation under SUTRA, MEDHA, KAVACH and SHROTAS. */
+/* Abhiyantriki: the shared engineering foundation under SUTRA, MEDHA, KAVACH and SROTAS. */
 export interface EngService { name: string; text: string; area: 'build' | 'connect' | 'run' | 'scale'; }
 
 export const ENGINEERING = {
@@ -12,8 +12,8 @@ export const ENGINEERING = {
     sutra: 'APIs and integrations connect every channel to CRMs, order systems and support desks.',
     medha: 'Cloud, DevOps and data pipelines run models and agents reliably, in the cloud or on-premise.',
     kavach: 'Secure architecture, access control and modernisation put governance into the systems themselves.',
-    shrotas: 'Data pipelines, official API connectors and scalable search keep every platform and news source flowing into one view.'
-  } as Record<'sutra' | 'medha' | 'kavach' | 'shrotas', string>,
+    srotas: 'Data pipelines, official API connectors and scalable search keep every platform and news source flowing into one view.'
+  } as Record<'sutra' | 'medha' | 'kavach' | 'srotas', string>,
   areas: {
     build: 'Build', connect: 'Connect', run: 'Run', scale: 'Scale'
   },

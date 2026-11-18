@@ -1,8 +1,8 @@
 /* =====================================================================
-   SUTRA · MEDHA · KAVACH · SHROTAS — platform content
+   SUTRA · MEDHA · KAVACH · SROTAS — platform content
    One file per concern keeps copy editable without touching components.
    ===================================================================== */
-export type PlatformSlug = 'sutra' | 'medha' | 'kavach' | 'shrotas';
+export type PlatformSlug = 'sutra' | 'medha' | 'kavach' | 'srotas';
 
 /**
  * KAVACH items are labelled so visitors can tell what kind of offer each one is.
@@ -136,14 +136,14 @@ export const PLATFORMS: Platform[] = [
     capabilities: []
   },
   {
-    slug: 'shrotas', name: 'SHROTAS', hi: 'स्रोतस', layer: 'The Awareness Layer', area: 'Media & Social Intelligence',
+    slug: 'srotas', name: 'SROTAS', hi: 'श्रोता', layer: 'The Awareness Layer', area: 'Media & Social Intelligence',
     descriptor: 'Media & Social Intelligence Platform', short: 'Intelligence Radar', tagline: 'Hear everything.',
-    meaning: 'Shrotas (स्रोतस) means the streams and channels through which news and public conversation flow.',
-    positioning: 'SHROTAS turns social media and news coverage into real-time intelligence and tracked action, so organisations know what is being said, how people feel and what needs a response.',
+    meaning: 'Srotas (श्रोता) means the listener: the one who hears what is being said across social media and the news.',
+    positioning: 'SROTAS turns social media and news coverage into real-time intelligence and tracked action, so organisations know what is being said, how people feel and what needs a response.',
     summary: 'Social listening and news monitoring across major platforms and news media, with sentiment, alerts, reports and intelligent engagement.',
     highlights: ['Social Listening', 'News Monitoring', 'Sentiment Analysis', 'Hindi & Hinglish', 'Trend Alerts', 'Competitor View', 'Easy Reports', 'Intelligent Engagement'],
     groups: [
-      { title: 'MyRadar 360', text: 'The SHROTAS product: all your social media and news, in one clear view.',
+      { title: 'MyRadar 360', text: 'The SROTAS product: all your social media and news, in one clear view.',
         items: ['One Feed', 'Sentiment', 'Trend Alerts', 'Competitor View', 'Instant Alerts', 'Easy Reports'].map(name => ({ name })) },
       { title: 'Major Platforms', text: 'Where conversations start and spread.',
         items: ['X (Twitter)', 'YouTube', 'Instagram', 'Facebook', 'Reddit', 'LinkedIn'].map(name => ({ name })) },
@@ -162,13 +162,13 @@ export const PLATFORMS: Platform[] = [
     challenge: {
       title: 'Blind spots in public conversation', text: 'A story can start on YouTube, Reddit, a news site or the morning paper. Teams often hear about it late, and from someone else, and complaints on X go unanswered.',
       symptoms: ['Mentions tracked by hand, platform by platform', 'Hindi and Hinglish posts missed or misread', 'Crises spotted only after they trend'],
-      answer: 'SHROTAS watches every major platform and news source in one place, alerts you while a story is still small, and turns complaints on X into tracked tickets.'
+      answer: 'SROTAS watches every major platform and news source in one place, alerts you while a story is still small, and turns complaints on X into tracked tickets.'
     },
     capabilities: []
   }
 ];
 
-/** The SHROTAS product. */
+/** The SROTAS product. */
 export const MYRADAR = {
   name: 'MyRadar 360',
   line: 'All your social media and news. One clear view.',

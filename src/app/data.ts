@@ -113,7 +113,7 @@ import { Step } from './components/flow.component';
 export const FLOW_JOURNEY: Step[]=[{t:'Discover',d:'Visitor lands and sees what Inbox Media does.'},{t:'Understand',d:'Capabilities and AI solutions explained by outcome.'},{t:'Trust',d:'Proof: case studies, results, verified claims.'},{t:'Enquire',d:'One clear form to book a demo.'}];
 export const FLOW_CAP: Step[]=[{t:'Customer need',d:'Alert, call, support or booking.'},{t:'Channel',d:'SMS, voice, WhatsApp, email or push.'},{t:'Automation',d:'Bots and agents handle the routine work.'},{t:'Integration',d:'APIs connect CRM and internal systems.'},{t:'Outcome',d:'Faster response, one coordinated journey.'}];
 export const FLOW_AI: Step[]=[{t:'Pick a use case',d:'Reception, outbound calls, knowledge, training or on-site AI.'},{t:'Match a solution',d:'Aura AI, Tellco, Custom SLM, TrainExl or Edge AI.'},{t:'Verify claims',d:'Confirm scope and data needs internally.'},{t:'Deploy',d:'Cloud or on-site, based on latency and data rules.'}];
-export const FLOW_ABOUT: Step[]=[{t:'Company',d:'Integrated enterprise technology platform.'},{t:'Capabilities',d:'Five capability domains inside the platforms.'},{t:'Platforms',d:'SUTRA, MEDHA, KAVACH and SHROTAS on a shared engineering foundation.'},{t:'Enquiry',d:'Talk to the team.'}];
+export const FLOW_ABOUT: Step[]=[{t:'Company',d:'Integrated enterprise technology platform.'},{t:'Capabilities',d:'Five capability domains inside the platforms.'},{t:'Platforms',d:'SUTRA, MEDHA, KAVACH and SROTAS on a shared engineering foundation.'},{t:'Enquiry',d:'Talk to the team.'}];
 export const ROADMAP: Step[]=[{t:'Strategy & Content',d:'Positioning, sitemap, approved copy, logos.'},{t:'UI & Development',d:'Components, routing, responsive layouts.'},{t:'Integration',d:'Forms, backend/API, CRM/email, analytics.'},{t:'QA & Launch',d:'Route, form, mobile, accessibility, SEO, performance tests.'},{t:'Optimization',d:'Analytics review, content and conversion improvements.'}];
 export const FLOW_CONTACT: Step[]=[{t:'Fill the form',d:'Name, email, interest.'},{t:'Validate',d:'Checked in browser, then on the server.'},{t:'Backend / CRM',d:'Enquiry is stored and routed.'},{t:'Confirmation',d:'Visitor sees success or a clear error.'}];
 
@@ -199,10 +199,10 @@ const PRODUCT_SHOWCASE: Record<string, Pick<Product, 'tagline' | 'caps' | 'visua
 PRODUCTS.forEach(p => Object.assign(p, PRODUCT_SHOWCASE[p.name]));
 
 /* ===== Industry detail: challenges, platforms and an example workflow ===== */
-export type PlatformKey = 'sutra' | 'medha' | 'kavach' | 'shrotas';
+export type PlatformKey = 'sutra' | 'medha' | 'kavach' | 'srotas';
 export interface IndustryDetail { challenges: string[]; platforms: PlatformKey[]; engineering?: boolean; workflow: string[]; }
 const INDUSTRY_DETAIL: Record<string, IndustryDetail> = {
-  'BFSI': { platforms: ['sutra', 'medha', 'kavach', 'shrotas'],
+  'BFSI': { platforms: ['sutra', 'medha', 'kavach', 'srotas'],
     challenges: ['OTPs and alerts must arrive in seconds', 'Missed reminders cost trust and revenue', 'Strict security and DLT messaging rules'],
     workflow: ['A transaction triggers a DLT-compliant SMS, OTP or RCS alert', 'WhatsApp automation answers routine service queries', 'IVR and outbound calls handle verification and reminders', 'Tellco automates follow-ups; staff ask a Custom SLM about approved procedures'] },
   'Healthcare': { platforms: ['sutra', 'medha', 'kavach'],
@@ -211,7 +211,7 @@ const INDUSTRY_DETAIL: Record<string, IndustryDetail> = {
   'Education': { platforms: ['sutra', 'medha'],
     challenges: ['Admission enquiries arrive in bursts', 'Notices must reach every parent', 'Policies and SOPs are rarely read in full'],
     workflow: ['Tellco captures and qualifies the admission enquiry', 'Notices and fee reminders go out by SMS and WhatsApp', 'Aura AI answers counselling questions', 'TrainExl turns staff SOPs into microlearning'] },
-  'Ecommerce & Retail': { platforms: ['sutra', 'medha', 'shrotas'], engineering: true,
+  'Ecommerce & Retail': { platforms: ['sutra', 'medha', 'srotas'], engineering: true,
     challenges: ['“Where is my order” tickets grow with every sale', 'Customers expect updates on their preferred channel', 'Repeat customers matter more than new ones'],
     workflow: ['An order event triggers the right message on the right channel', 'WhatsApp and voice bots answer common questions', 'Sentiment analysis flags unhappy customers for a person', 'APIs keep order and CRM systems in sync'] },
   'Real Estate': { platforms: ['sutra', 'medha'],
@@ -220,10 +220,10 @@ const INDUSTRY_DETAIL: Record<string, IndustryDetail> = {
   'Logistics & Delivery': { platforms: ['sutra'], engineering: true,
     challenges: ['Failed deliveries are expensive', '“Where is my parcel” calls flood support', 'Tracking systems rarely talk to messaging'],
     workflow: ['Each shipment stage triggers SMS and WhatsApp alerts', 'Outbound calls and IVR confirm address and delivery slot', 'APIs connect tracking and dispatch systems', 'Exceptions route to the operations team'] },
-  'Government': { platforms: ['sutra', 'medha', 'kavach', 'shrotas'],
+  'Government': { platforms: ['sutra', 'medha', 'kavach', 'srotas'],
     challenges: ['Large, multilingual populations to reach', 'Helplines that must scale on demand', 'Strict data handling and AI governance rules'],
     workflow: ['Citizen notices go out through bulk messaging and IVR', 'Multilingual voice and WhatsApp bots answer routine queries', 'Edge AI keeps processing on-premise', 'ISO 42001 readiness and TrainExl support governance and staff training'] },
-  'Telecom': { platforms: ['sutra', 'medha', 'shrotas'], engineering: true,
+  'Telecom': { platforms: ['sutra', 'medha', 'srotas'], engineering: true,
     challenges: ['Huge call and message volumes', 'Customers expect quick resolution on any channel', 'Legacy platforms slow down change'],
     workflow: ['Cloud telephony and IVR route and automate calls', 'Messaging APIs deliver notifications at scale', 'A Custom SLM powers a telecom-specific assistant', 'Abhiyantriki engineering modernises the platforms underneath'] }
 };
@@ -262,5 +262,5 @@ export const FINDER_GOALS: FinderGoal[] = [
   { key: 'automation', label: 'Customer support and conversations', interest: 'MEDHA' },
   { key: 'systems', label: 'Connect or modernise systems', interest: 'Abhiyantriki' },
   { key: 'governance', label: 'Privacy, security and AI governance', interest: 'KAVACH' },
-  { key: 'listening', label: 'Social media and news monitoring', interest: 'SHROTAS' }
+  { key: 'listening', label: 'Social media and news monitoring', interest: 'SROTAS' }
 ];
