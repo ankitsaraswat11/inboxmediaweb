@@ -383,7 +383,7 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     { t: 'AI that runs where your data rules say: public cloud, private cloud, on-premise or offline at the edge.', icons: ['M7 7h10v10H7zM10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4'] },
     { t: 'Plugs into the CRM, ERP and helpdesk you already run, through REST APIs and webhooks.', icons: ['M9 7V3M15 7V3M7 7h10v4a5 5 0 0 1-10 0zM12 16v5'] },
     { t: 'Privacy, security and AI governance built in from day one, not bolted on later.', icons: ['M12 2.8l7.5 2.8v5.8c0 4.4-3.1 7.8-7.5 9.4-4.4-1.6-7.5-5-7.5-9.4V5.6zM8.6 12l2.4 2.4 4.4-4.6'] },
-    { t: 'Hear what people say about you across social media, news and TV, with SHROTAS and MyRadar 360.', wide: true, icons: ['M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0-18 0M12 12m-5 0a5 5 0 1 0 10 0a5 5 0 1 0-10 0M12 12l6-6', 'M4 5h16v11H8l-4 4z', 'M3 7h18v12H3zM8 3l4 4 4-4'] }
+    { t: 'Hear what people say about you across social media and news, with SHROTAS and MyRadar 360.', wide: true, icons: ['M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0-18 0M12 12m-5 0a5 5 0 1 0 10 0a5 5 0 1 0-10 0M12 12l6-6', 'M4 5h16v11H8l-4 4z', 'M3 7h18v12H3zM8 3l4 4 4-4'] }
   ] as { t: string; icons: string[]; wide?: boolean }[];
 
   /** Morphing hero word. */

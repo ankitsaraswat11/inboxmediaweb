@@ -61,9 +61,7 @@ import { INDUSTRY_VIEW } from '../data';
               <p class="prod-line">{{ mr.line }}</p>
               <p>{{ mr.text }}</p>
               <div class="prod-n">
-                <div><b>{{ mr.sources.social }}</b><span>Social platforms</span></div>
-                <div><b>{{ mr.sources.media }}</b><span>Media streams</span></div>
-                <div><b>1</b><span>Unified view</span></div>
+                @for (k of mr.parts; track k.t) { <div><b>{{ k.t }}</b><span>{{ k.d }}</span></div> }
               </div>
               <a class="btn" routerLink="/contact" [queryParams]="{type:'demo', interest: mr.name}">Book a {{ mr.name }} demo</a>
             </div>
@@ -177,8 +175,8 @@ import { INDUSTRY_VIEW } from '../data';
   .prod h3{margin:0;font:700 clamp(1.8rem,3.4vw,2.6rem)/1.05 var(--font-display);letter-spacing:-.02em;color:var(--fg)}
   .prod-line{margin:0;font-style:italic;color:var(--c);font-weight:600}
   .prod-copy p{margin:0;max-width:52ch}
-  .prod-n{display:flex;flex-wrap:wrap;gap:1.6rem;margin:.4rem 0 .6rem}
-  .prod-n div{display:grid}.prod-n b{font:700 2rem/1 var(--font-display);color:var(--c)}.prod-n span{font-size:.82rem;color:var(--fg-2)}
+  .prod-n{display:flex;flex-wrap:wrap;gap:.6rem;margin:.4rem 0 .6rem}
+  .prod-n div{display:grid;gap:.15rem;flex:1 1 11rem;padding:.6rem .8rem;border-radius:12px;background:var(--t)}.prod-n b{font:700 1rem/1.2 var(--font-display);color:var(--c)}.prod-n span{font-size:.82rem;color:var(--fg-2)}
   .prod-f{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
   .prod-f li{display:grid;gap:.15rem;padding:.85rem 1rem;border-radius:12px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--c)}
   .prod-f b{color:var(--fg);font-weight:650}.prod-f span{font-size:.92rem;color:var(--fg-2)}

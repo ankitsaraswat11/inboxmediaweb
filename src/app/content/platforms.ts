@@ -139,27 +139,30 @@ export const PLATFORMS: Platform[] = [
     slug: 'shrotas', name: 'SHROTAS', hi: 'स्रोतस', layer: 'The Awareness Layer', area: 'Media & Social Intelligence',
     descriptor: 'Media & Social Intelligence Platform', short: 'Intelligence Radar', tagline: 'Hear everything.',
     meaning: 'Shrotas (स्रोतस) means the streams and channels through which news and public conversation flow.',
-    positioning: 'SHROTAS turns social media, news and TV coverage into real-time intelligence, so enterprises know what is being said, how people feel and what needs a response.',
-    summary: 'Social listening and media monitoring across ten sources, with sentiment, trends and alerts.',
-    highlights: ['Social Listening', 'Media Monitoring', 'Sentiment Analysis', 'Hindi & Hinglish', 'Trend Detection', 'Real-time Alerts', 'Competitor Benchmarking', 'Executive Reports'],
+    positioning: 'SHROTAS turns social media and news coverage into real-time intelligence and tracked action, so organisations know what is being said, how people feel and what needs a response.',
+    summary: 'Social listening and news monitoring across major platforms and news media, with sentiment, alerts, reports and intelligent engagement.',
+    highlights: ['Social Listening', 'News Monitoring', 'Sentiment Analysis', 'Hindi & Hinglish', 'Trend Alerts', 'Competitor View', 'Easy Reports', 'Intelligent Engagement'],
     groups: [
-      { title: 'MyRadar 360', text: 'The SHROTAS product: one radar for social media, news and TV.',
-        items: ['Unified Monitoring', 'Sentiment & Emotion', 'Trend & Spike Detection', 'Competitive Benchmarking', 'Real-time Alerts', 'Executive Reporting'].map(name => ({ name })) },
-      { title: 'Social Media Monitoring', text: 'Six platforms where conversations start and spread.',
+      { title: 'MyRadar 360', text: 'The SHROTAS product: all your social media and news, in one clear view.',
+        items: ['One Feed', 'Sentiment', 'Trend Alerts', 'Competitor View', 'Instant Alerts', 'Easy Reports'].map(name => ({ name })) },
+      { title: 'Major Platforms', text: 'Where conversations start and spread.',
         items: ['X (Twitter)', 'YouTube', 'Instagram', 'Facebook', 'Reddit', 'LinkedIn'].map(name => ({ name })) },
-      { title: 'Media Monitoring', text: 'Four streams where stories get reported.',
-        items: ['News (web)', 'Newspapers (e-paper)', 'Television', 'News on X'].map(name => ({ name })) }
+      { title: 'News & Media', text: 'Where stories get reported.',
+        items: ['News websites', 'Newspapers (e-paper)', 'News on X'].map(name => ({ name })) },
+      { title: 'Intelligent Engagement', text: 'Turn conversations into owned, tracked work, starting with X.',
+        items: ['Mentions & DMs become tickets', 'Replies in 13 languages', 'Auto topic & routing', 'SLA tracking', 'Citizen rating'].map(name => ({ name })) }
     ],
     useCases: [
       { title: 'Brand reputation', text: 'See what customers say about you and your rivals, across every platform, every day.', who: 'Brands & retail' },
       { title: 'Crisis early warning', text: 'Get alerted when complaints or negative coverage start to spike, before they trend.', who: 'PR & communications' },
       { title: 'Outage and scam chatter', text: 'Catch payment failures and phishing scams being discussed online, early.', who: 'BFSI, telecom' },
-      { title: 'Public feedback on policy', text: 'Understand how citizens react to announcements, by topic and by region.', who: 'Government' }
+      { title: 'Public feedback on policy', text: 'Understand how citizens react to announcements, by topic and by region.', who: 'Government' },
+      { title: 'Citizen support on X', text: 'Complaints and DMs to your X handle become tickets with an owner, an SLA clock and a reply in the citizen’s language.', who: 'Government & public offices' }
     ],
     challenge: {
-      title: 'Blind spots in public conversation', text: 'A story can start on YouTube, Reddit, TV or the morning paper. Teams often hear about it late, and from someone else.',
+      title: 'Blind spots in public conversation', text: 'A story can start on YouTube, Reddit, a news site or the morning paper. Teams often hear about it late, and from someone else, and complaints on X go unanswered.',
       symptoms: ['Mentions tracked by hand, platform by platform', 'Hindi and Hinglish posts missed or misread', 'Crises spotted only after they trend'],
-      answer: 'SHROTAS watches all ten sources in one place and alerts you while a story is still small.'
+      answer: 'SHROTAS watches every major platform and news source in one place, alerts you while a story is still small, and turns complaints on X into tracked tickets.'
     },
     capabilities: []
   }
@@ -168,14 +171,19 @@ export const PLATFORMS: Platform[] = [
 /** The SHROTAS product. */
 export const MYRADAR = {
   name: 'MyRadar 360',
-  line: 'See beyond the noise. Understand the signals.',
-  text: 'Social media, news and TV, tracked in one place. Know what people say, how they feel and what needs action, as it happens.',
-  sources: { social: 6, media: 4 },
+  line: 'All your social media and news. One clear view.',
+  text: 'MyRadar 360 tracks what people say about you across major platforms and news media, from X and YouTube to news sites and newspapers. Get alerts, sentiment and simple reports, and answer people on X.',
+  /** Service groups, as named on MyRadar 360 (no counts). */
+  parts: [
+    { t: 'Major platforms', d: 'X, YouTube, Instagram, Facebook, Reddit, LinkedIn' },
+    { t: 'News & Media', d: 'News websites, e-papers, news on X' },
+    { t: 'Intelligent Engagement', d: 'Citizen support & ticketing on X' }
+  ],
   features: [
-    { t: 'Unified monitoring', d: 'Every mention from 10 sources, in one feed.' },
-    { t: 'Sentiment & emotion', d: 'Hindi, Hinglish and regional languages too.' },
-    { t: 'Trend & spike detection', d: 'Catch a story while it is still small.' },
-    { t: 'Real-time alerts', d: 'Know the moment it matters.' }
+    { t: 'One feed', d: 'Every mention from every service, in one place.' },
+    { t: 'Sentiment', d: 'Hindi, Hinglish and regional languages too.' },
+    { t: 'Trend alerts', d: 'Spot a story while it is still small.' },
+    { t: 'Intelligent engagement', d: 'Mentions and DMs on X become tickets, with replies in 13 languages.' }
   ]
 };
 

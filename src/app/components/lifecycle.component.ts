@@ -8,7 +8,7 @@ import { PLATFORMS, PlatformSlug } from '../content/platforms';
      01 Communication → SUTRA   (channel hub: messages fan out to every channel)
      02 AI            → MEDHA   (AI tech stack → MEDHA core → the five AI products)
      03 Compliance & Security → KAVACH (shield drawing in, controls switching on)
-     04 Media & Social Intelligence → SHROTAS (radar picks up ten sources, mentions stream in)
+     04 Media & Social Intelligence → SHROTAS (radar picks up every source, mentions stream in)
 
    Movable: a vertical rail on the left. Drag its marker up/down, click a
    platform, or use the arrow keys, and the page scrolls to that platform.
@@ -27,7 +27,7 @@ export const STAGES: Stage[] = [
   mk('sutra', 'Communication', 'SMS, OTP, WhatsApp, RCS, voice and email run on one compliant communication fabric, so every customer is reached on the channel they actually use.', ['SMS & OTP', 'WhatsApp API', 'RCS', 'IVR & Voice']),
   mk('medha', 'Artificial Intelligence', 'AI voice agents and chatbots understand intent, reply in your customer’s language and complete the task, handing over to a person only when needed.', ['AI agents', 'Voice AI', 'Multilingual', 'Custom SLM']),
   mk('kavach', 'Compliance & Security', 'Consent, encryption, access control and audit trails are built into every flow, with DPDP compliance and AI governance from day one.', ['DPDP', 'Consent', 'Encryption', 'Audit logs']),
-  mk('shrotas', 'Media & Social Intelligence', 'MyRadar 360 listens across six social platforms, news, e-papers and TV, reads sentiment in Hindi and Hinglish, and alerts you while a story is still small.', ['Social listening', 'News & TV', 'Sentiment', 'Spike alerts'])
+  mk('shrotas', 'Media & Social Intelligence', 'MyRadar 360 listens across major platforms and news media, reads sentiment in Hindi and Hinglish, alerts you while a story is still small, and turns complaints on X into tracked tickets.', ['Social listening', 'News & e-papers', 'Sentiment', 'Engagement on X'])
 ];
 
 const CHANNELS = ['SMS', 'WhatsApp', 'RCS', 'Voice', 'Email', 'Push'];
@@ -50,12 +50,12 @@ const mdCol = (n: number, top: number, bottom: number) => Array.from({ length: n
 const mdCurve = (x1: number, y1: number, x2: number, y2: number) => { const m = (x1 + x2) / 2; return `M${x1} ${y1} C${m} ${y1} ${m} ${y2} ${x2} ${y2}`; };
 const MD_TECH_POS = mdCol(MD_TECH.length, 80, 400).map(y => ({ x: 92, y, d: mdCurve(150, y, MD_C.x - 58, MD_C.y) }));
 const MD_PROD_POS = mdCol(MD_PRODUCTS.length, 92, 388).map(y => ({ x: 500, y, d: mdCurve(MD_C.x + 58, MD_C.y, 428, y) }));
-/* SHROTAS radar: the ten sources MyRadar 360 monitors, and a sample of incoming mentions. */
-const SR_SOURCES = ['X', 'YouTube', 'Instagram', 'Facebook', 'Reddit', 'LinkedIn', 'News', 'E-papers', 'TV', 'News on X'];
+/* SHROTAS radar: the sources MyRadar 360 monitors, and a sample of incoming mentions. */
+const SR_SOURCES = ['X', 'YouTube', 'Instagram', 'Facebook', 'Reddit', 'LinkedIn', 'News', 'E-papers', 'News on X'];
 const SR_FEED = [
   { src: 'YouTube', t: 'Review: setup was quick and simple', s: 'pos', l: 'Positive' },
   { src: 'X', t: 'Delivery phir se late hai, koi update?', s: 'neg', l: 'Negative' },
-  { src: 'TV', t: 'Launch featured in the evening bulletin', s: 'neu', l: 'Neutral' },
+  { src: 'News', t: 'Launch covered by a national news portal', s: 'neu', l: 'Neutral' },
   { src: 'E-paper', t: 'Front-page story on the new service', s: 'pos', l: 'Positive' }
 ];
 const CONTROLS = ['Consent captured & logged', 'Data encrypted in transit & at rest', 'Role-based access control', 'Audit trail for every action', 'DPDP obligations mapped', 'AI governance (ISO 42001 readiness)'];
@@ -427,7 +427,7 @@ export class LifecycleComponent implements AfterViewInit, OnDestroy {
   mdLive = computed(() => this.stage() === 1 ? this.mdProducts.filter((_, k) => this.step() > 7 + k * 2).length : 0);
   srFeed = SR_FEED;
   /** SHROTAS source chips placed around the radar (percent of the radar box). */
-  srNodes = SR_SOURCES.map((l, k) => { const a = (-90 + k * 36) * Math.PI / 180; return { l, x: +(50 + 47 * Math.cos(a)).toFixed(1), y: +(50 + 47 * Math.sin(a)).toFixed(1) }; });
+  srNodes = SR_SOURCES.map((l, k) => { const a = (-90 + k * 360 / SR_SOURCES.length) * Math.PI / 180; return { l, x: +(50 + 47 * Math.cos(a)).toFixed(1), y: +(50 + 47 * Math.sin(a)).toFixed(1) }; });
   srBlips = [[66, 30], [30, 62], [68, 68], [38, 32]].map(([x, y]) => ({ x, y }));
   srLive = computed(() => this.stage() === 3 ? this.srNodes.filter((_, k) => this.step() > k * 1.5).length : 0);
   activeControls = computed(() => this.stage() === 2 ? this.controls.filter((_, k) => this.step() > k * 3).length : 0);

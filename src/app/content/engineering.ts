@@ -12,7 +12,7 @@ export const ENGINEERING = {
     sutra: 'APIs and integrations connect every channel to CRMs, order systems and support desks.',
     medha: 'Cloud, DevOps and data pipelines run models and agents reliably, in the cloud or on-premise.',
     kavach: 'Secure architecture, access control and modernisation put governance into the systems themselves.',
-    shrotas: 'Data pipelines, official API connectors and scalable search keep ten sources flowing into one view.'
+    shrotas: 'Data pipelines, official API connectors and scalable search keep every platform and news source flowing into one view.'
   } as Record<'sutra' | 'medha' | 'kavach' | 'shrotas', string>,
   areas: {
     build: 'Build', connect: 'Connect', run: 'Run', scale: 'Scale'

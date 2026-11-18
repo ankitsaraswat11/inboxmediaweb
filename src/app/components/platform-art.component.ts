@@ -41,7 +41,7 @@ const K_TAGS: Node[] = [
   ['AI governance', 68, 205, 'ISO 42001 readiness, AI risk assessment and model oversight.']
 ].map(([l, x, y, d]) => ({ l: l as string, x: x as number, y: y as number, w: pill(l as string), d: d as string }));
 
-/* ---------- SHROTAS: ten sources flowing into one radar ---------- */
+/* ---------- SHROTAS: major platforms and news media flowing into one radar ---------- */
 const RC = { x: 220, y: 205 };
 const SHROTAS_NODES: Node[] = [
   ['X', 'Posts, replies and trending hashtags.'],
@@ -52,10 +52,9 @@ const SHROTAS_NODES: Node[] = [
   ['LinkedIn', 'Company and leadership updates.'],
   ['News', 'Online news sites and portals.', true],
   ['E-papers', 'Daily newspaper editions.', true],
-  ['TV', 'News channel coverage.', true],
   ['News on X', 'Media-house handles on X.', true]
-].map(([l, d, media], i) => {
-  const r = (-90 + i * 36) * Math.PI / 180, x = +(RC.x + 168 * Math.cos(r)).toFixed(1), y = +(RC.y + 160 * Math.sin(r)).toFixed(1);
+].map(([l, d, media], i, all) => {
+  const r = (-90 + i * 360 / all.length) * Math.PI / 180, x = +(RC.x + 168 * Math.cos(r)).toFixed(1), y = +(RC.y + 160 * Math.sin(r)).toFixed(1);
   const mx = (RC.x + x) / 2, my = (RC.y + y) / 2, dx = x - RC.x, dy = y - RC.y;
   // drawn from the source into the core, so signals flow inward
   return { l: l as string, x, y, w: pill(l as string), d: d as string, sys: !!media, path: `M${x},${y} Q${(mx + dy * .18).toFixed(1)},${(my - dx * .18).toFixed(1)} ${RC.x},${RC.y}` };
@@ -113,7 +112,7 @@ const BLIPS = [[286, 132, 0], [150, 262, 900], [300, 268, 1700], [168, 150, 2500
       </svg>
     }
     @case ('shrotas') {
-      <svg viewBox="0 0 440 410" role="img" aria-label="SHROTAS radar: X, YouTube, Instagram, Facebook, Reddit, LinkedIn, news, e-papers, TV and news on X flowing into MyRadar 360">
+      <svg viewBox="0 0 440 410" role="img" aria-label="SHROTAS radar: X, YouTube, Instagram, Facebook, Reddit, LinkedIn, news websites, e-papers and news on X flowing into MyRadar 360">
         <circle class="rg" cx="220" cy="205" r="62"/>
         <circle class="rg" cx="220" cy="205" r="108"/>
         <circle class="rg dash spin" cx="220" cy="205" r="140"/>

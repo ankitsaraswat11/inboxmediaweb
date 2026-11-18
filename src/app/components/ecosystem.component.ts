@@ -7,7 +7,7 @@ const R = 172;
 /** Platform node positions on the orbit: SUTRA top-left, MEDHA top-right, KAVACH bottom-right, SHROTAS bottom-left. */
 const POS = [-135, -45, 45, 135].map(a => ({ x: +(C.x + R * Math.cos(a * Math.PI / 180)).toFixed(1), y: +(C.y + R * Math.sin(a * Math.PI / 180)).toFixed(1), a }));
 /** Satellite capabilities around each platform, placed outward from the centre. */
-const SATS: string[][] = [['SMS', 'WhatsApp', 'Voice'], ['AI agents', 'SLMs', 'Automation'], ['Privacy', 'Security', 'Governance'], ['Social', 'News & TV', 'Sentiment']];
+const SATS: string[][] = [['SMS', 'WhatsApp', 'Voice'], ['AI agents', 'SLMs', 'Automation'], ['Privacy', 'Security', 'Governance'], ['Social', 'News', 'Sentiment']];
 
 @Component({
   selector: 'app-ecosystem',
