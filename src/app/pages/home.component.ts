@@ -121,18 +121,22 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
   </div>
 </section>
 
-<!-- 5 · CINEMATIC BAND -->
+<!-- 5 · CINEMATIC BAND: four platforms statement -->
 <section class="cine inverse">
   <app-ribbon variant="band" [parallax]="50"/>
   <div class="wrap">
-    <h2 class="cine-h" reveal>Messaging, AI, security and media intelligence, <b>all on one platform.</b></h2>
-    <div class="feat" #feat>
-      @for (f of feats; track f.t; let i = $index) {
-        <article class="ft" [class.wide]="f.wide" [reveal]="i * .08">
-          <p>{{ f.t }}</p>
-          <span class="fi">@for (d of f.icons; track d) { <svg viewBox="0 0 24 24"><path [attr.d]="d"/></svg> }</span>
-        </article>
-      }
+    <div class="eco-panel" reveal>
+      <span class="ep-badge">Inbox Media</span>
+      <h2 class="cine-h">Four platforms. One connected technology ecosystem.</h2>
+      <p class="ep-tag">Connect. Think. Protect. Build.</p>
+      <p class="ep-copy">From intelligent communication and AI-powered automation to digital trust and engineering, Inbox Media brings together the technology enterprises need to move forward.</p>
+      <ul class="ep-chips" aria-label="Inbox Media platforms">
+        <li><a class="ep-chip sutra" routerLink="/platforms/sutra">SUTRA</a></li>
+        <li><a class="ep-chip medha" routerLink="/platforms/medha">MEDHA</a></li>
+        <li><a class="ep-chip kavach" routerLink="/platforms/kavach">KAVACH</a></li>
+        <li><a class="ep-chip abhi" routerLink="/abhiyantriki">ABHIYANTRIKI</a></li>
+      </ul>
+      <a class="ep-cta" routerLink="/platforms">Explore Our Platforms <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </div>
 </section>
@@ -279,17 +283,25 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 @keyframes breathe{50%{transform:scale(1.08)}}
 .pins{position:absolute;inset:-14px;border-radius:18px;background:repeating-linear-gradient(90deg,transparent 0 14px,color-mix(in srgb,#37E2A0 60%,transparent) 14px 22px) top/100% 14px no-repeat,repeating-linear-gradient(90deg,transparent 0 14px,color-mix(in srgb,#37E2A0 60%,transparent) 14px 22px) bottom/100% 14px no-repeat,repeating-linear-gradient(0deg,transparent 0 14px,color-mix(in srgb,#37E2A0 60%,transparent) 14px 22px) left/14px 100% no-repeat,repeating-linear-gradient(0deg,transparent 0 14px,color-mix(in srgb,#37E2A0 60%,transparent) 14px 22px) right/14px 100% no-repeat;z-index:-1}
 
-/* 5 cinematic band */
-.cine{position:relative;isolation:isolate;overflow:hidden;padding:clamp(8rem,16vw,14rem) 0 clamp(4rem,8vw,7rem)}
-.cine-h{margin:0 auto clamp(4rem,9vw,8rem);text-align:center;max-width:17ch;font-size:clamp(2.6rem,5.6vw,5rem);line-height:1.1;color:#fff}
-.feat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem}
-.ft.wide{grid-column:1/-1;min-height:clamp(180px,18vw,240px)}
-.ft{position:relative;overflow:hidden;min-height:clamp(240px,26vw,340px);display:grid;align-content:space-between;gap:2rem;padding:clamp(1.6rem,3.6vw,3.6rem);border-radius:16px;background:linear-gradient(160deg,#0D1130,#05060F 70%);border:1px solid rgba(255,255,255,.12)}
-.ft::before{content:"";position:absolute;inset:0;background:radial-gradient(420px circle at var(--x,-100%) var(--y,-100%),rgba(110,140,255,.22),transparent 60%);pointer-events:none}
-.ft::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:radial-gradient(300px circle at var(--x,-100%) var(--y,-100%),rgba(160,180,255,.8),transparent 60%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
-.ft p{position:relative;margin:0;font:400 clamp(1.3rem,2.2vw,2rem)/1.32 var(--font-body);color:#fff;max-width:28ch;letter-spacing:-.01em}
-.fi{position:relative;display:flex;gap:1.6rem}
-.fi svg{width:40px;height:40px;fill:none;stroke:#5C7CFF;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+/* 5 cinematic band: four platforms statement */
+.cine{position:relative;isolation:isolate;overflow:hidden;padding:clamp(5rem,10vw,9rem) 0}
+.eco-panel{position:relative;max-width:1100px;margin:0 auto;padding:clamp(1.8rem,4.5vw,4rem);border-radius:28px;background:linear-gradient(160deg,rgba(13,17,48,.92),rgba(5,6,15,.94) 70%);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:grid;gap:clamp(1rem,2vw,1.5rem);justify-items:start}
+.ep-badge{display:inline-flex;align-items:center;padding:.4rem .9rem;border-radius:999px;background:rgba(92,124,255,.14);border:1px solid rgba(92,124,255,.35);color:#8EA0FF;font:600 .78rem/1 var(--font-body);letter-spacing:.12em;text-transform:uppercase}
+.cine-h{margin:0;max-width:20ch;text-align:left;font-size:clamp(2.2rem,5vw,4.2rem);line-height:1.08;color:#fff}
+.ep-tag{margin:0;font:400 clamp(1.4rem,2.6vw,2.1rem)/1.25 var(--font-body);color:var(--fg-2);letter-spacing:-.01em}
+.ep-copy{margin:0;max-width:62ch;font:400 clamp(1.05rem,1.7vw,1.35rem)/1.6 var(--font-body);color:var(--fg-2)}
+.ep-chips{display:flex;flex-wrap:wrap;gap:.7rem;list-style:none;margin:.4rem 0 0;padding:0}
+.ep-chip{display:inline-flex;align-items:center;min-height:44px;padding:.55rem 1.3rem;border-radius:999px;border:1px solid var(--bd);background:var(--bgc);color:var(--tc);font:700 clamp(.95rem,1.4vw,1.1rem)/1 var(--font-body);letter-spacing:.02em;text-decoration:none;transition:background .2s,border-color .2s,transform .2s}
+.ep-chip:hover{background:var(--bgh);border-color:var(--tc)}
+.ep-chip:focus-visible,.ep-cta:focus-visible{outline:2px solid #fff;outline-offset:3px}
+.ep-chip.sutra{--tc:#6C8BFF;--bd:rgba(108,139,255,.35);--bgc:rgba(108,139,255,.12);--bgh:rgba(108,139,255,.22)}
+.ep-chip.medha{--tc:#B08CFF;--bd:rgba(176,140,255,.35);--bgc:rgba(176,140,255,.12);--bgh:rgba(176,140,255,.22)}
+.ep-chip.kavach{--tc:#34D399;--bd:rgba(52,211,153,.35);--bgc:rgba(52,211,153,.12);--bgh:rgba(52,211,153,.22)}
+.ep-chip.abhi{--tc:#E4E7F5;--bd:rgba(255,255,255,.22);--bgc:rgba(255,255,255,.08);--bgh:rgba(255,255,255,.16)}
+.ep-cta{display:flex;align-items:center;justify-content:center;gap:.7rem;width:100%;min-height:64px;margin-top:.6rem;padding:1rem 2rem;border-radius:14px;background:#2B44D1;color:#fff;font:600 clamp(1.05rem,1.8vw,1.35rem)/1.2 var(--font-body);text-decoration:none;transition:background .2s,box-shadow .2s}
+.ep-cta:hover{background:#3A55E8;box-shadow:0 14px 40px -14px rgba(60,90,255,.7)}
+.ep-cta svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s}
+.ep-cta:hover svg{transform:translateX(4px)}
 
 /* 6 trust */
 .trust{padding:clamp(6rem,12vw,11rem) 0 clamp(4rem,8vw,7rem);background:var(--bg-alt);text-align:center}
@@ -338,7 +350,7 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 @media(max-width:1000px){
   .eco-in,.integ-in{grid-template-columns:minmax(0,1fr)}
   .eco .lead{margin-top:1rem}
-  .feat,.pg{grid-template-columns:1fr}
+  .pg{grid-template-columns:1fr}
   .stats{grid-template-columns:1fr 1fr}.stats > div:nth-child(3){border-left:0}
   .stats > div:nth-child(n+3){padding-top:2rem;border-top:1px solid var(--border);margin-top:2rem}
 }
@@ -378,13 +390,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     { t: 'Social listening', x: 56, y: 40, d: 'M12 12m-8 0a8 8 0 1 0 16 0a8 8 0 1 0-16 0M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0-8 0M12 12l5-5' },
     { t: 'APIs', x: 60, y: 88, d: 'M8 8l-5 4 5 4M16 8l5 4-5 4' }
   ];
-  feats = [
-    { t: 'Run SMS, WhatsApp, RCS, voice and email from one orchestrated communication fabric.', icons: ['M4 6h16M4 12h16M4 18h10', 'M12 3a3 3 0 0 1 3 3v6a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3zM5 11a7 7 0 0 0 14 0M12 18v3', 'M4 5h16v11H8l-4 4z'] },
-    { t: 'AI that runs where your data rules say: public cloud, private cloud, on-premise or offline at the edge.', icons: ['M7 7h10v10H7zM10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4'] },
-    { t: 'Plugs into the CRM, ERP and helpdesk you already run, through REST APIs and webhooks.', icons: ['M9 7V3M15 7V3M7 7h10v4a5 5 0 0 1-10 0zM12 16v5'] },
-    { t: 'Privacy, security and AI governance built in from day one, not bolted on later.', icons: ['M12 2.8l7.5 2.8v5.8c0 4.4-3.1 7.8-7.5 9.4-4.4-1.6-7.5-5-7.5-9.4V5.6zM8.6 12l2.4 2.4 4.4-4.6'] },
-    { t: 'Hear what people say about you across social media and news, with SROTAS and MyRadar 360.', wide: true, icons: ['M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0-18 0M12 12m-5 0a5 5 0 1 0 10 0a5 5 0 1 0-10 0M12 12l6-6', 'M4 5h16v11H8l-4 4z', 'M3 7h18v12H3zM8 3l4 4 4-4'] }
-  ] as { t: string; icons: string[]; wide?: boolean }[];
 
   /** Morphing hero word. */
   t = signal(0);
@@ -396,7 +401,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
   private off: (() => void)[] = [];
   @ViewChild('hero') heroEl!: ElementRef<HTMLElement>;
   @ViewChild('fcard') fcardEl!: ElementRef<HTMLElement>;
-  @ViewChild('feat') featEl!: ElementRef<HTMLElement>;
 
   ngAfterViewInit() {
     if (typeof window === 'undefined') return; // prerender/SSR: browser-only setup
@@ -412,7 +416,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
       this.listen(hero, 'mouseleave', () => { this.held = false; });
       if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduce) {
         this.bindTilt(this.fcardEl.nativeElement);
-        this.bindSpot(this.featEl.nativeElement);
       }
       if (!reduce) {
         this.timer = setInterval(() => {
@@ -442,27 +445,6 @@ export class HomeComponent implements AfterViewInit, OnDestroy {
     });
     this.listen(el, 'pointerleave', () => { r = null; cancelAnimationFrame(raf); raf = 0; el.style.setProperty('--ry', '0deg'); el.style.setProperty('--rx', '0deg'); });
     const reset = () => { r = null; };
-    addEventListener('scroll', reset, { passive: true });
-    this.off.push(() => { removeEventListener('scroll', reset); cancelAnimationFrame(raf); });
-  }
-
-  /** Cursor spotlight on the cinematic cards (card rects measured once per hover, not on every move). */
-  private bindSpot(wrap: HTMLElement) {
-    let rects: DOMRect[] | null = null, raf = 0, cx = 0, cy = 0;
-    const cards = () => Array.from(wrap.children) as HTMLElement[];
-    const paint = () => {
-      raf = 0;
-      cards().forEach((c, i) => { const r = rects![i]; c.style.setProperty('--x', (cx - r.left) + 'px'); c.style.setProperty('--y', (cy - r.top) + 'px'); });
-    };
-    this.listen(wrap, 'pointerenter', () => { rects = null; });
-    this.listen(wrap, 'pointermove', (e: PointerEvent) => {
-      if (e.pointerType !== 'mouse') return;
-      rects ??= cards().map(c => c.getBoundingClientRect());
-      cx = e.clientX; cy = e.clientY;
-      raf ||= requestAnimationFrame(paint);
-    });
-    // rects are viewport-relative, so re-measure after the page scrolls under a resting cursor
-    const reset = () => { rects = null; };
     addEventListener('scroll', reset, { passive: true });
     this.off.push(() => { removeEventListener('scroll', reset); cancelAnimationFrame(raf); });
   }
