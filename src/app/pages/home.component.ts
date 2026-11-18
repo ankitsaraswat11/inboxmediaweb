@@ -134,7 +134,7 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
         <li><a class="ep-chip sutra" routerLink="/platforms/sutra">SUTRA</a></li>
         <li><a class="ep-chip medha" routerLink="/platforms/medha">MEDHA</a></li>
         <li><a class="ep-chip kavach" routerLink="/platforms/kavach">KAVACH</a></li>
-        <li><a class="ep-chip abhi" routerLink="/abhiyantriki">ABHIYANTRIKI</a></li>
+        <li><a class="ep-chip srotas" routerLink="/platforms/srotas">SROTAS</a></li>
       </ul>
       <a class="ep-cta" routerLink="/platforms">Explore Our Platforms <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
@@ -297,7 +297,7 @@ const MARQUEE = ['SMS & OTP', 'WhatsApp', 'RCS', 'Email', 'IVR', 'Cloud telephon
 .ep-chip.sutra{--tc:#6C8BFF;--bd:rgba(108,139,255,.35);--bgc:rgba(108,139,255,.12);--bgh:rgba(108,139,255,.22)}
 .ep-chip.medha{--tc:#B08CFF;--bd:rgba(176,140,255,.35);--bgc:rgba(176,140,255,.12);--bgh:rgba(176,140,255,.22)}
 .ep-chip.kavach{--tc:#34D399;--bd:rgba(52,211,153,.35);--bgc:rgba(52,211,153,.12);--bgh:rgba(52,211,153,.22)}
-.ep-chip.abhi{--tc:#E4E7F5;--bd:rgba(255,255,255,.22);--bgc:rgba(255,255,255,.08);--bgh:rgba(255,255,255,.16)}
+.ep-chip.srotas{--tc:#F472B6;--bd:rgba(244,114,182,.35);--bgc:rgba(244,114,182,.12);--bgh:rgba(244,114,182,.22)}
 .ep-cta{display:flex;align-items:center;justify-content:center;gap:.7rem;width:100%;min-height:64px;margin-top:.6rem;padding:1rem 2rem;border-radius:14px;background:#2B44D1;color:#fff;font:600 clamp(1.05rem,1.8vw,1.35rem)/1.2 var(--font-body);text-decoration:none;transition:background .2s,box-shadow .2s}
 .ep-cta:hover{background:#3A55E8;box-shadow:0 14px 40px -14px rgba(60,90,255,.7)}
 .ep-cta svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s}
